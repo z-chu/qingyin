@@ -1,4 +1,4 @@
-package com.github.zchu.model;
+package com.github.zchu.mvp;
 
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package com.github.zchu.common;
+package com.github.zchu.mvp;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -20,6 +20,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.github.zchu.common.test", appContext.getPackageName());
+        assertEquals("com.github.zchu.mvp.test", appContext.getPackageName());
     }
 }
