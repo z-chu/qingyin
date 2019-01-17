@@ -1,9 +1,11 @@
-package com.github.zchu.common.util
+package com.github.zchu.common.help
 
 import android.annotation.SuppressLint
 import android.content.Context
 import android.widget.Toast
 import androidx.annotation.StringRes
+import com.github.zchu.common.util.requireNonNull
+import com.github.zchu.common.util.whenNullDefault
 
 
 @SuppressLint("StaticFieldLeak")

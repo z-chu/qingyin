@@ -1,7 +1,7 @@
 package live.qingyin.talk
 
 import android.app.Application
-import com.github.zchu.common.util.ToastDef
+import com.github.zchu.common.help.ToastDef
 
 private lateinit var context: AppContext
 
