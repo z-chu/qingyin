@@ -4,13 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.github.zchu.common.help.toastShort
+import com.github.zchu.common.rx._subscribe
 import com.github.zchu.common.rx.bindLifecycle
-import com.github.zchu.common.util.whenNullDefault
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import io.reactivex.Observable
-import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_main.*
 import live.qingyin.talk.presentation.login.LoginActivity
 import java.util.concurrent.TimeUnit
@@ -45,25 +43,11 @@ class MainActivity : AppCompatActivity() {
         Observable.just("柱子哥牛逼")
             .delay(3, TimeUnit.SECONDS)
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : Observer<String> {
-                override fun onComplete() {
-
-
+            ._subscribe {
+                _onNext {
+                    toastShort(it)
                 }
-
-                override fun onSubscribe(d: Disposable) {
-                    d.bindLifecycle(this@MainActivity)
-                }
-
-                override fun onNext(t: String) {
-                    toastShort(t)
-                }
-
-                override fun onError(e: Throwable) {
-                    toastShort(e.message.whenNullDefault("null"))
-                }
-
-
-            })
+            }
+            .bindLifecycle(this)
     }
 }
