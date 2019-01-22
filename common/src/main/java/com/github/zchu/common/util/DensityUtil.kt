@@ -26,3 +26,4 @@ fun Context.px2dp(pxVal: Float): Float {
 fun Context.px2sp(pxVal: Float): Float {
     return pxVal / this.resources.displayMetrics.scaledDensity
 }
+

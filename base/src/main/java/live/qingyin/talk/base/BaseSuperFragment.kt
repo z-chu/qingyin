@@ -1,3 +1,3 @@
 package live.qingyin.talk.base
 
-class BaseActivity
+class BaseSuperFragment

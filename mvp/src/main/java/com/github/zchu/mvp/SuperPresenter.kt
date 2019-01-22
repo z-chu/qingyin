@@ -3,14 +3,12 @@ package com.github.zchu.mvp
 import android.os.Bundle
 import androidx.annotation.CallSuper
 import androidx.annotation.MainThread
-import androidx.lifecycle.DefaultLifecycleObserver
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.ViewModelStore
+import androidx.lifecycle.*
 import java.lang.ref.WeakReference
 import java.util.*
 
-class SuperPresenter<V : MvpView>(view: V) : MvpPresenter, StateListener {
+
+open class SuperPresenter<V : MvpView>(view: V) : MvpPresenter, StateListener {
 
     private val viewRef: WeakReference<V>?
     private var inState: Bundle? = null
@@ -40,29 +38,20 @@ class SuperPresenter<V : MvpView>(view: V) : MvpPresenter, StateListener {
 
 
     init {
-        lifecycle.addObserver(object : DefaultLifecycleObserver {
-            override fun onCreate(owner: LifecycleOwner) {
-                this@SuperPresenter.onCreate()
-            }
-
-            override fun onStart(owner: LifecycleOwner) {
-                this@SuperPresenter.onStart()
-            }
-
-            override fun onResume(owner: LifecycleOwner) {
-                this@SuperPresenter.onResume()
-            }
-
-            override fun onPause(owner: LifecycleOwner) {
-                this@SuperPresenter.onPause()
-            }
-
-            override fun onStop(owner: LifecycleOwner) {
-                this@SuperPresenter.onStop()
-            }
-
-            override fun onDestroy(owner: LifecycleOwner) {
-                this@SuperPresenter.onDestroy()
+        lifecycle.addObserver(object : LifecycleObserver {
+            @OnLifecycleEvent(Lifecycle.Event.ON_ANY)
+            fun onAny(source: LifecycleOwner, event: Lifecycle.Event) {
+                when (event) {
+                    Lifecycle.Event.ON_CREATE -> onCreate()
+                    Lifecycle.Event.ON_START -> onStart()
+                    Lifecycle.Event.ON_RESUME -> onResume()
+                    Lifecycle.Event.ON_PAUSE -> onPause()
+                    Lifecycle.Event.ON_STOP -> onStop()
+                    Lifecycle.Event.ON_DESTROY -> onDestroy()
+                    else -> {
+                        //do nothing
+                    }
+                }
             }
         })
         viewRef = WeakReference(view)
@@ -83,38 +72,38 @@ class SuperPresenter<V : MvpView>(view: V) : MvpPresenter, StateListener {
     }
 
     @MainThread
-    protected fun onCreate() {
+    protected open fun onCreate() {
 
     }
 
     @MainThread
-    protected fun onStart() {
+    protected open fun onStart() {
 
     }
 
     @MainThread
-    protected fun onResume() {
+    protected open fun onResume() {
 
     }
 
     @MainThread
-    protected fun onPause() {
+    protected open fun onPause() {
 
     }
 
     @MainThread
-    protected fun onStop() {
+    protected open fun onStop() {
 
     }
 
     @MainThread
     @CallSuper
-    protected fun onDestroy() {
+    protected open fun onDestroy() {
         viewRef?.clear()
     }
 
 
-    protected fun runOnViewNonNull(consumer: ((V) -> Unit)) {
+    protected inline fun runOnViewNonNull(consumer: ((V) -> Unit)) {
         val v = view
         if (v != null) consumer.invoke(v)
     }

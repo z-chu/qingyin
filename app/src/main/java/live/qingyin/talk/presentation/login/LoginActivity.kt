@@ -20,6 +20,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.github.zchu.mvp.MvpView
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_login.*
 import live.qingyin.talk.R
@@ -28,7 +29,7 @@ import java.util.*
 /**
  * A login screen that offers login via email/password.
  */
-class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
+class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor>, MvpView {
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
@@ -49,6 +50,7 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         })
 
         email_sign_in_button.setOnClickListener { attemptLogin() }
+        LoginPresenter(this)
     }
 
     private fun populateAutoComplete() {

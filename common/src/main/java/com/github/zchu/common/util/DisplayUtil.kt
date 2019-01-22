@@ -59,9 +59,9 @@ fun Context.hasVirtualNavigationBar(): Boolean {
 }
 
 
-fun Context.getScreenResolution(context: Context): Point {
+fun Context.getScreenResolution(): Point {
     val screenResolution = Point()
-    val wm = context.getSystemService(Context.WINDOW_SERVICE)
+    val wm = this.getSystemService(Context.WINDOW_SERVICE)
     if (wm != null && wm is WindowManager) {
         val display = wm.defaultDisplay
         display.getSize(screenResolution)
@@ -69,9 +69,9 @@ fun Context.getScreenResolution(context: Context): Point {
     return screenResolution
 }
 
-fun Context.getScreenOrientation(context: Context): Int {
+fun Context.getScreenOrientation(): Int {
     var orientation = Configuration.ORIENTATION_UNDEFINED
-    val wm = context.getSystemService(Context.WINDOW_SERVICE)
+    val wm = this.getSystemService(Context.WINDOW_SERVICE)
     if (wm != null && wm is WindowManager) {
         val display = wm.defaultDisplay
         val screenResolution = Point()
