@@ -50,6 +50,9 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor>, MvpView {
         })
 
         email_sign_in_button.setOnClickListener { attemptLogin() }
+
+
+
         LoginPresenter(this)
     }
 

@@ -2,43 +2,40 @@ package com.github.zchu.common.weiget
 
 import androidx.viewpager.widget.ViewPager
 
-class OnPageChangeListenerObj : ViewPager.OnPageChangeListener {
+class OnPageChangeListenerBridge : ViewPager.OnPageChangeListener {
 
-    //---
-    private var _A: ((position: Int, positionOffset: Float, positionOffsetPixels: Int) -> Unit)? = null
+    private var _onPageScrolled: ((position: Int, positionOffset: Float, positionOffsetPixels: Int) -> Unit)? = null
 
     fun _onPageScrolled(a: ((position: Int, positionOffset: Float, positionOffsetPixels: Int) -> Unit)) {
-        _A = a
+        _onPageScrolled = a
+    }
+
+    private var _onPageSelected: ((position: Int) -> Unit)? = null
+
+    fun _onPageSelected(b: ((position: Int) -> Unit)) {
+        _onPageSelected = b
+    }
+
+
+    private var _onPageScrollStateChanged: ((state: Int) -> Unit)? = null
+
+    fun _onPageScrollStateChanged(c: ((state: Int) -> Unit)) {
+        _onPageScrollStateChanged = c
     }
 
     override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-        _A?.invoke(position, positionOffset, positionOffsetPixels)
-    }
-
-
-    //---
-    private var _B: ((position: Int) -> Unit)? = null
-
-    fun _onPageSelected(b: ((position: Int) -> Unit)) {
-        _B = b
+        _onPageScrolled?.invoke(position, positionOffset, positionOffsetPixels)
     }
 
     override fun onPageSelected(position: Int) {
-        _B?.invoke(position)
-    }
-
-    //---
-    private var _C: ((state: Int) -> Unit)? = null
-
-    fun _onPageScrollStateChanged(c: ((state: Int) -> Unit)) {
-        _C = c
+        _onPageSelected?.invoke(position)
     }
 
     override fun onPageScrollStateChanged(state: Int) {
-        _C?.invoke(state)
+        _onPageScrollStateChanged?.invoke(state)
     }
 }
 
 
-inline fun ViewPager._addOnPageChangeListener(func: (OnPageChangeListenerObj.() -> Unit)) =
-    addOnPageChangeListener(OnPageChangeListenerObj().apply(func))
+inline fun ViewPager._addOnPageChangeListener(func: (OnPageChangeListenerBridge.() -> Unit)) =
+    addOnPageChangeListener(OnPageChangeListenerBridge().apply(func))

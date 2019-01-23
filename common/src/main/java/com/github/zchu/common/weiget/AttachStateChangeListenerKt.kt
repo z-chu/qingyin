@@ -2,28 +2,27 @@ package com.github.zchu.common.weiget
 
 import android.view.View
 
-class AttachStateChangeListenerObj : View.OnAttachStateChangeListener {
+class AttachStateChangeListenerBridge : View.OnAttachStateChangeListener {
 
-    private var _a: ((v: View?) -> Unit)? = null
+    private var _onViewAttachedToWindow: ((view: View?) -> Unit)? = null
+    private var _onViewDetachedFromWindow: ((view: View?) -> Unit)? = null
 
-    fun _onDetached(t: ((v: View?) -> Unit)) {
-        _a = t
+    fun _onViewAttachedToWindow(func: ((view: View?) -> Unit)) {
+        _onViewAttachedToWindow = func
     }
 
-    override fun onViewDetachedFromWindow(v: View?) {
-        _a?.invoke(v)
+    fun _onViewDetachedFromWindow(func: ((view: View?) -> Unit)) {
+        _onViewDetachedFromWindow = func
     }
 
-    private var _b: ((v: View?) -> Unit)? = null
-
-    fun _onAttached(t: ((v: View?) -> Unit)) {
-        _b = t
+    override fun onViewAttachedToWindow(view: View?) {
+        _onViewAttachedToWindow?.invoke(view)
     }
 
-    override fun onViewAttachedToWindow(v: View?) {
-        _b?.invoke(v)
+    override fun onViewDetachedFromWindow(view: View?) {
+        _onViewDetachedFromWindow?.invoke(view)
     }
 }
 
-inline fun View._addOnAttachStateChangeListener(func: (AttachStateChangeListenerObj.() -> Unit)) =
-    addOnAttachStateChangeListener(AttachStateChangeListenerObj().apply(func))
+inline fun View._addOnAttachStateChangeListener(func: (AttachStateChangeListenerBridge.() -> Unit)) =
+    addOnAttachStateChangeListener(AttachStateChangeListenerBridge().apply(func))
