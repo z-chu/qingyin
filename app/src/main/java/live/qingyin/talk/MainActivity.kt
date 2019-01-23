@@ -3,7 +3,7 @@ package live.qingyin.talk
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.github.zchu.common.help.toastShort
+import com.github.zchu.common.help.showToastShort
 import com.github.zchu.common.rx._subscribe
 import com.github.zchu.common.rx.bindLifecycle
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit
 class MainActivity : AppCompatActivity() {
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-        toastShort(item.itemId.toString())
+        showToastShort(item.itemId.toString())
         when (item.itemId) {
             R.id.navigation_home -> {
                 message.setText(R.string.title_home)
@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
             .observeOn(AndroidSchedulers.mainThread())
             ._subscribe {
                 _onNext {
-                    toastShort(it)
+                    showToastShort(it)
                 }
             }
             .bindLifecycle(this)

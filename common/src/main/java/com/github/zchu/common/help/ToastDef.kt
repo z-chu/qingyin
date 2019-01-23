@@ -48,19 +48,19 @@ object ToastDef {
 
 }
 
-fun Context.toastShort(@StringRes resId: Int) {
-    toastShort(this.getString(resId))
+fun Context.showToastShort(@StringRes resId: Int) {
+    showToastShort(this.getString(resId))
 }
 
-fun Context.toastShort(msg: String) {
+fun Context.showToastShort(msg: String) {
     ToastDef.showShort(msg, this)
 }
 
-fun Context.toastLong(@StringRes resId: Int) {
-    toastLong(this.getString(resId))
+fun Context.showToastLong(@StringRes resId: Int) {
+    showToastLong(this.getString(resId))
 }
 
-fun Context.toastLong(msg: String) {
+fun Context.showToastLong(msg: String) {
     ToastDef.showLong(msg, this)
 }
 

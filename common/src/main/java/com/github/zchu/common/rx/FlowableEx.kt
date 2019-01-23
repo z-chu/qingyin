@@ -4,46 +4,45 @@ import io.reactivex.Flowable
 import io.reactivex.FlowableSubscriber
 import org.reactivestreams.Subscription
 
-class FlowableObj<T> : FlowableSubscriber<T> {
+class FlowableBridge<T> : FlowableSubscriber<T> {
 
-    private var _a: ((s: Subscription) -> Unit)? = null
-    private var _b: ((t: T) -> Unit)? = null
-    private var _c: (() -> Unit)? = null
-    private var _d: ((e: Throwable) -> Unit)? = null
-
-    override fun onSubscribe(s: Subscription) {
-        _a?.invoke(s)
-    }
+    private var _onSubscribe: ((s: Subscription) -> Unit)? = null
+    private var _onNext: ((t: T) -> Unit)? = null
+    private var _onComplete: (() -> Unit)? = null
+    private var _onError: ((e: Throwable) -> Unit)? = null
 
     fun _onSubscribe(t: ((s: Subscription) -> Unit)) {
-        _a = t
+        _onSubscribe = t
     }
-
 
     fun _onNext(t: ((t: T) -> Unit)) {
-        _b = t
-    }
-
-    override fun onNext(t: T) {
-        _b?.invoke(t)
+        _onNext = t
     }
 
     fun _onComplete(t: (() -> Unit)) {
-        _c = t
-    }
-
-    override fun onComplete() {
-        _c?.invoke()
+        _onComplete = t
     }
 
     fun _onError(t: ((e: Throwable) -> Unit)) {
-        _d = t
+        _onError = t
+    }
+
+    override fun onSubscribe(s: Subscription) {
+        _onSubscribe?.invoke(s)
+    }
+
+    override fun onNext(t: T) {
+        _onNext?.invoke(t)
+    }
+
+    override fun onComplete() {
+        _onComplete?.invoke()
     }
 
     override fun onError(e: Throwable) {
-        _d?.invoke(e)
+        _onError?.invoke(e)
     }
 }
 
-inline fun <reified T> Flowable<T>._subscribe(func: FlowableObj<T>.() -> Unit) =
-    subscribe(FlowableObj<T>().apply(func))
+inline fun <reified T> Flowable<T>._subscribe(func: FlowableBridge<T>.() -> Unit) =
+    subscribe(FlowableBridge<T>().apply(func))

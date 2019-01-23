@@ -1,61 +1,59 @@
 package com.github.zchu.common.rx
 
-import android.util.Log
 import io.reactivex.Observable
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
 
-class ObserverObj<T> : Observer<T> {
+class ObserverBridge<T> : Observer<T> {
 
-    private var _a: ((disposable: Disposable) -> Unit)? = null
-    private var _b: ((t: T) -> Unit)? = null
-    private var _c: (() -> Unit)? = null
-    private var _d: ((e: Throwable) -> Unit)? = null
+    private var _onSubscribe: ((disposable: Disposable) -> Unit)? = null
+    private var _onNext: ((t: T) -> Unit)? = null
+    private var _onComplete: (() -> Unit)? = null
+    private var _onError: ((e: Throwable) -> Unit)? = null
     private lateinit var disposable: Disposable
 
     fun _onSubscribe(t: ((disposable: Disposable) -> Unit)) {
-        _a = t
+        _onSubscribe = t
     }
-
-    override fun onSubscribe(d: Disposable) {
-        disposable = d
-        Log.i("opop", disposable.toString())
-        _a?.invoke(d)
-    }
-
 
     fun _onNext(t: ((t: T) -> Unit)) {
-        _b = t
-    }
-
-    override fun onNext(t: T) {
-        _b?.invoke(t)
+        _onNext = t
     }
 
     fun _onComplete(t: (() -> Unit)) {
-        _c = t
+        _onComplete = t
     }
-
-    override fun onComplete() {
-        _c?.invoke()
-    }
-
 
     fun _onError(t: ((e: Throwable) -> Unit)) {
-        _d = t
-    }
-
-    override fun onError(e: Throwable) {
-        _d?.invoke(e)
+        _onError = t
     }
 
     fun getDisposable(): Disposable {
         return disposable
     }
+
+    override fun onSubscribe(d: Disposable) {
+        disposable = d
+        _onSubscribe?.invoke(d)
+    }
+
+    override fun onNext(t: T) {
+        _onNext?.invoke(t)
+    }
+
+    override fun onComplete() {
+        _onComplete?.invoke()
+    }
+
+    override fun onError(e: Throwable) {
+        _onError?.invoke(e)
+    }
+
+
 }
 
-inline fun <reified T> Observable<T>._subscribe(func: ObserverObj<T>.() -> Unit): Disposable {
-    val real = ObserverObj<T>()
+inline fun <reified T> Observable<T>._subscribe(func: ObserverBridge<T>.() -> Unit): Disposable {
+    val real = ObserverBridge<T>()
     real.func()
     subscribe(real)
     return real.getDisposable()
