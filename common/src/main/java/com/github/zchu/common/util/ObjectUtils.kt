@@ -8,6 +8,15 @@ fun <T : Any> T?.requireNonNull(message: String? = null): T {
     return this
 }
 
+fun checkNonNull(vararg objects: Any?): Boolean {
+    for (`object` in objects) {
+        if (`object` == null) {
+            return false
+        }
+    }
+    return true
+}
+
 
 fun <T : Any> T?.whenNullDefault(defaultValue: T): T {
     return this ?: defaultValue
