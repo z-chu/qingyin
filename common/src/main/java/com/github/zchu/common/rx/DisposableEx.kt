@@ -11,6 +11,11 @@ fun Disposable.bindLifecycle(lifecycleOwner: LifecycleOwner) {
     bindLifecycle(lifecycleOwner.lifecycle)
 }
 
+fun Disposable.bindLifecycle(lifecycleOwner: LifecycleOwner, untilEvent: Lifecycle.Event) {
+    bindLifecycle(lifecycleOwner.lifecycle, untilEvent)
+}
+
+
 fun Disposable.bindLifecycle(lifecycle: Lifecycle) {
     bindLifecycle(lifecycle, getOpponentLifecycleEvent(lifecycle))
 }

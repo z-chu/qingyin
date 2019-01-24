@@ -3,6 +3,7 @@ package live.qingyin.talk
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
 import com.github.zchu.common.help.showToastShort
 import com.github.zchu.common.rx._subscribe
 import com.github.zchu.common.rx.bindLifecycle
@@ -17,6 +18,7 @@ class MainActivity : AppCompatActivity() {
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         showToastShort(item.itemId.toString())
+        //ToastDef.showLong(item.itemId.toString(), appContext())
         when (item.itemId) {
             R.id.navigation_home -> {
                 message.setText(R.string.title_home)
@@ -47,6 +49,6 @@ class MainActivity : AppCompatActivity() {
                 _onNext {
                 }
             }
-            .bindLifecycle(this)
+            .bindLifecycle(this, Lifecycle.Event.ON_STOP)
     }
 }

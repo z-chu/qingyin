@@ -1,20 +1,28 @@
 package com.github.zchu.common.help
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.annotation.StringRes
+import androidx.core.app.NotificationManagerCompat
 import com.github.zchu.common.util.requireNonNull
 import com.github.zchu.common.util.whenNullDefault
+import java.lang.ref.WeakReference
 
 
 @SuppressLint("StaticFieldLeak")
 object ToastDef {
 
-    private var toast: Toast? = null
+    private var defaultToast: Toast? = null
+    private var prevToastCompat: WeakReference<ToastCompat>? = null
+
     var defaultContext: Context? = null
         set(value) {
-            field = value?.applicationContext
+            if (field == null) {
+                field = value?.applicationContext
+            }
         }
 
     fun showShort(@StringRes resId: Int, context: Context? = null) {
@@ -28,7 +36,7 @@ object ToastDef {
         val toast = getToast(context)
         toast.duration = Toast.LENGTH_SHORT
         toast.setText(msg)
-        toast.show()
+        show(toast, context)
     }
 
     fun showLong(@StringRes resId: Int, context: Context? = null) {
@@ -42,7 +50,21 @@ object ToastDef {
         val toast = getToast(context)
         toast.setText(msg)
         toast.duration = Toast.LENGTH_LONG
-        toast.show()
+        show(toast, context)
+    }
+
+    private fun show(toast: Toast, context: Context?) {
+        if (context == null || isNotificationEnabled(context)) {
+            toast.show()
+        } else {
+            if (context is Activity) {
+                prevToastCompat?.get()?.cancel()
+                val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+                val toastCompat = ToastCompat(toast, windowManager)
+                toastCompat.show()
+                prevToastCompat = WeakReference(toastCompat)
+            }
+        }
     }
 
     private fun Context?.getString(@StringRes resId: Int): String {
@@ -53,36 +75,30 @@ object ToastDef {
 
 
     @SuppressLint("ShowToast")
-    private fun getToast(context: Context?): Toast {
-        return if (toast == null) {
-            val contextLocal =
-                if (context == null) {
-                    defaultContext.requireNonNull("At least one of Context and defaultContext is not null")
-                } else {
-                    context.applicationContext
-                }
-            defaultContext = contextLocal
-
-
+    fun getToast(context: Context? = null): Toast {
+        defaultContext = context
+        return defaultToast.whenNullDefault {
             val makeText = Toast.makeText(
-                contextLocal,
+                defaultContext.requireNonNull("At least one of Context and defaultContext is not null"),
                 "",
                 Toast.LENGTH_SHORT
             )
-            toast = makeText
-
-
+            defaultToast = makeText
             makeText
-        } else {
-            toast!!
         }
-
     }
+
 
     fun cancel() {
-        toast?.cancel()
+        defaultToast?.cancel()
+        prevToastCompat?.get()?.cancel()
     }
 
+    @JvmStatic
+    private fun isNotificationEnabled(context: Context): Boolean {
+        val notificationManagerCompat = NotificationManagerCompat.from(context)
+        return notificationManagerCompat.areNotificationsEnabled()
+    }
 }
 
 fun Context.showToastShort(@StringRes resId: Int) {
