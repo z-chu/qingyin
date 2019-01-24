@@ -45,7 +45,6 @@ class MainActivity : AppCompatActivity() {
             .observeOn(AndroidSchedulers.mainThread())
             ._subscribe {
                 _onNext {
-                    showToastShort(it)
                 }
             }
             .bindLifecycle(this)
