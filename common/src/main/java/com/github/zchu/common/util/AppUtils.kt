@@ -130,3 +130,25 @@ fun Context.installApk(apkFile: File, fileProviderAuthority: String) {
     this.startActivity(intent)
 }
 
+
+fun Context.showAppSystemSetting() {
+    val localIntent = Intent()
+    localIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+    localIntent.action = "android.settings.APPLICATION_DETAILS_SETTINGS"
+    localIntent.data = Uri.fromParts("package", packageName, null)
+    startActivity(localIntent)
+}
+
+fun Context.showAppMarket(): Boolean {
+    return try {
+        val mAddress = "market://details?id=$packageName"
+        val marketIntent = Intent("android.intent.action.VIEW")
+        marketIntent.data = Uri.parse(mAddress)
+        startActivity(marketIntent)
+        true
+    } catch (e: Exception) {
+        e.printStackTrace()
+        false
+    }
+
+}
