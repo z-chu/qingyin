@@ -1,1 +1,1 @@
-include ':app', ':common', ':base', ':model', ':mvp'
+include ':app', ':common', ':base', ':model', ':mvp', ':livedata-convert'

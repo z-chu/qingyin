@@ -47,8 +47,11 @@ dependencies {
 
     implementation "androidx.lifecycle:lifecycle-extensions:2.0.0"
 
+    implementation project(':base')
     implementation project(':common')
     implementation project(':mvp')
+    implementation project(':model')
+    implementation project(':livedata-convert')
 
 
 }
