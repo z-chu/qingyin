@@ -1,4 +1,4 @@
-package com.github.zchu.common.weiget
+package com.github.zchu.common.widget
 
 import android.content.Context
 import android.text.Editable
