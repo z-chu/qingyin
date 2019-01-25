@@ -6,6 +6,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.IdRes
+import androidx.fragment.app.Fragment
 
 //filter frequent click event
 fun View._setOnClickListener(block: ((v: View?) -> Unit)) {
@@ -47,6 +48,10 @@ fun View.bindOnClickLister(listener: View.OnClickListener, @IdRes vararg ids: In
 
 fun Activity.bindOnClickLister(listener: View.OnClickListener, @IdRes vararg ids: Int) {
     window?.decorView?.doBindOnClickLister(listener, ids)
+}
+
+fun Fragment.bindOnClickLister(listener: View.OnClickListener, @IdRes vararg ids: Int) {
+    view?.doBindOnClickLister(listener, ids)
 }
 
 fun Dialog.bindOnClickLister(listener: View.OnClickListener, @IdRes vararg ids: Int) {
