@@ -16,7 +16,6 @@ import java.lang.ref.WeakReference
 object ToastDef {
 
     private var defaultToast: Toast? = null
-    private var prevToastCompat: WeakReference<ToastCompat>? = null
 
     var defaultContext: Context? = null
         set(value) {
@@ -36,7 +35,7 @@ object ToastDef {
         val toast = getToast(context)
         toast.duration = Toast.LENGTH_SHORT
         toast.setText(msg)
-        show(toast, context)
+        context?.showToastCompat(toast)
     }
 
     fun showLong(@StringRes resId: Int, context: Context? = null) {
@@ -50,22 +49,9 @@ object ToastDef {
         val toast = getToast(context)
         toast.setText(msg)
         toast.duration = Toast.LENGTH_LONG
-        show(toast, context)
+        context?.showToastCompat(toast)
     }
 
-    private fun show(toast: Toast, context: Context?) {
-        if (context == null || isNotificationEnabled(context)) {
-            toast.show()
-        } else {
-            if (context is Activity) {
-                prevToastCompat?.get()?.cancel()
-                val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
-                val toastCompat = ToastCompat(toast, windowManager)
-                toastCompat.show()
-                prevToastCompat = WeakReference(toastCompat)
-            }
-        }
-    }
 
     private fun Context?.getString(@StringRes resId: Int): String {
         return this
@@ -77,28 +63,40 @@ object ToastDef {
     @SuppressLint("ShowToast")
     fun getToast(context: Context? = null): Toast {
         defaultContext = context
-        return defaultToast.whenNullDefault {
-            val makeText = Toast.makeText(
-                defaultContext.requireNonNull("At least one of Context and defaultContext is not null"),
+        return if (context != null) {
+            Toast.makeText(
+                context,
                 "",
                 Toast.LENGTH_SHORT
             )
-            defaultToast = makeText
-            makeText
+        } else {
+            defaultToast.whenNullDefault {
+                val makeText = Toast.makeText(
+                    defaultContext.requireNonNull("At least one of Context and defaultContext is not null"),
+                    "",
+                    Toast.LENGTH_SHORT
+                )
+                defaultToast = makeText
+                makeText
+            }
         }
+
     }
 
 
+/*
     fun cancel() {
         defaultToast?.cancel()
         prevToastCompat?.get()?.cancel()
     }
+*/
 
-    @JvmStatic
-    private fun isNotificationEnabled(context: Context): Boolean {
-        val notificationManagerCompat = NotificationManagerCompat.from(context)
-        return notificationManagerCompat.areNotificationsEnabled()
-    }
+
+}
+
+fun Context.isNotificationEnabled(): Boolean {
+    val notificationManagerCompat = NotificationManagerCompat.from(this)
+    return notificationManagerCompat.areNotificationsEnabled()
 }
 
 fun Context.showToastShort(@StringRes resId: Int) {
@@ -125,3 +123,27 @@ fun showToastLong(msg: String) {
     ToastDef.showLong(msg)
 }
 
+private var prevToastCompat: WeakReference<ToastCompat>? = null
+
+fun Activity.showToastCompat(toast: Toast) {
+    if (this.isNotificationEnabled()) {
+        toast.show()
+    } else {
+        val windowManager = getSystemService(Context.WINDOW_SERVICE)
+        if (windowManager is WindowManager) {
+            prevToastCompat?.get()?.cancel()
+            val toastCompat = ToastCompat(toast, windowManager)
+            toastCompat.show()
+            prevToastCompat = WeakReference(toastCompat)
+        }
+    }
+}
+
+fun Context.showToastCompat(toast: Toast) {
+    if (this is Activity) {
+        this.showToastCompat(toast)
+    } else {
+        toast.show()
+    }
+
+}

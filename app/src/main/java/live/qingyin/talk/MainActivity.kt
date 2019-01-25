@@ -7,8 +7,6 @@ import androidx.lifecycle.Lifecycle
 import com.github.zchu.common.help.showToastShort
 import com.github.zchu.common.rx._subscribe
 import com.github.zchu.common.rx.bindLifecycle
-import com.github.zchu.common.util.showAppMarket
-import com.github.zchu.common.util.showAppSystemSetting
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -30,12 +28,12 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.navigation_dashboard -> {
                 message.setText(R.string.title_dashboard)
-                showAppSystemSetting()
+                //  showAppSystemSetting()
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_notifications -> {
                 message.setText(R.string.title_notifications)
-                showAppMarket()
+                // showAppMarket()
                 return@OnNavigationItemSelectedListener true
             }
         }
