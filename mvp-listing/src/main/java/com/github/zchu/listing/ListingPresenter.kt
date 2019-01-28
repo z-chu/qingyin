@@ -3,9 +3,9 @@ package com.github.zchu.listing
 import com.github.zchu.mvp.MvpPresenter
 
 
-interface ListMvpPresenter<T> : MvpPresenter {
+interface ListingPresenter<T> : MvpPresenter {
 
-    fun onResource(resource: ListResource<T>)
+    fun onResource(resource: ListingResource<T>)
 
     fun refresh()
 

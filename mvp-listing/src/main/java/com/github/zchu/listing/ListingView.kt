@@ -3,7 +3,7 @@ package com.github.zchu.listing
 import com.github.zchu.mvp.MvpView
 
 
-interface ListMvpView<T> : MvpView {
+interface ListingView<T> : MvpView {
 
     fun showInitializing()
 

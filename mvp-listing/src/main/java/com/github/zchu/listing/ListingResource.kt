@@ -1,6 +1,6 @@
 package com.github.zchu.listing
 
-data class ListResource<T>(
+data class ListingResource<T>(
     val status: Status,
     val action: Action,
     val all: List<T>? = null,
@@ -13,18 +13,18 @@ data class ListResource<T>(
 ) {
 
 
-    fun toRefreshing(): ListResource<T> {
+    fun toRefreshing(): ListingResource<T> {
         return refreshing(all!!, ended)
     }
 
-    fun toLoadingMore(): ListResource<T> {
+    fun toLoadingMore(): ListingResource<T> {
         return loadingMore(all!!)
     }
 
     companion object {
 
-        fun <T> initializing(): ListResource<T> {
-            return ListResource(Status.LOADING, Action.INITIALIZE)
+        fun <T> initializing(): ListingResource<T> {
+            return ListingResource(Status.LOADING, Action.INITIALIZE)
         }
 
         fun <T> initialized(
@@ -32,19 +32,19 @@ data class ListResource<T>(
             refresh: (() -> Unit)? = null,
             loadMore: (() -> Unit)? = null,
             ended: Boolean = true
-        ): ListResource<T> {
-            return ListResource(
+        ): ListingResource<T> {
+            return ListingResource(
                 Status.SUCCESS, Action.INITIALIZE, initialData,
                 refresh = refresh, loadMore = loadMore, ended = ended
             )
         }
 
-        fun <T> initializationFailed(throwable: Throwable?, retry: (() -> Unit)? = null): ListResource<T> {
-            return ListResource(Status.ERROR, Action.INITIALIZE, retry = retry, throwable = throwable)
+        fun <T> initializationFailed(throwable: Throwable?, retry: (() -> Unit)? = null): ListingResource<T> {
+            return ListingResource(Status.ERROR, Action.INITIALIZE, retry = retry, throwable = throwable)
         }
 
-        fun <T> refreshing(allData: List<T>, ended: Boolean = true): ListResource<T> {
-            return ListResource(Status.LOADING, Action.REFRESH, all = allData, ended = ended)
+        fun <T> refreshing(allData: List<T>, ended: Boolean = true): ListingResource<T> {
+            return ListingResource(Status.LOADING, Action.REFRESH, all = allData, ended = ended)
         }
 
         fun <T> refreshed(
@@ -52,8 +52,8 @@ data class ListResource<T>(
             refresh: (() -> Unit),
             loadMore: (() -> Unit)? = null,
             ended: Boolean = true
-        ): ListResource<T> {
-            return ListResource(
+        ): ListingResource<T> {
+            return ListingResource(
                 Status.SUCCESS, Action.REFRESH, newData,
                 refresh = refresh, loadMore = loadMore, ended = ended
             )
@@ -64,15 +64,15 @@ data class ListResource<T>(
             refresh: (() -> Unit),
             loadMore: (() -> Unit)? = null,
             ended: Boolean = true
-        ): ListResource<T> {
-            return ListResource(
+        ): ListingResource<T> {
+            return ListingResource(
                 Status.ERROR, Action.REFRESH, oldData, throwable = throwable,
                 refresh = refresh, loadMore = loadMore, ended = ended
             )
         }
 
-        fun <T> loadingMore(allData: List<T>): ListResource<T> {
-            return ListResource(Status.LOADING, Action.LOAD_MORE, allData, ended = false)
+        fun <T> loadingMore(allData: List<T>): ListingResource<T> {
+            return ListingResource(Status.LOADING, Action.LOAD_MORE, allData, ended = false)
         }
 
         fun <T> loadMoreComplete(
@@ -80,8 +80,8 @@ data class ListResource<T>(
             refresh: (() -> Unit)? = null,
             loadMore: (() -> Unit)? = null,
             ended: Boolean = true
-        ): ListResource<T> {
-            return ListResource(
+        ): ListingResource<T> {
+            return ListingResource(
                 Status.SUCCESS, Action.LOAD_MORE, newAllData, moreData,
                 refresh = refresh, loadMore = loadMore, ended = ended
             )
@@ -91,8 +91,8 @@ data class ListResource<T>(
             oldData: List<T>, throwable: Throwable?,
             refresh: (() -> Unit)? = null,
             loadMore: (() -> Unit)? = null
-        ): ListResource<T> {
-            return ListResource(
+        ): ListingResource<T> {
+            return ListingResource(
                 Status.ERROR, Action.LOAD_MORE, oldData,
                 throwable = throwable, refresh = refresh, loadMore = loadMore, ended = false
             )

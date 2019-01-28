@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-abstract class ListViewModel<T> : ViewModel() {
+abstract class AbsListingModel<T> : ViewModel() {
 
 
     protected val refresh = { loadInitial(true) }
@@ -18,12 +18,12 @@ abstract class ListViewModel<T> : ViewModel() {
     private var isNoMore: Boolean = true
 
 
-    private val listing: MutableLiveData<ListResource<T>> by lazy {
-        val mutableLiveData = MutableLiveData<ListResource<T>>()
+    private val listing: MutableLiveData<ListingResource<T>> by lazy {
+        val mutableLiveData = MutableLiveData<ListingResource<T>>()
         mutableLiveData
     }
 
-    fun getListing(): LiveData<ListResource<T>> {
+    fun getListing(): LiveData<ListingResource<T>> {
         if (listing.value == null) {
             loadInitial(false)
         }
@@ -35,9 +35,9 @@ abstract class ListViewModel<T> : ViewModel() {
             return
         }
         if (isRefresh) {
-            listing.postValue(ListResource.refreshing(ArrayList(allData), isNoMore))
+            listing.postValue(ListingResource.refreshing(ArrayList(allData), isNoMore))
         } else {
-            listing.postValue(ListResource.initializing())
+            listing.postValue(ListingResource.initializing())
         }
         val loadCallback = object : LoadCallback<T> {
             override fun onResult(data: List<T>) {
@@ -45,7 +45,7 @@ abstract class ListViewModel<T> : ViewModel() {
                 isNoMore = isNoMoreOnInitial(data)
                 if (isRefresh) {
                     listing.postValue(
-                        ListResource.refreshed(
+                        ListingResource.refreshed(
                             data,
                             loadMore = if (isNoMore) null else loadMore,
                             ended = isNoMore,
@@ -54,7 +54,7 @@ abstract class ListViewModel<T> : ViewModel() {
                     )
                 } else {
                     listing.postValue(
-                        ListResource.initialized(
+                        ListingResource.initialized(
                             data,
                             loadMore = if (isNoMore) null else loadMore,
                             ended = isNoMore,
@@ -66,10 +66,10 @@ abstract class ListViewModel<T> : ViewModel() {
 
             override fun onFailure(t: Throwable) {
                 if (isRefresh) {
-                    listing.postValue(ListResource.refreshFailed(ArrayList(allData), t, refresh, loadMore, isNoMore))
+                    listing.postValue(ListingResource.refreshFailed(ArrayList(allData), t, refresh, loadMore, isNoMore))
 
                 } else {
-                    listing.postValue(ListResource.initializationFailed(t, retry))
+                    listing.postValue(ListingResource.initializationFailed(t, retry))
                 }
             }
 
@@ -87,13 +87,13 @@ abstract class ListViewModel<T> : ViewModel() {
         if (!canLoadMore()) {
             return
         }
-        listing.postValue(ListResource.loadingMore(ArrayList(allData)))
+        listing.postValue(ListingResource.loadingMore(ArrayList(allData)))
         val loadCallback = object : LoadCallback<T> {
             override fun onResult(data: List<T>) {
                 allData.addAll(data)
                 isNoMore = isNoMoreOnMore(data)
                 listing.postValue(
-                    ListResource.loadMoreComplete(
+                    ListingResource.loadMoreComplete(
                         ArrayList(allData),
                         loadMore = if (isNoMore) null else loadMore
                         , ended = isNoMore,
@@ -104,7 +104,7 @@ abstract class ListViewModel<T> : ViewModel() {
             }
 
             override fun onFailure(t: Throwable) {
-                listing.postValue(ListResource.loadMoreFailed(ArrayList(allData), t, refresh, loadMore))
+                listing.postValue(ListingResource.loadMoreFailed(ArrayList(allData), t, refresh, loadMore))
             }
 
         }

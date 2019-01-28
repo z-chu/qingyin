@@ -40,7 +40,7 @@ dependencies {
     }
 
     implementation project(':mvp')
-    implementation project(':listing')
+    implementation project(':mvp-listing')
 }
 repositories {
     mavenCentral()
