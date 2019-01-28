@@ -10,13 +10,16 @@ import android.view.KeyCharacterMap
 import android.view.KeyEvent
 import android.view.ViewConfiguration
 import android.view.WindowManager
+import androidx.annotation.Px
 
 
+@Px
 fun Context.getNavigationBarHeight(): Int {
     val resourceId = this.resources.getIdentifier("navigation_bar_height", "dimen", "android")
     return if (resourceId > 0) this.resources.getDimensionPixelSize(resourceId) else 0
 }
 
+@Px
 fun Context.getActionBarHeight(): Int {
     val tv = TypedValue()
     return if (this.theme.resolveAttribute(android.R.attr.actionBarSize, tv, true)) {
@@ -26,6 +29,7 @@ fun Context.getActionBarHeight(): Int {
     } else 0
 }
 
+@Px
 fun Context.getStateBarHeight(): Int {
     val resourceId = this.resources.getIdentifier("status_bar_height", "dimen", "android")
     return if (resourceId > 0) this.resources.getDimensionPixelSize(resourceId) else 0
