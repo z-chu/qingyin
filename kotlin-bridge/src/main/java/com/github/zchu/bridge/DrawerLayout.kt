@@ -1,4 +1,4 @@
-package com.github.zchu.common.widget
+package com.github.zchu.bridge
 
 import android.view.View
 import androidx.drawerlayout.widget.DrawerLayout

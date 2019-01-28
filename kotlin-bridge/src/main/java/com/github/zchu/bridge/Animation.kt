@@ -1,7 +1,8 @@
-package com.github.zchu.common.anim
+package com.github.zchu.bridge
 
 import android.animation.Animator
 import android.view.ViewPropertyAnimator
+import android.view.animation.Animation
 
 class AnimatorListenerBridge : Animator.AnimatorListener {
 
@@ -48,3 +49,39 @@ inline fun ViewPropertyAnimator._setListener(func: (AnimatorListenerBridge.() ->
 
 inline fun Animator._addListener(func: (AnimatorListenerBridge.() -> Unit)) =
     addListener(AnimatorListenerBridge().apply(func))
+
+
+class AnimationListenerBridge : Animation.AnimationListener {
+
+    private var _onAnimationStart: ((animation: Animation?) -> Unit)? = null
+    private var _onAnimationEnd: ((animation: Animation?) -> Unit)? = null
+    private var _onAnimationRepeat: ((animation: Animation?) -> Unit)? = null
+
+    fun onAnimationStart(func: (animation: Animation?) -> Unit) {
+        _onAnimationStart = func
+    }
+
+    fun onAnimationEnd(func: (animation: Animation?) -> Unit) {
+        _onAnimationEnd = func
+    }
+
+    fun onAnimationRepeat(func: (animation: Animation?) -> Unit) {
+        _onAnimationRepeat = func
+    }
+
+    override fun onAnimationStart(animation: Animation?) {
+        _onAnimationStart?.invoke(animation)
+    }
+
+    override fun onAnimationEnd(animation: Animation?) {
+        _onAnimationEnd?.invoke(animation)
+
+    }
+
+    override fun onAnimationRepeat(animation: Animation?) {
+        _onAnimationRepeat?.invoke(animation)
+    }
+}
+
+inline fun Animation._setAnimationListener(func: (AnimationListenerBridge.() -> Unit)) =
+    setAnimationListener(AnimationListenerBridge().apply(func))

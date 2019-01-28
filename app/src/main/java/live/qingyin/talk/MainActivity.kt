@@ -4,8 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
+import com.github.zchu.bridge._subscribe
 import com.github.zchu.common.help.showToastShort
-import com.github.zchu.common.rx._subscribe
 import com.github.zchu.common.rx.bindLifecycle
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import io.reactivex.Observable
