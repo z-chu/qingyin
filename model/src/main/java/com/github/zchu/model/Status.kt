@@ -2,8 +2,6 @@ package com.github.zchu.model
 
 enum class Status {
     INITIALIZED, RUNNING, SUCCEEDED, FAILED;
-
-
 }
 
 fun Status.isFinished(): Boolean {
