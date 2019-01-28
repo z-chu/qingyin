@@ -1,1 +1,1 @@
-include ':app', ':common', ':base', ':model', ':mvp', ':livedata-convert', ':mvp-listing', ':kotlin-bridge'
+include ':app', ':common', ':base', ':model', ':mvp', ':livedata-convert', ':mvp-listing', ':kotlin-bridge', ':stateful'

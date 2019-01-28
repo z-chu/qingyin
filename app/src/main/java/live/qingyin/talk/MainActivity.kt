@@ -54,6 +54,5 @@ class MainActivity : AppCompatActivity() {
             }
             .bindLifecycle(this, Lifecycle.Event.ON_STOP)
 
-
     }
 }
