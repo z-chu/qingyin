@@ -25,3 +25,16 @@ fun <T : Any> T?.whenNullDef(defaultValue: T): T {
 inline fun <T : Any> T?.whenNullDef(defaultValueFuc: () -> T): T {
     return this ?: defaultValueFuc.invoke()
 }
+
+
+fun <T> ((T) -> Unit).debounce(intervalMill: Int = 500): (T) -> Unit {
+    return object : ((T) -> Unit) {
+        var last = 0L
+        override fun invoke(t: T) {
+            if (System.currentTimeMillis() - last > intervalMill) {
+                this@debounce.invoke(t)
+                last = System.currentTimeMillis()
+            }
+        }
+    }
+}

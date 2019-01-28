@@ -16,6 +16,7 @@ import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
 
+
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         showToastShort(item.itemId.toString())
         //ToastDef.showLong(item.itemId.toString(), appContext())
@@ -52,6 +53,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             .bindLifecycle(this, Lifecycle.Event.ON_STOP)
+
 
     }
 }

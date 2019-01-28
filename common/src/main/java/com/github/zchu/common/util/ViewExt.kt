@@ -1,62 +1,9 @@
 package com.github.zchu.common.util
 
-import android.app.Activity
-import android.app.Dialog
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.IdRes
-import androidx.fragment.app.Fragment
 
-//filter frequent click event
-fun View._setOnClickListener(block: ((v: View?) -> Unit)) {
-    setOnClickListener(object : View.OnClickListener {
-        var last = 0L
-        override fun onClick(v: View?) {
-            if (System.currentTimeMillis() - last > 500) {
-                block(v)
-                last = System.currentTimeMillis()
-            }
-        }
-    })
-}
-
-fun View._setOnClickListener(intervalMill: Int, block: ((v: View?) -> Unit)) {
-    setOnClickListener(object : View.OnClickListener {
-        var last = 0L
-        override fun onClick(v: View?) {
-            if (System.currentTimeMillis() - last > intervalMill) {
-                block(v)
-                last = System.currentTimeMillis()
-            }
-        }
-    })
-}
-
-
-private fun View.doBindOnClickLister(listener: View.OnClickListener, ids: IntArray) {
-    for (id in ids) {
-        val view = findViewById<View>(id)
-        view?.setOnClickListener(listener)
-    }
-}
-
-
-fun View.bindOnClickLister(listener: View.OnClickListener, @IdRes vararg ids: Int) {
-    doBindOnClickLister(listener, ids)
-}
-
-fun Activity.bindOnClickLister(listener: View.OnClickListener, @IdRes vararg ids: Int) {
-    window?.decorView?.doBindOnClickLister(listener, ids)
-}
-
-fun Fragment.bindOnClickLister(listener: View.OnClickListener, @IdRes vararg ids: Int) {
-    view?.doBindOnClickLister(listener, ids)
-}
-
-fun Dialog.bindOnClickLister(listener: View.OnClickListener, @IdRes vararg ids: Int) {
-    window?.decorView?.doBindOnClickLister(listener, ids)
-}
 
 fun View.removeSelfFromParent() {
     val parent = this.parent
