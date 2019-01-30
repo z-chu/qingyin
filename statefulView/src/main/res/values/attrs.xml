@@ -7,6 +7,9 @@
         <attr name="contentLayout" format="reference"/>
         <attr name="loadingLayout" format="reference"/>
         <attr name="errorLayout" format="reference"/>
+        <attr name="retryViewId" format="reference"/>
+        <attr name="loadingTextViewId" format="reference"/>
+        <attr name="errorTextViewId" format="reference"/>
     </declare-styleable>
 
 </resources>
