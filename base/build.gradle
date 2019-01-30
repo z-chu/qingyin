@@ -41,6 +41,8 @@ dependencies {
 
     implementation project(':mvp')
     implementation project(':mvp-listing')
+    implementation 'com.github.z-chu:StatefulView:1.0.0'
+
 }
 repositories {
     mavenCentral()

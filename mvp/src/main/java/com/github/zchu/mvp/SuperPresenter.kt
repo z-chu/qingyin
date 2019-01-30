@@ -1,41 +1,42 @@
 package com.github.zchu.mvp
 
 import android.os.Bundle
+import androidx.activity.ComponentActivity
 import androidx.annotation.CallSuper
 import androidx.annotation.MainThread
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.*
 import java.lang.ref.WeakReference
 import java.util.*
 
 
-open class SuperPresenter<V : MvpView>(view: V) : MvpPresenter, StateListener {
+open class SuperPresenter<V : MvpView>(
+    view: V,
+    private val lifecycle: Lifecycle,
+    private val viewModelStore: ViewModelStore
+) : MvpPresenter, StateListener {
 
-    private val viewRef: WeakReference<V>?
+    constructor(
+        view: V,
+        lifecycleOwner: LifecycleOwner,
+        viewModelStoreOwner: ViewModelStoreOwner
+    ) : this(view, lifecycleOwner.lifecycle, viewModelStoreOwner.viewModelStore)
+
+
+    constructor(
+        view: V,
+        activity: ComponentActivity
+    ) : this(view, activity.lifecycle, activity.viewModelStore)
+
+    constructor(
+        view: V,
+        fragment: Fragment
+    ) : this(view, fragment.lifecycle, fragment.viewModelStore)
+
+    private val viewRef = WeakReference(view)
     private var inState: Bundle? = null
     private var letInStateConsumers: LinkedList<((Bundle?) -> Unit)>? = null
     private var isCallOnRestoreState: Boolean = false
-
-
-    private val lifecycle: Lifecycle = view.lifecycle
-
-    private val viewModelStore: ViewModelStore = view.viewModelStore
-
-
-    override fun getLifecycle(): Lifecycle {
-        return lifecycle
-    }
-
-    override fun getViewModelStore(): ViewModelStore {
-        return viewModelStore
-    }
-
-    override val bundleKey: String
-        get() {
-            val view = view
-            val viewTag = if (view != null) view.javaClass.name else "unknown"
-            return viewTag + javaClass.name
-        }
-
 
     init {
         lifecycle.addObserver(object : LifecycleObserver {
@@ -54,22 +55,35 @@ open class SuperPresenter<V : MvpView>(view: V) : MvpPresenter, StateListener {
                 }
             }
         })
-        viewRef = WeakReference(view)
     }
 
+    protected val view: V?
+        get() = viewRef.get()
+
+
+    protected fun requireView(): V {
+        return this.view ?: throw IllegalStateException("Presenter $this is unbind View. View is null")
+    }
+
+    override fun getLifecycle(): Lifecycle {
+        return lifecycle
+    }
+
+    override fun getViewModelStore(): ViewModelStore {
+        return viewModelStore
+    }
+
+    override val bundleKey: String
+        get() {
+            val view = view
+            val viewTag = if (view != null) view.javaClass.name else "unknown"
+            return viewTag + javaClass.name
+        }
 
     override fun onViewInitialized() {
         // do something
     }
 
-
-    protected val view: V?
-        get() = viewRef?.get()
-
-
-    protected fun requireView(): V {
-        return this.view ?: throw IllegalStateException("Presenter " + this + " is unbind View. View is null")
-    }
 
     @MainThread
     protected open fun onCreate() {
@@ -99,7 +113,7 @@ open class SuperPresenter<V : MvpView>(view: V) : MvpPresenter, StateListener {
     @MainThread
     @CallSuper
     protected open fun onDestroy() {
-        viewRef?.clear()
+        viewRef.clear()
     }
 
 

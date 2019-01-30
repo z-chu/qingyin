@@ -56,6 +56,6 @@ dependencies {
     implementation project(':mvp')
     implementation project(':model')
     implementation project(':livedata-convert')
-
+    implementation 'com.github.z-chu:StatefulView:1.0.0'
 
 }

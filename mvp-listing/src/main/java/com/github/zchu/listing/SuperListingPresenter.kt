@@ -1,9 +1,37 @@
 package com.github.zchu.listing
 
+import androidx.activity.ComponentActivity
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.ViewModelStore
+import androidx.lifecycle.ViewModelStoreOwner
 import com.github.zchu.mvp.SuperPresenter
 
 
-open class SuperListingPresenter<T>(view: ListingView<T>) : SuperPresenter<ListingView<T>>(view), ListingPresenter<T> {
+open class SuperListingPresenter<T>(
+    view: ListingView<T>,
+    lifecycle: Lifecycle,
+    viewModelStore: ViewModelStore
+) : SuperPresenter<ListingView<T>>(view, lifecycle, viewModelStore), ListingPresenter<T> {
+
+    constructor(
+        view: ListingView<T>,
+        lifecycleOwner: LifecycleOwner,
+        viewModelStoreOwner: ViewModelStoreOwner
+    ) : this(view, lifecycleOwner.lifecycle, viewModelStoreOwner.viewModelStore)
+
+
+    constructor(
+        view: ListingView<T>,
+        activity: ComponentActivity
+    ) : this(view, activity.lifecycle, activity.viewModelStore)
+
+    constructor(
+        view: ListingView<T>,
+        fragment: Fragment
+    ) : this(view, fragment.lifecycle, fragment.viewModelStore)
+
 
     private var resource: ListingResource<T>? = null
     private var initialData: List<T>? = null
