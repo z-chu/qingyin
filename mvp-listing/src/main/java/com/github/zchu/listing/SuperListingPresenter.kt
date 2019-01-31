@@ -87,7 +87,6 @@ open class SuperListingPresenter<T>(
     protected open fun onInitialized(view: ListingView<T>, resource: ListingResource<T>) {
         setInitialData(view, resource)
         view.setAll(resource.all!!)
-        view.showInitialized()
         checkEnded(view, resource)
     }
 

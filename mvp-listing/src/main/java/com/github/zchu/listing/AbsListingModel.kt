@@ -117,9 +117,9 @@ abstract class AbsListingModel<T> : ViewModel() {
     protected abstract fun doLoadMore(callback: LoadCallback<T>)
 
 
-    protected abstract fun isNoMoreOnInitial(data: List<T>): Boolean
+    protected abstract fun isNoMoreOnInitial(initialData: List<T>): Boolean
 
-    protected abstract fun isNoMoreOnMore(data: List<T>): Boolean
+    protected abstract fun isNoMoreOnMore(moreData: List<T>): Boolean
 
     protected fun getData(): List<T> {
         return allData
