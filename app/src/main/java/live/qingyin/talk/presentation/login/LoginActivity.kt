@@ -20,6 +20,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.github.zchu.common.help.initToolbar
 import com.github.zchu.mvp.MvpView
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_login.*
@@ -38,7 +39,7 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor>, MvpView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        setupActionBar()
+        initToolbar("登录")
         // Set up the login form.
         populateAutoComplete()
         password.setOnEditorActionListener(TextView.OnEditorActionListener { _, id, _ ->
@@ -94,16 +95,6 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor>, MvpView {
         }
     }
 
-    /**
-     * Set up the {@link android.app.ActionBar}, if the API is available.
-     */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    private fun setupActionBar() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            // Show the Up button in the action bar.
-            supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        }
-    }
 
     /**
      * Attempts to sign in or register the account specified by the login form.

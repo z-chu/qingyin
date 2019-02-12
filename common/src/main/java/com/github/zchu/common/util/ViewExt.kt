@@ -1,5 +1,6 @@
 package com.github.zchu.common.util
 
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
@@ -42,4 +43,21 @@ fun View.getAbsoluteY(): Float {
         y += parent.getAbsoluteY()
     }
     return y
+}
+
+fun <T : View> View.findViewByClass(clazz: Class<T>): T? {
+    Log.d("findViewByClass", this.javaClass.name)
+    if (clazz.isAssignableFrom(this::class.java)) {
+        return this as T
+    }
+    if (this is ViewGroup) {
+        for (i in 0 until this.childCount) {
+            val findViewByClass = this.getChildAt(i).findViewByClass(clazz)
+            if (findViewByClass != null) {
+                return findViewByClass
+            }
+        }
+
+    }
+    return null
 }

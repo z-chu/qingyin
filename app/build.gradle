@@ -55,7 +55,7 @@ dependencies {
     implementation project(':kotlin-bridge')
     implementation project(':mvp')
     implementation project(':mvp-listing')
-    implementation project(':model')
+    implementation project(':models')
     implementation project(':livedata-convert')
     implementation 'com.github.z-chu:StatefulView:1.0.2'
     implementation('com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.45-androidx') {
