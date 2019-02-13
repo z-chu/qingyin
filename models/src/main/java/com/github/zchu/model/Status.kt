@@ -1,7 +1,7 @@
 package com.github.zchu.model
 
 enum class Status {
-    INITIALIZED, RUNNING, SUCCEEDED, FAILED;
+    RUNNING, SUCCEEDED, FAILED;
 }
 
 fun Status.isFinished(): Boolean {
@@ -13,5 +13,5 @@ fun Status.isSuccess(): Boolean {
 }
 
 fun Status.isFailed(): Boolean {
-    return this == Status.SUCCEEDED
+    return this == Status.FAILED
 }

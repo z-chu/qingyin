@@ -46,7 +46,7 @@ fun Dialog.bindOnClickLister(@IdRes vararg ids: Int, block: ((v: View) -> Unit))
     window?.decorView?.doBindOnClickLister(block.toOnClickLister(), ids)
 }
 
-fun ((v: View) -> Unit).toOnClickLister(): View.OnClickListener {
+private fun ((v: View) -> Unit).toOnClickLister(): View.OnClickListener {
     return View.OnClickListener { v -> invoke(v) }
 }
 
@@ -56,8 +56,12 @@ fun View.OnClickListener.debounce(intervalMill: Int = 500): DebounceOnClickListe
 }
 
 
-class DebounceOnClickLister(private val listener: View.OnClickListener, private val intervalMill: Int = 500) :
+class DebounceOnClickLister @JvmOverloads constructor(
+    private val listener: View.OnClickListener,
+    private val intervalMill: Int = 500
+) :
     View.OnClickListener {
+
     private var last = 0L
     override fun onClick(v: View) {
         if (System.currentTimeMillis() - last > intervalMill) {
