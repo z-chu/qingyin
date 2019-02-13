@@ -14,7 +14,7 @@ open class SuperPresenter<V : MvpView>(
     view: V,
     private val lifecycle: Lifecycle,
     private val viewModelStore: ViewModelStore
-) : MvpPresenter, StateListener {
+) : MvpPresenter<V>, StateListener {
 
     constructor(
         view: V,
@@ -57,7 +57,7 @@ open class SuperPresenter<V : MvpView>(
         })
     }
 
-    protected val view: V?
+    override val view: V?
         get() = viewRef.get()
 
 
@@ -115,7 +115,6 @@ open class SuperPresenter<V : MvpView>(
     protected open fun onDestroy() {
         viewRef.clear()
     }
-
 
     protected inline fun runOnViewNonNull(consumer: ((V) -> Unit)) {
         val v = view
