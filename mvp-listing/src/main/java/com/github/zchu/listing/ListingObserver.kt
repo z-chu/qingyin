@@ -1,44 +1,18 @@
 package com.github.zchu.listing
 
-import androidx.activity.ComponentActivity
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.ViewModelStore
-import androidx.lifecycle.ViewModelStoreOwner
-import com.github.zchu.mvp.SuperPresenter
+import androidx.annotation.CallSuper
+import androidx.lifecycle.Observer
 
+class ListingObserver<T>(private val view: ListingView<T>, var errorFunc: ((Throwable) -> String)? = null) :
+    Observer<ListingResource<T>> {
 
-open class SuperListingPresenter<T>(
-    view: ListingView<T>,
-    lifecycle: Lifecycle,
-    viewModelStore: ViewModelStore
-) : SuperPresenter<ListingView<T>>(view, lifecycle, viewModelStore), ListingPresenter<T> {
-
-    constructor(
-        view: ListingView<T>,
-        lifecycleOwner: LifecycleOwner,
-        viewModelStoreOwner: ViewModelStoreOwner
-    ) : this(view, lifecycleOwner.lifecycle, viewModelStoreOwner.viewModelStore)
-
-
-    constructor(
-        view: ListingView<T>,
-        activity: ComponentActivity
-    ) : this(view, activity.lifecycle, activity.viewModelStore)
-
-    constructor(
-        view: ListingView<T>,
-        fragment: Fragment
-    ) : this(view, fragment.lifecycle, fragment.viewModelStore)
-
-
-    private var resource: ListingResource<T>? = null
+    var resource: ListingResource<T>? = null
     private var initialData: List<T>? = null
 
 
-    override fun onResource(resource: ListingResource<T>) {
-        val view = view ?: return
+    @CallSuper
+    override fun onChanged(resource: ListingResource<T>?) {
+        resource ?: return
         this.resource = resource
         when {
             resource.action == ListingResource.Action.INITIALIZE &&
@@ -80,48 +54,48 @@ open class SuperListingPresenter<T>(
         }
     }
 
-    protected open fun onInitializing(view: ListingView<T>) {
+    private fun onInitializing(view: ListingView<T>) {
         view.showInitializing()
     }
 
-    protected open fun onInitialized(view: ListingView<T>, resource: ListingResource<T>) {
+    private fun onInitialized(view: ListingView<T>, resource: ListingResource<T>) {
         setInitialData(view, resource)
         view.setAll(resource.all!!)
         checkEnded(view, resource)
     }
 
-    protected open fun onInitializationFailed(view: ListingView<T>, resource: ListingResource<T>) {
+    private fun onInitializationFailed(view: ListingView<T>, resource: ListingResource<T>) {
         view.showInitializationFailed(handleException(resource.throwable))
     }
 
-    protected open fun onRefreshing(view: ListingView<T>, resource: ListingResource<T>) {
+    private fun onRefreshing(view: ListingView<T>, resource: ListingResource<T>) {
         checkInitialNoNull(view, resource)
         view.setAll(resource.all!!)
         view.showRefreshing()
         checkEnded(view, resource)
     }
 
-    protected open fun onRefreshed(view: ListingView<T>, resource: ListingResource<T>) {
+    private fun onRefreshed(view: ListingView<T>, resource: ListingResource<T>) {
         setInitialData(view, resource)
         view.setAll(resource.all!!)
         view.showRefreshed()
         checkEnded(view, resource)
     }
 
-    protected open fun onRefreshFailed(view: ListingView<T>, resource: ListingResource<T>) {
+    private fun onRefreshFailed(view: ListingView<T>, resource: ListingResource<T>) {
         checkInitialNoNull(view, resource)
         view.setAll(resource.all!!)
         view.showRefreshFailed(handleException(resource.throwable))
         checkEnded(view, resource)
     }
 
-    protected open fun onLoadingMore(view: ListingView<T>, resource: ListingResource<T>) {
+    private fun onLoadingMore(view: ListingView<T>, resource: ListingResource<T>) {
         checkInitialNoNull(view, resource)
         view.setAll(resource.all!!)
         view.showLoadingMore()
     }
 
-    protected open fun onLoadMoreComplete(view: ListingView<T>, resource: ListingResource<T>) {
+    private fun onLoadMoreComplete(view: ListingView<T>, resource: ListingResource<T>) {
         if (checkInitialNoNull(view, resource) && resource.more!!.isNotEmpty()) {
             view.addMore(resource.more)
         }
@@ -130,7 +104,7 @@ open class SuperListingPresenter<T>(
         checkEnded(view, resource)
     }
 
-    protected open fun onLoadMoreFailed(view: ListingView<T>, resource: ListingResource<T>) {
+    private fun onLoadMoreFailed(view: ListingView<T>, resource: ListingResource<T>) {
         checkInitialNoNull(view, resource)
         view.setAll(resource.all!!)
         view.showLoadMoreFailed(handleException(resource.throwable))
@@ -158,23 +132,22 @@ open class SuperListingPresenter<T>(
         return false
     }
 
-
-    override fun refresh() {
+    fun refresh() {
         resource?.refresh?.invoke()
     }
 
-    override fun retry() {
+    fun retry() {
         resource?.retry?.invoke()
     }
 
-    override fun loadMore() {
+    fun loadMore() {
         resource?.loadMore?.invoke()
     }
 
-
-    protected open fun handleException(throwable: Throwable?): String? {
-        return throwable?.message
+    private fun handleException(throwable: Throwable?): String? {
+        return throwable?.let {
+            errorFunc?.invoke(it) ?: it.message
+        }
     }
-
 
 }

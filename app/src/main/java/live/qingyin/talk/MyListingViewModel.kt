@@ -11,27 +11,25 @@ class MyListingViewModel : AbsListingModel<String>() {
             Thread.sleep(3000)
             AndroidSchedulers.mainThread().scheduleDirect {
 
-                if (System.currentTimeMillis() % 2 == 0L) {
-                    callback.onFailure(NullPointerException("出bug啦"))
-                } else {
+
                     callback.onResult(
                         arrayListOf(
-                            "asda",
-                            "asdaf",
-                            "adsadad",
-                            "asdadzsc",
-                            "ascaga",
-                            "sadsadasasdaf",
-                            "adsaczg",
-                            "039rjians",
-                            "asdkma,g",
-                            "adsadad",
-                            "asdadzsc",
-                            "ascaga",
-                            "sadsadasd"
+                            "1",
+                            "2",
+                            "3",
+                            "4",
+                            "5",
+                            "6",
+                            "7",
+                            "8",
+                            "9",
+                            "10",
+                            "11",
+                            "12",
+                            "13"
                         )
                     )
-                }
+
             }
         }
     }
@@ -40,24 +38,20 @@ class MyListingViewModel : AbsListingModel<String>() {
         Schedulers.io().scheduleDirect {
             Thread.sleep(1000)
             AndroidSchedulers.mainThread().scheduleDirect {
-                if (System.currentTimeMillis() % 2 == 0L) {
-                    callback.onFailure(NullPointerException("出bug啦"))
-                } else {
-                    callback.onResult(
+
+                callback.onResult(
                         arrayListOf(
-                            "asda",
-                            "asdaf",
-                            "adsaczg",
-                            "039rjians",
-                            "asdkma,g",
-                            "adsadad",
-                            "asdadzsc",
-                            "ascaga",
-                            "sadsadasd"
+                            "1m",
+                            "2m",
+                            "3m",
+                            "4m",
+                            "5m",
+                            "6m",
+                            "7m",
+                            "8m",
+                            "9m"
                         )
                     )
-
-                }
 
 
             }

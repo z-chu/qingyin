@@ -61,6 +61,7 @@ dependencies {
     implementation('com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.45-androidx') {
         exclude group: 'com.android.support'
     }
+    implementation 'org.koin:koin-android-viewmodel:2.0.0-beta-1'
 
 
 }

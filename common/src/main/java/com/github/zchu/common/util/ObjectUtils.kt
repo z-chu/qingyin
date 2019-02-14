@@ -18,11 +18,11 @@ fun checkNonNull(vararg objects: Any?): Boolean {
 }
 
 
-fun <T : Any> T?.whenNullDef(defaultValue: T): T {
+fun <T : Any> T?.defaultIfNull(defaultValue: T): T {
     return this ?: defaultValue
 }
 
-inline fun <T : Any> T?.whenNullDef(defaultValueFuc: () -> T): T {
+inline fun <T : Any> T?.defaultIfNull(defaultValueFuc: () -> T): T {
     return this ?: defaultValueFuc.invoke()
 }
 

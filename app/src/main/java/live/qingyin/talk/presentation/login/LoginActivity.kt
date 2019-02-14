@@ -49,11 +49,12 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor>, MvpView {
             }
             false
         })
-
         email_sign_in_button.setOnClickListener { attemptLogin() }
 
 
-        LoginPresenter(this)
+        val loginPresenter = LoginPresenter(this)
+
+        loginPresenter.login()
     }
 
     private fun populateAutoComplete() {
@@ -295,6 +296,7 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor>, MvpView {
             showProgress(false)
         }
     }
+
 
     companion object {
 

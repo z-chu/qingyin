@@ -41,9 +41,11 @@ abstract class AbsListingModel<T> : ViewModel() {
         }
         val loadCallback = object : LoadCallback<T> {
             override fun onResult(data: List<T>) {
-                allData.addAll(data)
-                isNoMore = isNoMoreOnInitial(data)
+
                 if (isRefresh) {
+                    allData.clear()
+                    allData.addAll(data)
+                    isNoMore = isNoMoreOnInitial(data)
                     listing.postValue(
                         ListingResource.refreshed(
                             data,
@@ -53,6 +55,8 @@ abstract class AbsListingModel<T> : ViewModel() {
                         )
                     )
                 } else {
+                    allData.addAll(data)
+                    isNoMore = isNoMoreOnInitial(data)
                     listing.postValue(
                         ListingResource.initialized(
                             data,

@@ -1,9 +1,7 @@
 package com.github.zchu.listing
 
-import com.github.zchu.mvp.MvpView
 
-
-interface ListingView<T> : MvpView {
+interface ListingView<T> {
 
     fun showInitializing()
 

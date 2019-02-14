@@ -7,8 +7,8 @@ import android.view.WindowManager
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.core.app.NotificationManagerCompat
+import com.github.zchu.common.util.defaultIfNull
 import com.github.zchu.common.util.requireNonNull
-import com.github.zchu.common.util.whenNullDef
 import java.lang.ref.WeakReference
 
 
@@ -55,7 +55,7 @@ object ToastDef {
 
     private fun Context?.getString(@StringRes resId: Int): String {
         return this
-            .whenNullDef(defaultContext.requireNonNull("At least one of Context and defaultContext is not null"))
+            .defaultIfNull(defaultContext.requireNonNull("At least one of Context and defaultContext is not null"))
             .getString(resId)
     }
 
@@ -70,7 +70,7 @@ object ToastDef {
                 Toast.LENGTH_SHORT
             )
         } else {
-            defaultToast.whenNullDef {
+            defaultToast.defaultIfNull {
                 val makeText = Toast.makeText(
                     defaultContext.requireNonNull("At least one of Context and defaultContext is not null"),
                     "",

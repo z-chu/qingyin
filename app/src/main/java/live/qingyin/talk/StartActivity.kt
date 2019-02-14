@@ -14,7 +14,9 @@ class StartActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start)
-        startActivity(Intent(this, MainActivity::class.java))
+        val intent = Intent(this, MainActivity::class.java)
+        intent.putExtra("test", "柱子哥哥好牛逼啊！")
+        startActivity(intent)
         stateful_view.onContentViewCreatedListener = {
 
         }

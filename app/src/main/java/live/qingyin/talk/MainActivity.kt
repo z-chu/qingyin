@@ -6,13 +6,13 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.github.zchu.bridge._subscribe
 import com.github.zchu.common.help.showToastShort
 import com.github.zchu.common.rx.bindLifecycle
-import com.github.zchu.listing.SuperListingPresenter
+import com.github.zchu.common.util.argument
+import com.github.zchu.listing.ListingObserver
+import com.github.zchu.listing.ListingView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -20,10 +20,12 @@ import kotlinx.android.synthetic.main.activity_main.*
 import live.qingyin.talk.base.CommonAdapter
 import live.qingyin.talk.base.CommonViewHolder
 import live.qingyin.talk.presentation.login.LoginActivity
+import org.koin.android.viewmodel.ext.viewModel
 import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
 
+    val str: String by argument("test")
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         showToastShort(item.itemId.toString())
@@ -49,32 +51,14 @@ class MainActivity : AppCompatActivity() {
         false
     }
 
-    val superListingPresenter: SuperListingPresenter<String> by lazy {
-        val superListingPresenter1 = SuperListingPresenter(listing_view, this) as SuperListingPresenter<String>
-        listing_view.setOnLoadMoreListener {
-            superListingPresenter1.loadMore()
-        }
-        listing_view.setOnRefreshListener {
-            superListingPresenter1.refresh()
-        }
-        listing_view.setOnRetryListener {
-            superListingPresenter1.retry()
-        }
-        superListingPresenter1
-    }
+
+    val myViewModel: MyListingViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-        Observable.just("柱子哥牛逼")
-            .delay(3, TimeUnit.SECONDS)
-            .observeOn(AndroidSchedulers.mainThread())
-            ._subscribe {
-                _onNext {
-                }
-            }
-            .bindLifecycle(this, Lifecycle.Event.ON_STOP)
+
         listing_view.setAdapter {
             val value: BaseQuickAdapter<Any, *> = object : CommonAdapter<Any>(data = it) {
                 override fun convert(helper: CommonViewHolder, item: Any?) {
@@ -89,10 +73,34 @@ class MainActivity : AppCompatActivity() {
             }
             value
         }
-        ViewModelProviders.of(this).get(MyListingViewModel::class.java)
-            .getListing().observe(this, Observer {
-                superListingPresenter.onResource(it)
+        listing_view.setOnLoadMoreListener {
+            myViewModel.getListing().value?.loadMore?.invoke()
+        }
+        listing_view.setOnRefreshListener {
+            myViewModel.getListing().value?.refresh?.invoke()
+
+        }
+        listing_view.setOnRetryListener {
+            myViewModel.getListing().value?.retry?.invoke()
+
+        }
+        myViewModel
+            .getListing().observe(this, ListingObserver(listing_view as ListingView<String>) {
+                it.localizedMessage
             })
 
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Observable.just(str)
+            .delay(3, TimeUnit.SECONDS)
+            .observeOn(AndroidSchedulers.mainThread())
+            ._subscribe {
+                _onNext {
+                    showToastShort(it)
+                }
+            }
+            .bindLifecycle(this, Lifecycle.Event.ON_PAUSE)
     }
 }
