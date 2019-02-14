@@ -6,7 +6,7 @@ import java.lang.ref.WeakReference
 import java.util.*
 
 
-open class SuperPresenter<V : MvpView> : MvpPresenter2<V>, StateListener {
+open class SuperPresenter<V : MvpView> : MvpPresenter<V>, StateListener {
 
     private var viewRef: WeakReference<V>? = null
     private var inState: Bundle? = null
@@ -31,6 +31,8 @@ open class SuperPresenter<V : MvpView> : MvpPresenter2<V>, StateListener {
     protected fun requireView(): V {
         return this.view ?: throw IllegalStateException("Presenter $this not attached view. View is null.")
     }
+
+    fun isViewAttached(): Boolean = view != null
 
     override val bundleKey: String
         get() {

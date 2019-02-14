@@ -5,7 +5,7 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.OnLifecycleEvent
 
-interface MvpPresenter2<V> {
+interface MvpPresenter<V> {
 
     fun attach(view: V)
 
@@ -14,11 +14,11 @@ interface MvpPresenter2<V> {
     val view: V?
 }
 
-fun <V : MvpView, P : MvpPresenter2<V>> P.detachAt(lifecycleOwner: LifecycleOwner, untilEvent: Lifecycle.Event): P {
+fun <V : MvpView, P : MvpPresenter<V>> P.detachAt(lifecycleOwner: LifecycleOwner, untilEvent: Lifecycle.Event): P {
     return detachAt(lifecycleOwner.lifecycle, untilEvent)
 }
 
-fun <V : MvpView, P : MvpPresenter2<V>> P.detachAt(lifecycle: Lifecycle, untilEvent: Lifecycle.Event): P {
+fun <V : MvpView, P : MvpPresenter<V>> P.detachAt(lifecycle: Lifecycle, untilEvent: Lifecycle.Event): P {
     if (untilEvent <= Lifecycle.Event.ON_RESUME || untilEvent == Lifecycle.Event.ON_ANY) {
         throw IllegalArgumentException("The parameter untilEvent($untilEvent) cannot be a positive event")
     }
@@ -47,13 +47,13 @@ fun <V : MvpView, P : MvpPresenter2<V>> P.detachAt(lifecycle: Lifecycle, untilEv
     return this
 }
 
-fun <V : MvpView, P : MvpPresenter2<V>> P.attachAndDetachAt(
+fun <V : MvpView, P : MvpPresenter<V>> P.attachAndDetachAt(
     view: V,
     lifecycleOwner: LifecycleOwner,
     untilEvent: Lifecycle.Event
 ): P = attachAndDetachAt(view, lifecycleOwner.lifecycle, untilEvent)
 
-fun <V : MvpView, P : MvpPresenter2<V>> P.attachAndDetachAt(
+fun <V : MvpView, P : MvpPresenter<V>> P.attachAndDetachAt(
     view: V,
     lifecycle: Lifecycle,
     untilEvent: Lifecycle.Event

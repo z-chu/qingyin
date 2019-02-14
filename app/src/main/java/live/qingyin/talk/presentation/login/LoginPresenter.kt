@@ -1,10 +1,10 @@
 package live.qingyin.talk.presentation.login
 
 import com.github.zchu.common.help.showToastShort
-import com.github.zchu.mvp.ComponentPresenter2
+import com.github.zchu.mvp.LifecyclePresenter
 import com.github.zchu.mvp.attachAndDetachAt
 
-class LoginPresenter(view: LoginActivity) : ComponentPresenter2<LoginActivity>(view, view) {
+class LoginPresenter(view: LoginActivity) : LifecyclePresenter<LoginActivity>(view) {
 
     init {
         attachAndDetachAt(view)

@@ -54,7 +54,7 @@ dependencies {
     implementation project(':common')
     implementation project(':kotlin-bridge')
     implementation project(':mvp')
-    implementation project(':mvp-listing')
+    implementation project(':listing')
     implementation project(':models')
     implementation project(':livedata-convert')
     implementation 'com.github.z-chu:StatefulView:1.0.2'
