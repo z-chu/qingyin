@@ -37,7 +37,7 @@ dependencies {
 
     // androidx
     implementation 'androidx.appcompat:appcompat:1.1.0-alpha02'
-    implementation 'com.google.android.material:material:1.1.0-alpha03'
+    implementation 'com.google.android.material:material:1.1.0-alpha04'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha3'
     implementation 'androidx.vectordrawable:vectordrawable:1.1.0-alpha01'
 
@@ -50,14 +50,18 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-reactivestreams:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-reactivestreams-ktx:$lifecycle_version"
 
-    implementation project(':base')
-    implementation project(':common')
-    implementation project(':kotlin-bridge')
-    implementation project(':mvp')
-    implementation project(':listing')
-    implementation project(':models')
-    implementation project(':livedata-convert')
-    implementation 'com.github.z-chu:StatefulView:1.0.2'
+
+    def androidCommonKit_version = "0.1.2"
+
+    implementation "com.github.z-chu.android-common-kit:common:$androidCommonKit_version"
+    implementation "com.github.z-chu.android-common-kit:mvp:$androidCommonKit_version"
+    implementation "com.github.z-chu.android-common-kit:models:$androidCommonKit_version"
+    implementation "com.github.z-chu.android-common-kit:base:$androidCommonKit_version"
+    implementation "com.github.z-chu.android-common-kit:listing:$androidCommonKit_version"
+    implementation "com.github.z-chu.android-common-kit:kotlin-bridge:$androidCommonKit_version"
+
+
+    implementation 'com.github.z-chu:StatefulView:1.0.3'
     implementation('com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.45-androidx') {
         exclude group: 'com.android.support'
     }
