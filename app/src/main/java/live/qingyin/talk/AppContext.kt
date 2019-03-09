@@ -14,7 +14,8 @@ val appModule = module {
 
 private lateinit var context: AppContext
 
-val appContext: AppContext = context
+val appContext: AppContext
+    get() = context
 
 class AppContext : Application() {
 
