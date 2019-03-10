@@ -6,6 +6,8 @@
     <string name="title_messages">Messages</string>
     <string name="title_me">Me</string>
     <string name="title_notifications">Notifications</string>
+    <string name="title_login">用户登录</string>
+    <string name="title_register">用户登录</string>
 
 
     <string name="title_activity_login">Sign in</string>
@@ -19,4 +21,22 @@
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email completions."</string>
+
+
+    <string name="username">用户名</string>
+    <string name="password">密码</string>
+    <string name="forgot_your_password">忘记密码?</string>
+
+
+    //exception
+    <string name="exception_default">Something went wrong, please try again later</string>
+    <string name="exception_socket_time_out">Network connection timed out, please try again later</string>
+    <string name="exception_connect">Network connection failed, please try again later</string>
+    <string name="error_server">Server unknown error</string>
+    <string name="exception_unknown_host">No network, please check the network settings</string>
+    <string name="exception_security">Insufficient permissions</string>
+    <string name="exception_json">Data parsing error</string>
+    <string name="exception_ssl">Network certificate verification failed</string>
+    <string name="exception_timeout">Request timed out, please try again</string>
+
 </resources>

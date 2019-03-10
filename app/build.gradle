@@ -35,6 +35,14 @@ dependencies {
     // kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
+
+    //netWork
+    implementation 'com.squareup.okio:okio:1.16.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.12.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.5.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
+
     // androidx
     implementation 'androidx.appcompat:appcompat:1.1.0-alpha02'
     implementation 'com.google.android.material:material:1.1.0-alpha04'
@@ -52,7 +60,6 @@ dependencies {
 
 
     def androidCommonKit_version = "0.1.2"
-
     implementation "com.github.z-chu.android-common-kit:common:$androidCommonKit_version"
     implementation "com.github.z-chu.android-common-kit:mvp:$androidCommonKit_version"
     implementation "com.github.z-chu.android-common-kit:models:$androidCommonKit_version"
@@ -61,6 +68,11 @@ dependencies {
     implementation "com.github.z-chu.android-common-kit:kotlin-bridge:$androidCommonKit_version"
 
 
+    // widget
+    implementation 'com.rengwuxian.materialedittext:library:2.1.4'
+    implementation 'com.ocnyang:contourview:1.0.0'
+    implementation 'com.github.dmytrodanylyk.android-process-button:library:1.0.4'
+    implementation 'com.gelitenight.waveview:waveview:1.0.0'
     implementation 'com.github.z-chu:StatefulView:1.0.3'
     implementation('com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.45-androidx') {
         exclude group: 'com.android.support'

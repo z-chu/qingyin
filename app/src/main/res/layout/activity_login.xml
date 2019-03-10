@@ -1,82 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:gravity="center_horizontal"
-              android:orientation="vertical"
-              android:paddingBottom="@dimen/activity_vertical_margin"
-              android:paddingLeft="@dimen/activity_horizontal_margin"
-              android:paddingRight="@dimen/activity_horizontal_margin"
-              android:paddingTop="@dimen/activity_vertical_margin"
-              tools:context=".presentation.login.LoginActivity">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:gravity="center"
+             android:background="@drawable/bg_login_window">
 
-    <androidx.appcompat.widget.Toolbar
+    <com.ocnyang.contourview.ContourView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="match_parent"
+            app:contour_style="Clouds"
+            app:shader_endcolor="#FEE140"
+            app:shader_mode="RadialGradient"
+            app:shader_startcolor="#FA709A"
+            app:shader_style="LeftToBottom"
+            tools:visibility="gone"
+            app:smoothness="0.25"/>
 
-    <!-- Login progress -->
-    <ProgressBar
-            android:id="@+id/login_progress"
-            style="?android:attr/progressBarStyleLarge"
+
+    <!--
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:visibility="gone"/>
+            android:layout_alignRight="@id/card_content"
+            android:layout_alignTop="@id/card_content"
+            android:layout_marginRight="-20dp"
+            android:layout_marginTop="25dp"
+            android:transitionName="loginFab"
+            android:visibility="gone"
+            app:fabSize="normal"
+            app:srcCompat="@drawable/ic_vector_add"/>
+    -->
 
-    <ScrollView
-            android:id="@+id/login_form"
+    <com.gelitenight.waveview.library.WaveView
+            android:id="@+id/wave"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="182dp"
+            android:layout_gravity="bottom"/>
 
-        <LinearLayout
-                android:id="@+id/email_login_form"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
 
-            <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                <AutoCompleteTextView
-                        android:id="@+id/email"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/prompt_email"
-                        android:inputType="textEmailAddress"
-                        android:maxLines="1"
-                        android:singleLine="true"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                <EditText
-                        android:id="@+id/password"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/prompt_password"
-                        android:imeActionId="6"
-                        android:imeActionLabel="@string/action_sign_in_short"
-                        android:imeOptions="actionUnspecified"
-                        android:inputType="textPassword"
-                        android:maxLines="1"
-                        android:singleLine="true"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <Button
-                    android:id="@+id/email_sign_in_button"
-                    style="?android:textAppearanceSmall"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/action_sign_in"
-                    android:textStyle="bold"/>
-
-        </LinearLayout>
-    </ScrollView>
-</LinearLayout>
+</FrameLayout>
