@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import com.github.zchu.common.help.showToastShort
 import com.github.zchu.common.util.DebounceOnClickLister
 import com.github.zchu.model.whenRun
@@ -16,13 +15,11 @@ import kotlinx.android.synthetic.main.login_card.*
 import live.qingyin.talk.R
 import live.qingyin.talk.presentation.main.MainActivity
 import live.qingyin.talk.utils.getEasyMessage
+import org.koin.android.viewmodel.ext.viewModel
 
 class LoginDialogFragment : DialogFragment(), View.OnClickListener {
 
-    private val viewModel: LoginViewModel by lazy {
-        ViewModelProviders.of(this).get(LoginViewModel::class.java)
-    }
-
+    private val viewModel: LoginViewModel  by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
