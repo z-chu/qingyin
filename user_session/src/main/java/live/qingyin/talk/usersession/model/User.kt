@@ -1,4 +1,4 @@
-package live.qingyin.talk.user.model
+package live.qingyin.talk.usersession.model
 
 data class User(
     val id: String,

@@ -10,12 +10,11 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import live.qingyin.talk.R
 import live.qingyin.talk.presentation.login.LoginActivity
-import live.qingyin.talk.user.UserManager
 import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity() {
 
-    private val userManager: UserManager by inject()
+    private val userManager: live.qingyin.talk.usersession.UserManager by inject()
 
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->

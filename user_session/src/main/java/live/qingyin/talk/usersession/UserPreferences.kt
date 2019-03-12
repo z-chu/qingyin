@@ -1,7 +1,7 @@
-package live.qingyin.talk.user
+package live.qingyin.talk.usersession
 
 import android.content.Context
-import live.qingyin.talk.user.model.User
+import live.qingyin.talk.usersession.model.User
 import net.grandcentrix.tray.TrayPreferences
 
 

@@ -1,10 +1,10 @@
-package live.qingyin.talk.user
+package live.qingyin.talk.usersession
 
 import android.content.Context
 import androidx.lifecycle.LiveData
 import com.github.zchu.common.livedata.map
 import com.github.zchu.common.util.checkNonNull
-import live.qingyin.talk.user.model.User
+import live.qingyin.talk.usersession.model.User
 import net.grandcentrix.tray.core.OnTrayPreferenceChangeListener
 import net.grandcentrix.tray.core.TrayItem
 
@@ -14,7 +14,11 @@ class UserManager(context: Context) {
 
     private val userPreferences = UserPreferences(context.applicationContext)
 
-    private val userLive: LiveData<User> by lazy { UserLiveData(userPreferences) }
+    private val userLive: LiveData<User> by lazy {
+        UserLiveData(
+            userPreferences
+        )
+    }
 
 
     fun isLoggedIn(): Boolean {

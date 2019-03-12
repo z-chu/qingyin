@@ -79,13 +79,12 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-reactivestreams-ktx:$lifecycle_version"
 
 
-    def androidCommonKit_version = "0.1.2"
-    implementation "com.github.z-chu.android-common-kit:common:$androidCommonKit_version"
-    implementation "com.github.z-chu.android-common-kit:mvp:$androidCommonKit_version"
-    implementation "com.github.z-chu.android-common-kit:models:$androidCommonKit_version"
-    implementation "com.github.z-chu.android-common-kit:base:$androidCommonKit_version"
-    implementation "com.github.z-chu.android-common-kit:listing:$androidCommonKit_version"
-    implementation "com.github.z-chu.android-common-kit:kotlin-bridge:$androidCommonKit_version"
+    implementation "com.github.z-chu.android-common-kit:common:$android_common_kit_version"
+    implementation "com.github.z-chu.android-common-kit:mvp:$android_common_kit_version"
+    implementation "com.github.z-chu.android-common-kit:models:$android_common_kit_version"
+    implementation "com.github.z-chu.android-common-kit:base:$android_common_kit_version"
+    implementation "com.github.z-chu.android-common-kit:listing:$android_common_kit_version"
+    implementation "com.github.z-chu.android-common-kit:kotlin-bridge:$android_common_kit_version"
 
 
     // widget
@@ -100,6 +99,9 @@ dependencies {
     implementation 'org.koin:koin-android-viewmodel:2.0.0-beta-1'
 
     implementation 'net.grandcentrix.tray:tray:0.12.0'
+
+    implementation project(':user_session')
+
 
 
 
