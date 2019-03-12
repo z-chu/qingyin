@@ -4,9 +4,9 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import com.github.zchu.common.help.showToastShort
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.orhanobut.logger.Logger
 import kotlinx.android.synthetic.main.activity_main.*
 import live.qingyin.talk.R
 import live.qingyin.talk.presentation.login.LoginActivity
@@ -19,7 +19,6 @@ class MainActivity : AppCompatActivity() {
 
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-        Logger.d(item)
         when (item.itemId) {
             R.id.navigation_home -> {
                 showToastShort(R.string.title_home)
@@ -36,6 +35,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             R.id.navigation_me -> {
+                LoginActivity.start(this)
                 return@OnNavigationItemSelectedListener checkLoggedIn {
                     showToastShort(R.string.title_me)
                 }
@@ -45,12 +45,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private inline fun checkLoggedIn(block: () -> Unit): Boolean {
-        if (userManager.isLoggedIn()) {
+        return if (userManager.isLoggedIn()) {
             block.invoke()
-            return true
+            true
         } else {
             LoginActivity.start(this)
-            return false
+            false
         }
     }
 
@@ -59,7 +59,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-
+        userManager
+            .liveDataOfUser()
+            .observe(this, Observer {
+                it?.let {
+                    tv_message.text = it.toString()
+                }
+            })
 
     }
 

@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.github.zchu.common.rx.schedule4Io2Main
 import com.github.zchu.model.ViewData
+import live.qingyin.talk.data.json.toUser
 import live.qingyin.talk.data.repository.UserRepository
 import live.qingyin.talk.user.UserManager
 import live.qingyin.talk.user.model.User
@@ -27,7 +28,7 @@ class LoginViewModel(
         userRepository
             .loginOrRegister(username, password)
             .map {
-                User(it.id, it.sessionToken)
+                it.toUser()
             }
             .schedule4Io2Main()
             .doOnNext {

@@ -5,9 +5,14 @@ import com.readystatesoftware.chuck.api.ChuckCollector
 import com.readystatesoftware.chuck.api.ChuckInterceptor
 import com.readystatesoftware.chuck.api.RetentionManager
 import live.qingyin.talk.BuildConfig
+import live.qingyin.talk.data.net.H_LC_ID
+import live.qingyin.talk.data.net.H_LC_KEY
+import live.qingyin.talk.data.net.HeaderInterceptor
 import live.qingyin.talk.data.net.LeancloudService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -41,13 +46,26 @@ fun createChuckInterceptor(context: Context, collector: ChuckCollector): ChuckIn
         .maxContentLength(250000L)
 }
 
+class ChuckComponent : KoinComponent {
+    val chuckInterceptor: ChuckInterceptor by inject()
+}
+
 fun createOkHttpClient(): OkHttpClient {
     val httpLoggingInterceptor = HttpLoggingInterceptor()
-    httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BASIC
-
+    remoteDataSourceModule
+    httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
     return OkHttpClient
         .Builder()
+        .addInterceptor(
+            HeaderInterceptor(
+                hashMapOf(
+                    H_LC_ID to BuildConfig.LEANCLOUD_APP_ID,
+                    H_LC_KEY to BuildConfig.LEANCLOUD_APP_KEY
+                )
+            )
+        )
         .addInterceptor(httpLoggingInterceptor)
+        .addInterceptor(ChuckComponent().chuckInterceptor)
         .build()
 }
 

@@ -21,11 +21,11 @@
 
     <!--
         <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab"
+            android:objectId="@+objectId/fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignRight="@id/card_content"
-            android:layout_alignTop="@id/card_content"
+            android:layout_alignRight="@objectId/card_content"
+            android:layout_alignTop="@objectId/card_content"
             android:layout_marginRight="-20dp"
             android:layout_marginTop="25dp"
             android:transitionName="loginFab"
