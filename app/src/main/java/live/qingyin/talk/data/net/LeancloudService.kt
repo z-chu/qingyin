@@ -1,9 +1,9 @@
 package live.qingyin.talk.data.net
 
 import io.reactivex.Observable
-import live.qingyin.talk.data.bean.LCResult
-import live.qingyin.talk.data.bean.UserBean
-import live.qingyin.talk.data.body.UserBody
+import live.qingyin.talk.data.json.LCResult
+import live.qingyin.talk.data.json.UserBean
+import live.qingyin.talk.data.json.UserBody
 import retrofit2.http.*
 
 interface LeancloudService {

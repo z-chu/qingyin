@@ -14,7 +14,9 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField 'String', 'LEANCLOUD_SERVER', '"https://fn78orw2.api.lncld.net/1.1/"'
+        buildConfigField 'String', 'LEANCLOUD_SERVER', '"https://qgno7jb6.api.lncld.net/1.1/"'
+        buildConfigField 'String', 'LEANCLOUD_APP_ID', '"qGNO7JB6wLjvuyrlTRFn2CgK-gzGzoHsz"'
+        buildConfigField 'String', 'LEANCLOUD_APP_KEY', '"7K6K4sFXHNM2FtiD2OzhpcFr"'
 
     }
     buildTypes {

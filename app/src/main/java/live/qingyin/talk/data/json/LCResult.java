@@ -1,4 +1,4 @@
-package live.qingyin.talk.data.bean;
+package live.qingyin.talk.data.json;
 
 import java.io.Serializable;
 import java.util.Date;

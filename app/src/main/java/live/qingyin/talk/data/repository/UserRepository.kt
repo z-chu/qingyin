@@ -2,9 +2,9 @@ package live.qingyin.talk.data.repository
 
 import com.google.gson.Gson
 import io.reactivex.Observable
-import live.qingyin.talk.data.bean.LCResult
-import live.qingyin.talk.data.bean.UserBean
-import live.qingyin.talk.data.body.UserBody
+import live.qingyin.talk.data.json.LCResult
+import live.qingyin.talk.data.json.UserBean
+import live.qingyin.talk.data.json.UserBody
 import live.qingyin.talk.data.net.LeancloudService
 import retrofit2.HttpException
 import java.io.IOException

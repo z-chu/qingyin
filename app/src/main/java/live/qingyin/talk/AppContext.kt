@@ -40,7 +40,7 @@ class AppContext : Application() {
     }
 
 
-    fun initLogger() {
+    private fun initLogger() {
         val formatStrategy = PrettyFormatStrategy.newBuilder()
             .tag("qingyin")
             .build()
