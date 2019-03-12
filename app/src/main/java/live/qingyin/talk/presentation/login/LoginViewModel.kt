@@ -6,10 +6,14 @@ import androidx.lifecycle.ViewModel
 import com.github.zchu.common.rx.schedule4Io2Main
 import com.github.zchu.model.ViewData
 import live.qingyin.talk.data.repository.UserRepository
+import live.qingyin.talk.user.UserManager
 import live.qingyin.talk.user.model.User
 import live.qingyin.talk.utils.subscribe
 
-class LoginViewModel(private val userRepository: UserRepository) : ViewModel() {
+class LoginViewModel(
+    private val userRepository: UserRepository
+    , private val userManager: UserManager
+) : ViewModel() {
 
     private val viewData: MutableLiveData<ViewData<User>> by lazy {
         MutableLiveData<ViewData<User>>()
@@ -26,6 +30,9 @@ class LoginViewModel(private val userRepository: UserRepository) : ViewModel() {
                 User(it.id, it.sessionToken)
             }
             .schedule4Io2Main()
+            .doOnNext {
+                userManager.saveUser(it)
+            }
             .subscribe(viewData)
     }
 

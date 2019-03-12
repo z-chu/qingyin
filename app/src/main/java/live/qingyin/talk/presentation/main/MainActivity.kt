@@ -6,16 +6,20 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.github.zchu.common.help.showToastShort
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.orhanobut.logger.Logger
 import kotlinx.android.synthetic.main.activity_main.*
 import live.qingyin.talk.R
 import live.qingyin.talk.presentation.login.LoginActivity
 import live.qingyin.talk.user.UserManager
+import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity() {
 
-    private val userManager by lazy { UserManager(this) }
+    private val userManager: UserManager by inject()
+
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
+        Logger.d(item)
         when (item.itemId) {
             R.id.navigation_home -> {
                 showToastShort(R.string.title_home)

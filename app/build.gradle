@@ -45,13 +45,21 @@ dependencies {
     implementation "org.koin:koin-androidx-scope:$koin_version"
     implementation "org.koin:koin-androidx-viewmodel:$koin_version"
 
-
     //netWork
     implementation 'com.squareup.okio:okio:1.16.0'
-    implementation 'com.squareup.okhttp3:okhttp:3.12.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.12.1'
+    implementation "com.squareup.okhttp3:logging-interceptor:3.12.1"
     implementation 'com.squareup.retrofit2:retrofit:2.5.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.5.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
+
+    // chuck
+    debugImplementation 'fr.o80.chucker:library:2.0.4'
+    releaseImplementation 'fr.o80.chucker:library-no-op:2.0.4'
+
+    //logging
+    //implementation 'com.jakewharton.timber:timber:4.7.1'
+    implementation 'com.orhanobut:logger:2.2.0'
 
     // androidx
     implementation 'androidx.appcompat:appcompat:1.1.0-alpha02'
