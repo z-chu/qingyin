@@ -34,7 +34,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             R.id.navigation_me -> {
-                LoginActivity.start(this)
                 return@OnNavigationItemSelectedListener checkLoggedIn {
                     showToastShort(R.string.title_me)
                 }

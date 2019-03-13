@@ -59,6 +59,12 @@ dependencies {
     debugImplementation 'fr.o80.chucker:library:2.0.4'
     releaseImplementation 'fr.o80.chucker:library-no-op:2.0.4'
 
+    //doraemonkit
+    debugImplementation 'com.didichuxing.doraemonkit:doraemonkit:1.1.2'
+    releaseImplementation 'com.didichuxing.doraemonkit:doraemonkit-no-op:1.1.2'
+    debugImplementation 'com.willowtreeapps.hyperion:hyperion-core:0.9.24'
+
+
     //logging
     //implementation 'com.jakewharton.timber:timber:4.7.1'
     implementation 'com.orhanobut:logger:2.2.0'

@@ -29,6 +29,7 @@ class AppContext : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        //DoraemonKit.install(this)
         startKoin {
             logger()
             androidContext(this@AppContext)
