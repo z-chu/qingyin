@@ -1,8 +1,11 @@
 package live.qingyin.talk.usersession
 
 import android.content.Context
+import androidx.lifecycle.LiveData
 import live.qingyin.talk.usersession.model.User
 import net.grandcentrix.tray.TrayPreferences
+import net.grandcentrix.tray.core.OnTrayPreferenceChangeListener
+import net.grandcentrix.tray.core.TrayItem
 
 
 internal class UserPreferences(context: Context) : TrayPreferences(context, "user_session", 1) {
@@ -46,9 +49,51 @@ internal class UserPreferences(context: Context) : TrayPreferences(context, "use
         return User(userId, username, sessionToken, phone)
     }
 
+    fun saveUser(user: User) {
+        userId = user.id
+        username = user.username
+        sessionToken = user.sessionToken
+        phone = user.phone
+        userVersion++
+    }
+
+
+    val userLiveData: LiveData<User> by lazy {
+        UserLiveData(this)
+    }
+
+    private class UserLiveData(val userPreferences: UserPreferences) : LiveData<User>(),
+        OnTrayPreferenceChangeListener {
+
+        private val userVersion = 0
+
+        override fun onTrayPreferenceChanged(items: MutableCollection<TrayItem>) {
+            for (item in items) {
+                if (item.key() == UserPreferences.K_USER_VERSION) {
+                    if (userVersion != item.value()?.toIntOrNull()) {
+                        value = userPreferences.loadUser()
+                    }
+                }
+            }
+        }
+
+        override fun onActive() {
+            super.onActive()
+            if (userVersion != userPreferences.userVersion) {
+                value = userPreferences.loadUser()
+            }
+            userPreferences.registerOnTrayPreferenceChangeListener(this)
+        }
+
+        override fun onInactive() {
+            super.onInactive()
+            userPreferences.unregisterOnTrayPreferenceChangeListener(this)
+        }
+
+    }
 
     companion object {
-        const val K_USER_VERSION = "user_version"
+        private const val K_USER_VERSION = "user_version"
         private const val K_SESSION_TOKEN = "session_token"
         private const val K_USER_ID = "user_id"
         private const val K_USER_NAME = "user_name"
