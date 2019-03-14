@@ -12,6 +12,7 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true //SVG兼容库
 
     }
 
@@ -34,8 +35,9 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+    annotationProcessor "com.google.auto.service:auto-service:1.0-rc4"
 
-    api 'com.didichuxing.doraemonkit:doraemonkit:1.1.2'
+
     api 'com.willowtreeapps.hyperion:hyperion-core:0.9.24'
     api 'com.willowtreeapps.hyperion:hyperion-attr:0.9.24'
     api 'com.willowtreeapps.hyperion:hyperion-measurement:0.9.24'
@@ -50,5 +52,9 @@ dependencies {
     api 'com.zchu:hyperion-hosturl:1.0.2'
     api 'com.zchu:hyperion-build-config:1.0.0'
     api 'com.zchu:hyperion-uetool:1.0.1'
+
+    api 'com.didichuxing.doraemonkit:doraemonkit:1.1.2'
+    api 'fr.o80.chucker:library:2.0.4'
+
 }
 

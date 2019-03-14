@@ -7,5 +7,6 @@ public class DebugKit {
 
     public static void install(final Application app) {
         DoraemonKit.install(app);
+        DoraemonKit.hide();
     }
 }

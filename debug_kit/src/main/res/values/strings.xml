@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">DebugKit</string>
+    <string name="plugin_name_chucker">Chucker</string>
+    <string name="plugin_name_doraemon">Doraemon Kit</string>
+
 </resources>
