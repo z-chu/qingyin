@@ -2,7 +2,7 @@ package live.qingyin.talk.usersession
 
 import android.content.Context
 import androidx.lifecycle.LiveData
-import live.qingyin.talk.usersession.model.User
+import live.qingyin.talk.usersession.model.UserSession
 import net.grandcentrix.tray.TrayPreferences
 import net.grandcentrix.tray.core.OnTrayPreferenceChangeListener
 import net.grandcentrix.tray.core.TrayItem
@@ -42,14 +42,14 @@ internal class UserPreferences(context: Context) : TrayPreferences(context, "use
         get() = getString(K_PHONE, null)
 
 
-    fun loadUser(): User? {
+    fun loadUser(): UserSession? {
         val userId = userId ?: return null
         val username = username ?: return null
         val sessionToken = sessionToken ?: return null
-        return User(userId, username, sessionToken, phone)
+        return UserSession(userId, username, sessionToken, phone)
     }
 
-    fun saveUser(user: User) {
+    fun saveUser(user: UserSession) {
         userId = user.id
         username = user.username
         sessionToken = user.sessionToken
@@ -58,11 +58,11 @@ internal class UserPreferences(context: Context) : TrayPreferences(context, "use
     }
 
 
-    val userLiveData: LiveData<User> by lazy {
+    val userLiveData: LiveData<UserSession> by lazy {
         UserLiveData(this)
     }
 
-    private class UserLiveData(val userPreferences: UserPreferences) : LiveData<User>(),
+    private class UserLiveData(val userPreferences: UserPreferences) : LiveData<UserSession>(),
         OnTrayPreferenceChangeListener {
 
         private val userVersion = 0

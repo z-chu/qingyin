@@ -5,6 +5,6 @@ data class UserBean(val objectId: String, val username: String, val sessionToken
 
 }
 
-fun UserBean.toUser(): live.qingyin.talk.usersession.model.User {
-    return live.qingyin.talk.usersession.model.User(objectId, username, sessionToken, phone)
+fun UserBean.toUser(): live.qingyin.talk.usersession.model.UserSession {
+    return live.qingyin.talk.usersession.model.UserSession(objectId, username, sessionToken, phone)
 }

@@ -7,18 +7,20 @@ import com.github.zchu.common.rx.schedule4Io2Main
 import com.github.zchu.model.ViewData
 import live.qingyin.talk.data.json.toUser
 import live.qingyin.talk.data.repository.UserRepository
+import live.qingyin.talk.usersession.UserSessionManager
+import live.qingyin.talk.usersession.model.UserSession
 import live.qingyin.talk.utils.subscribe
 
 class LoginViewModel(
     private val userRepository: UserRepository
-    , private val userManager: live.qingyin.talk.usersession.UserManager
+    , private val userManager: UserSessionManager
 ) : ViewModel() {
 
-    private val viewData: MutableLiveData<ViewData<live.qingyin.talk.usersession.model.User>> by lazy {
-        MutableLiveData<ViewData<live.qingyin.talk.usersession.model.User>>()
+    private val viewData: MutableLiveData<ViewData<UserSession>> by lazy {
+        MutableLiveData<ViewData<UserSession>>()
     }
 
-    fun result(): LiveData<ViewData<live.qingyin.talk.usersession.model.User>> {
+    fun result(): LiveData<ViewData<UserSession>> {
         return viewData
     }
 

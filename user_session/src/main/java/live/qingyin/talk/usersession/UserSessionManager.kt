@@ -4,10 +4,10 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import com.github.zchu.common.livedata.map
 import com.github.zchu.common.util.checkNonNull
-import live.qingyin.talk.usersession.model.User
+import live.qingyin.talk.usersession.model.UserSession
 
 
-class UserManager(context: Context) {
+class UserSessionManager(context: Context) {
 
 
     private val userPreferences = UserPreferences(context.applicationContext)
@@ -21,17 +21,17 @@ class UserManager(context: Context) {
         )
     }
 
-    fun liveDataOfUser(): LiveData<User> {
+    fun liveDataOfUser(): LiveData<UserSession> {
         return userPreferences
             .userLiveData
             .map { it?.copy() }
     }
 
-    fun loadUser(): User? {
+    fun loadUser(): UserSession? {
         return userPreferences.loadUser()
     }
 
-    fun saveUser(user: User) {
+    fun saveUser(user: UserSession) {
         userPreferences.saveUser(user)
     }
 
@@ -40,12 +40,12 @@ class UserManager(context: Context) {
     }
 
 
-    inline fun doIfLoggedIn(block: (User) -> Unit): UserManager {
+    inline fun doIfLoggedIn(block: (UserSession) -> Unit): UserSessionManager {
         loadUser()?.let(block)
         return this
     }
 
-    inline fun doIfnNotLoggedIn(block: () -> Unit): UserManager {
+    inline fun doIfnNotLoggedIn(block: () -> Unit): UserSessionManager {
         if (!isLoggedIn()) {
             block.invoke()
         }

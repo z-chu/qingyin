@@ -1,6 +1,6 @@
 package live.qingyin.talk.usersession.model
 
-data class User(
+data class UserSession(
     val id: String,
     val username: String,
     val sessionToken: String,
