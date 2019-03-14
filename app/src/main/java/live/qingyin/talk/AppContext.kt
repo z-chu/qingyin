@@ -5,6 +5,7 @@ import android.app.Application
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
+import androidx.multidex.MultiDex
 import com.github.zchu.common.help.ToastDef
 import com.github.zchu.debug.DebugKit
 import com.orhanobut.logger.AndroidLogAdapter
@@ -24,8 +25,9 @@ val appContext: AppContext
 class AppContext : Application() {
 
     override fun attachBaseContext(base: Context?) {
-        context = this
+        MultiDex.install(this)
         super.attachBaseContext(base)
+        context = this
     }
 
     override fun onCreate() {

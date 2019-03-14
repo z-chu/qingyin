@@ -13,6 +13,8 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+        vectorDrawables.useSupportLibrary = true //SVG兼容库
 
         buildConfigField 'String', 'LEANCLOUD_SERVER', '"https://qgno7jb6.api.lncld.net/1.1/"'
         buildConfigField 'String', 'LEANCLOUD_APP_ID', '"qGNO7JB6wLjvuyrlTRFn2CgK-gzGzoHsz"'
@@ -60,8 +62,8 @@ dependencies {
     releaseImplementation 'fr.o80.chucker:library-no-op:2.0.4'
 
     //doraemonkit
-    debugImplementation project(':debug_kit')
-   // debugImplementation project(':debug_kit_no_op')
+   // debugImplementation project(':debug_kit')
+    debugImplementation project(':debug_kit_no_op')
     releaseImplementation project(':debug_kit_no_op')
 
 
@@ -70,6 +72,7 @@ dependencies {
     implementation 'com.orhanobut:logger:2.2.0'
 
     // androidx
+    implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'androidx.appcompat:appcompat:1.1.0-alpha03'
     implementation 'com.google.android.material:material:1.1.0-alpha04'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha3'
