@@ -46,7 +46,7 @@ fun createChuckInterceptor(context: Context, collector: ChuckCollector): ChuckIn
         .maxContentLength(250000L)
 }
 
-class ChuckComponent : KoinComponent {
+private class ChuckComponent : KoinComponent {
     val chuckInterceptor: ChuckInterceptor by inject()
 }
 

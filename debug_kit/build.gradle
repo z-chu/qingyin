@@ -1,0 +1,54 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 28
+
+
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+repositories {
+    maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    //test
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+
+    api 'com.didichuxing.doraemonkit:doraemonkit:1.1.2'
+    api 'com.willowtreeapps.hyperion:hyperion-core:0.9.24'
+    api 'com.willowtreeapps.hyperion:hyperion-attr:0.9.24'
+    api 'com.willowtreeapps.hyperion:hyperion-measurement:0.9.24'
+    api 'com.willowtreeapps.hyperion:hyperion-disk:0.9.24'
+    api 'com.willowtreeapps.hyperion:hyperion-recorder:0.9.24'
+    api 'com.willowtreeapps.hyperion:hyperion-phoenix:0.9.24'
+    api 'com.willowtreeapps.hyperion:hyperion-crash:0.9.24'
+    api 'com.willowtreeapps.hyperion:hyperion-shared-preferences:0.9.24'
+    api 'com.willowtreeapps.hyperion:hyperion-geiger-counter:0.9.24'
+    api 'com.star_zero:hyperion-appinfo:1.0.0'
+    api 'com.zchu:hyperion-debugdb:1.0.0'
+    api 'com.zchu:hyperion-hosturl:1.0.2'
+    api 'com.zchu:hyperion-build-config:1.0.0'
+    api 'com.zchu:hyperion-uetool:1.0.1'
+}
+

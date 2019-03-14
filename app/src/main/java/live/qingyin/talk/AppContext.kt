@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import com.github.zchu.common.help.ToastDef
+import com.github.zchu.debug.DebugKit
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.DiskLogAdapter
 import com.orhanobut.logger.Logger
@@ -29,7 +30,7 @@ class AppContext : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        //DoraemonKit.install(this)
+        DebugKit.install(this)
         startKoin {
             logger()
             androidContext(this@AppContext)

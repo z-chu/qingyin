@@ -60,9 +60,9 @@ dependencies {
     releaseImplementation 'fr.o80.chucker:library-no-op:2.0.4'
 
     //doraemonkit
-    debugImplementation 'com.didichuxing.doraemonkit:doraemonkit:1.1.2'
-    releaseImplementation 'com.didichuxing.doraemonkit:doraemonkit-no-op:1.1.2'
-    debugImplementation 'com.willowtreeapps.hyperion:hyperion-core:0.9.24'
+    debugImplementation project(':debug_kit')
+   // debugImplementation project(':debug_kit_no_op')
+    releaseImplementation project(':debug_kit_no_op')
 
 
     //logging
