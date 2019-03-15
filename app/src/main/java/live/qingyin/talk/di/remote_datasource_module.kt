@@ -11,6 +11,7 @@ import live.qingyin.talk.data.net.HeaderInterceptor
 import live.qingyin.talk.data.net.LeancloudService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.koin.android.ext.koin.androidContext
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 import org.koin.dsl.module
@@ -24,9 +25,9 @@ import retrofit2.converter.gson.GsonConverterFactory
  */
 val remoteDataSourceModule = module {
 
-    single { createChuckCollector(get()) }
+    single { createChuckCollector(androidContext()) }
 
-    single { createChuckInterceptor(get(), get()) }
+    single { createChuckInterceptor(androidContext(), get()) }
 
     // provided web components
     single { createOkHttpClient() }

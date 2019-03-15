@@ -4,12 +4,12 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import com.github.zchu.common.help.showToastShort
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import live.qingyin.talk.R
 import live.qingyin.talk.presentation.login.LoginActivity
+import live.qingyin.talk.presentation.user.MeFragment
 import live.qingyin.talk.usersession.UserSessionManager
 import org.koin.android.ext.android.inject
 
@@ -58,13 +58,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-        userManager
-            .liveDataOfUser()
-            .observe(this, Observer {
-                it?.let {
-                    tv_message.text = it.toString()
-                }
-            })
+
+        supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.container, MeFragment())
+                .commit()
 
     }
 
