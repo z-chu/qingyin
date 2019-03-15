@@ -1,1 +1,1 @@
-include ':app', ':user_session', ':debug_kit', ':debug_kit_no_op'
+include ':app', ':user_session', ':debug_kit', ':debug_kit_no_op', ':base'

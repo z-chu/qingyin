@@ -119,6 +119,7 @@ dependencies {
 
     //project
     implementation project(':user_session')
+    implementation project(':base')
 
 
 
