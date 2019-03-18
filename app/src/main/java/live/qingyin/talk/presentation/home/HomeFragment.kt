@@ -1,14 +1,11 @@
 package live.qingyin.talk.presentation.home
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import live.qingyin.talk.R
+import live.qingyin.talk.base.BaseFragment
 
-class HomeFragment : Fragment() {
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_home, container, false)
-    }
+class HomeFragment : BaseFragment() {
+
+    override val layoutId: Int?
+        get() = R.layout.fragment_home
+
 }

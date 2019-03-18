@@ -1,27 +1,24 @@
 package live.qingyin.talk.presentation.user
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.github.zchu.common.util.dp2px
 import kotlinx.android.synthetic.main.header_user_overview.*
 import live.qingyin.talk.R
+import live.qingyin.talk.base.BaseFragment
 import live.qingyin.talk.usersession.UserSessionManager
 import live.qingyin.talk.usersession.model.UserSession
 import live.qingyin.talk.utils.GlideApp
 import org.koin.android.ext.android.inject
 
-class MeFragment : Fragment() {
+class MeFragment : BaseFragment() {
 
     val userSessionManager: UserSessionManager by inject()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_me, container, false)
-    }
+    override val layoutId: Int?
+        get() = R.layout.fragment_me
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

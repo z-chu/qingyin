@@ -3,15 +3,16 @@ package live.qingyin.talk.presentation.main
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
+import com.github.zchu.common.util.selectFragmentDisplay
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import live.qingyin.talk.R
 import live.qingyin.talk.base.BaseActivity
+import live.qingyin.talk.presentation.follow.FollowingFragment
 import live.qingyin.talk.presentation.home.HomeFragment
 import live.qingyin.talk.presentation.login.LoginActivity
+import live.qingyin.talk.presentation.messages.MessagesFragment
 import live.qingyin.talk.presentation.user.MeFragment
 import live.qingyin.talk.usersession.UserSessionManager
 import org.koin.android.ext.android.inject
@@ -24,8 +25,8 @@ class MainActivity : BaseActivity() {
         val tagId = it.toInt()
         when (tagId) {
             R.id.navigation_home -> HomeFragment()
-            R.id.navigation_following -> MeFragment()
-            R.id.navigation_messages -> MeFragment()
+            R.id.navigation_following -> FollowingFragment()
+            R.id.navigation_messages -> MessagesFragment()
             R.id.navigation_me -> MeFragment()
             else -> error("没有给 fragment tag：$it 返回对应的 Fragment 实例。")
         }
@@ -68,27 +69,6 @@ class MainActivity : BaseActivity() {
         setContentView(R.layout.activity_main)
         supportFragmentManager.selectFragmentDisplay(containerViewId, R.id.navigation_home.toString(), fragmentFunc)
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-    }
-
-    private fun FragmentManager.selectFragmentDisplay(
-        @IdRes containerViewId: Int, tag: String,
-        block: (tag: String) -> Fragment
-    ) {
-        val beginTransaction = beginTransaction()
-        for (fragment in fragments) {
-            if (!fragment.isHidden) {
-                beginTransaction.hide(fragment)
-            }
-        }
-        val findFragmentByTag = findFragmentByTag(tag)
-        if (findFragmentByTag == null) {
-            beginTransaction.add(containerViewId, block.invoke(tag), tag)
-        } else {
-            if (findFragmentByTag.isHidden) {
-                beginTransaction.show(findFragmentByTag)
-            }
-        }
-        beginTransaction.commit()
     }
 
 
