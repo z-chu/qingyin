@@ -6,12 +6,11 @@
     <string name="title_messages">Messages</string>
     <string name="title_me">Me</string>
     <string name="title_notifications">Notifications</string>
-    <string name="title_login">用户登录</string>
-    <string name="title_register">用户登录</string>
+    <string name="title_login">Sign in</string>
+    <string name="title_register">sign up</string>
+    <string name="title_setting">Setting</string>
 
 
-    <string name="title_activity_login">Sign in</string>
-    <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password (optional)</string>
     <string name="action_sign_in">Sign in or register</string>
@@ -23,9 +22,9 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email completions."</string>
 
 
-    <string name="username">用户名</string>
-    <string name="password">密码</string>
-    <string name="forgot_your_password">忘记密码?</string>
+    <string name="username">username</string>
+    <string name="password">password</string>
+    <string name="forgot_your_password">forgot your password?</string>
 
 
     //exception
@@ -38,5 +37,10 @@
     <string name="exception_json">Data parsing error</string>
     <string name="exception_ssl">Network certificate verification failed</string>
     <string name="exception_timeout">Request timed out, please try again</string>
+
+
+    <string name="feed">Feed</string>
+    <string name="sound">Sound</string>
+    <string name="about_users">About %s</string>
 
 </resources>
