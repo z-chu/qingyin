@@ -53,18 +53,35 @@ class MeFragment : BaseFragment() {
     }
 
     private fun displayUser(user: UserSession) {
-        tv_name.text = user.username
-        tv_bio.text = "在漫天风沙里望着你远去,我竟悲伤地不能自己"
-        GlideApp
-            .with(this)
-            .load("https://avatars3.githubusercontent.com/u/13902657?s=460&v=4")
-            .transform(RoundedCorners(requireContext().dp2px(6F)))
-            .into(iv_profile_photo)
+        tv_name.text = user.name
+        tv_bio.text = user.bio ?: "还没有填写个性签名"
+        val profilePhoto = user.profilePhoto
+        if (profilePhoto == null) {
+            GlideApp
+                .with(this)
+                .load(R.drawable.img_profile_photo_default)
+                .transform(RoundedCorners(requireContext().dp2px(6F)))
+                .into(iv_profile_photo)
+        } else {
+            GlideApp
+                .with(this)
+                .load(profilePhoto)
+                .transform(RoundedCorners(requireContext().dp2px(6F)))
+                .into(iv_profile_photo)
+        }
 
-        GlideApp
-            .with(this)
-            .load(R.drawable.image_cover_default)
-            .into(iv_cover)
+        val cover = user.cover
+        if (cover == null) {
+            GlideApp
+                .with(this)
+                .load(R.drawable.img_cover_default)
+                .into(iv_cover)
+        } else {
+            GlideApp
+                .with(this)
+                .load(cover)
+                .into(iv_cover)
+        }
     }
 
 }

@@ -3,7 +3,6 @@ package live.qingyin.talk.usersession
 import android.content.Context
 import androidx.lifecycle.LiveData
 import com.github.zchu.common.livedata.map
-import com.github.zchu.common.util.checkNonNull
 import live.qingyin.talk.usersession.model.UserSession
 
 
@@ -14,11 +13,7 @@ class UserSessionManager(context: Context) {
 
 
     fun isLoggedIn(): Boolean {
-        return checkNonNull(
-            userPreferences.userId,
-            userPreferences.username,
-            userPreferences.sessionToken
-        )
+        return userPreferences.hasUser()
     }
 
     fun liveDataOfUser(): LiveData<UserSession> {

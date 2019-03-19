@@ -6,6 +6,7 @@ import live.qingyin.talk.data.json.LCResult
 import live.qingyin.talk.data.json.UserBean
 import live.qingyin.talk.data.json.UserBody
 import live.qingyin.talk.data.net.LeancloudService
+import live.qingyin.talk.pref.profilePhotoUrls
 import retrofit2.HttpException
 import java.io.IOException
 
@@ -22,14 +23,17 @@ class UserRepository(private val leancloudService: LeancloudService) {
     }
 
     fun loginOrRegister(username: String, password: String): Observable<UserBean> {
+        val userBody = UserBody(username, password)
+        val profilePhotoUrls = profilePhotoUrls()
+        userBody.profilePhoto = profilePhotoUrls[(0..profilePhotoUrls.size).random()]
+        userBody.name = username
         return leancloudService
-            .register(UserBody(username, password))
+            .register(userBody)
             .onErrorResumeNext { throwable: Throwable ->
                 if (throwable is HttpException) {
-                    val httpException = throwable
-                    if (httpException.code() == 400) {
+                    if (throwable.code() == 400) {
                         try {
-                            val string = httpException.response().errorBody()!!.string()
+                            val string = throwable.response().errorBody()!!.string()
                             val lcResult = Gson().fromJson(string, LCResult::class.java)
                             if (lcResult.code == 202) {
                                 return@onErrorResumeNext leancloudService
