@@ -25,7 +25,7 @@ class UserRepository(private val leancloudService: LeancloudService) {
     fun loginOrRegister(username: String, password: String): Observable<UserBean> {
         val userBody = UserBody(username, password)
         val profilePhotoUrls = profilePhotoUrls()
-        userBody.profilePhoto = profilePhotoUrls[(0..profilePhotoUrls.size).random()]
+        userBody.profilePhoto = profilePhotoUrls.random()
         userBody.name = username
         return leancloudService
             .register(userBody)

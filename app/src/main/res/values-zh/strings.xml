@@ -10,6 +10,9 @@
     <string name="title_register">用户注册</string>
     <string name="title_setting">设置</string>
 
+    <string name="action_sign_out">退出登录</string>
+    <string name="message_warn_sign_out">你真的要退出登录吗？</string>
+
 
     <string name="username">用户名</string>
     <string name="password">密码</string>

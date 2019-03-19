@@ -30,7 +30,7 @@ class UserSessionManager(context: Context) {
         userPreferences.saveUser(user)
     }
 
-    fun logout() {
+    fun signOut() {
         userPreferences.clear()
     }
 

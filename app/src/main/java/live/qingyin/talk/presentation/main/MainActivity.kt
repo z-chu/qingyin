@@ -21,16 +21,6 @@ class MainActivity : BaseActivity() {
 
     private val userManager: UserSessionManager by inject()
 
-    private val fragmentFunc: (tag: String) -> Fragment = {
-        val tagId = it.toInt()
-        when (tagId) {
-            R.id.navigation_home -> HomeFragment()
-            R.id.navigation_following -> FollowingFragment()
-            R.id.navigation_messages -> MessagesFragment()
-            R.id.navigation_me -> MeFragment()
-            else -> error("没有给 fragment tag：$it 返回对应的 Fragment 实例。")
-        }
-    }
 
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
@@ -73,7 +63,18 @@ class MainActivity : BaseActivity() {
 
 
     companion object {
-        const val containerViewId = R.id.container
+        private const val containerViewId = R.id.container
+        private val fragmentFunc: (tag: String) -> Fragment = {
+            val tagId = it.toInt()
+            when (tagId) {
+                R.id.navigation_home -> HomeFragment()
+                R.id.navigation_following -> FollowingFragment()
+                R.id.navigation_messages -> MessagesFragment()
+                R.id.navigation_me -> MeFragment()
+                else -> error("没有给 fragment tag：$it 返回对应的 Fragment 实例。")
+            }
+        }
+
         fun start(context: Context) {
             context.startActivity(Intent(context, MainActivity::class.java))
         }
