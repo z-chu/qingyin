@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="SettingRow">
+        <attr name="setting_icon" format="color|reference"/>
+        <attr name="setting_title" format="string"/>
+        <attr name="setting_title_color" format="color"/>
+        <attr name="setting_title_bold" format="boolean"/>
+        <attr name="setting_subtitle_color" format="color"/>
+        <attr name="setting_subtitle" format="string"/>
+        <attr name="setting_divider_visibility" format="boolean"/>
+        <attr name="setting_divider" format="color|reference"/>
+        <attr name="setting_arrow_visibility" format="boolean"/>
+        <attr name="setting_arrow" format="reference"/>
+
+    </declare-styleable>
+
+
+</resources>

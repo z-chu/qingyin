@@ -9,7 +9,8 @@
     <Space
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            />
 
     <TextView
             android:id="@+id/row_logout"
@@ -18,5 +19,6 @@
             android:background="@android:color/white"
             android:gravity="center"
             android:text="@string/action_sign_out"
-            android:textColor="@color/md_red_A200"/>
+            android:textColor="@color/md_red_A200"
+            />
 </LinearLayout>
