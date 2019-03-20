@@ -62,7 +62,7 @@ class SettingRow @JvmOverloads constructor(
         tvTitle.paint.isFakeBoldText = titleBold
         val subtitle = typedArray.getString(R.styleable.SettingRow_setting_subtitle)
         tvSubtitle.text = subtitle
-        val dividerVisibility = typedArray.getBoolean(R.styleable.SettingRow_setting_divider_visibility, false)
+        val dividerVisibility = typedArray.getBoolean(R.styleable.SettingRow_setting_divider_visibility, true)
         divider.visibility = if (dividerVisibility) View.VISIBLE else View.GONE
         val arrowVisibility = typedArray.getBoolean(R.styleable.SettingRow_setting_arrow_visibility, true)
         val layoutParams = tvSubtitle.layoutParams as RelativeLayout.LayoutParams
@@ -100,11 +100,11 @@ class SettingRow @JvmOverloads constructor(
     }
 
 
-    fun setTitle(title: String) {
+    fun setTitle(title: String?) {
         tvTitle.text = title
     }
 
-    fun setSubtitle(subtitle: String) {
+    fun setSubtitle(subtitle: String?) {
         tvSubtitle.text = subtitle
     }
 

@@ -64,6 +64,7 @@
                 android:label="@string/title_login">
         </activity>
         <activity android:name=".presentation.setting.SettingActivity"/>
+        <activity android:name=".presentation.user.ProfileSettingsActivity"/>
 
         <provider
                 android:name="net.grandcentrix.tray.provider.TrayContentProvider"

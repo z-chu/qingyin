@@ -6,6 +6,7 @@ import androidx.lifecycle.Observer
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.github.zchu.common.help.BaseFragmentAdapter
 import com.github.zchu.common.util.dp2px
+import com.github.zchu.common.util.setDebounceOnClickLister
 import kotlinx.android.synthetic.main.fragment_me.*
 import kotlinx.android.synthetic.main.header_user_overview.*
 import live.qingyin.talk.R
@@ -31,6 +32,9 @@ class MeFragment : BaseFragment() {
             }
             return@setOnMenuItemClickListener true
         }
+        header_user_overview.setDebounceOnClickLister {
+            ProfileSettingsActivity.start(requireContext())
+        }
 
         val fragmentAdapter = BaseFragmentAdapter(childFragmentManager)
         fragmentAdapter.fragments = arrayOf(SoundFragment(), FeedFragment(), AboutFragment())
@@ -54,7 +58,7 @@ class MeFragment : BaseFragment() {
 
     private fun displayUser(user: UserSession) {
         tv_name.text = user.name
-        tv_bio.text = user.bio ?: "还没有填写个性签名"
+        tv_bio.text = user.bio ?: getString(R.string.default_bio_if_null)
         val profilePhoto = user.profilePhoto
         if (profilePhoto == null) {
             GlideApp

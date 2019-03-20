@@ -1,38 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-    <include layout="@layout/view_appbar"/>
+    <live.qingyin.talk.widget.SettingRow
+            android:id="@+id/row_profile_photo"
+            android:layout_width="match_parent"
+            app:setting_title="头像"
+            android:layout_height="72dp">
+
+        <ImageView
+                android:id="@+id/iv_profile_photo"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/arrow"
+                tools:srcCompat="@tools:sample/avatars"/>
+
+    </live.qingyin.talk.widget.SettingRow>
 
     <live.qingyin.talk.widget.SettingRow
+            android:id="@+id/row_nickname"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            app:setting_subtitle="zchu"
+            app:setting_subtitle="柱子"
             app:setting_title="昵称"
             />
 
     <live.qingyin.talk.widget.SettingRow
+            android:id="@+id/row_username"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             app:setting_subtitle="zchu"
-            app:setting_title="昵称"
+            app:setting_title="账号名"
             />
 
     <live.qingyin.talk.widget.SettingRow
+            android:id="@+id/row_gender"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            app:setting_subtitle="zchu"
-            app:setting_title="昵称"
+            app:setting_subtitle="男"
+            app:setting_title="性别"
             />
 
     <live.qingyin.talk.widget.SettingRow
+            android:id="@+id/row_bio"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            app:setting_subtitle="zchu"
-            app:setting_title="昵称"
+            app:setting_subtitle="真是一个悲伤的故事啊"
+            app:setting_title="个性签名"
+            />
+
+    <live.qingyin.talk.widget.SettingRow
+            android:id="@+id/row_region"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            app:setting_subtitle="上海 浦东新区"
+            app:setting_title="地区"
+            />
+
+    <live.qingyin.talk.widget.SettingRow
+            android:id="@+id/row_birthday"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            app:setting_subtitle="1996-03-01"
+            app:setting_title="生日"
             />
 
 </LinearLayout>
