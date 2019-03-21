@@ -7,7 +7,7 @@ data class UserSession(
     val username: String,
     val sessionToken: String,
     var name: String, //名称
-    var gender: Int,//性别  0保密、1男、2女
+    var gender: Gender,//性别  0保密、1男、2女
     var phone: String? = null, //手机
     var profilePhoto: String? = null, //头像
     var cover: String? = null,//封面

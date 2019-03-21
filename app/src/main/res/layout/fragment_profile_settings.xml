@@ -10,6 +10,7 @@
             android:id="@+id/row_profile_photo"
             android:layout_width="match_parent"
             app:setting_title="头像"
+            android:background="?selectableItemBackground"
             android:layout_height="72dp">
 
         <ImageView

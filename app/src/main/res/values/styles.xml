@@ -4,8 +4,38 @@
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+
+        <!-- 在 colorPrimary 上绘制时传递文本/图标的可访问性指南的颜色。 -->
+        <item name="colorOnPrimary">#FFFFFF</item>
+
+        <item name="colorSecondary">@color/colorAccent</item>
+        <item name="colorSecondaryVariant">#F39881</item>
+
+        <!-- 在 colorSecondary 上绘制时传递文本/图标的可访问性指南的颜色。 -->
+        <item name="colorOnSecondary">#FFFFFF</item>
+
+        <!-- 表面颜色会影响组件的表面，例如卡片，工作表和菜单。 -->
+        <item name="colorSurface">#FFFFFF</item>
+
+        <!-- 在表面颜色上绘制时传递文本/图标的可访问性指南的颜色。 -->
+        <item name="colorOnSurface">#000000</item>
+
+        <!-- 错误颜色表示文本字段等组件的错误状态 -->
+        <item name="colorError">#C51162</item>
+
+        <!-- 在 colorError 之上绘制时，传递文本/图标的可访问性指南的颜色。-->
+        <item name="colorOnError">#FFFFFF</item>
+
+        <!--应用的背景颜色 不能直接设置颜色值，要设置引用-->
+        <item name="android:colorBackground">@color/md_grey_50</item>
+
+        <!-- 在背景颜色上绘制时传递文本/图标的辅助功能指南的颜色。 -->
+        <item name="colorOnBackground">#000000</item>
+
+        <item name="dialogCornerRadius">4dp</item>
+
     </style>
 
     <style name="AlertDialogStyle" parent="@android:style/Theme.Dialog">

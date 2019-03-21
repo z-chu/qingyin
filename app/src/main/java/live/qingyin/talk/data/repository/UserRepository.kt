@@ -50,4 +50,11 @@ class UserRepository(private val leancloudService: LeancloudService) {
 
             }
     }
+
+    fun modifyProfile(sessionToken: String, userId: String, userBean: UserBean): Observable<Unit> {
+        return leancloudService
+            .putUser(sessionToken, userId, userBean)
+            .map { Unit }
+
+    }
 }

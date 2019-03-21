@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.util.AttributeSet
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,20 +31,20 @@ class SettingRow @JvmOverloads constructor(
         tvSubtitle = findViewById(R.id.tv_subtitle)
         divider = findViewById(R.id.divider)
         arrow = findViewById(R.id.arrow)
-        val layoutParams = layoutParams
-        if (layoutParams == null || layoutParams.height == ViewGroup.LayoutParams.WRAP_CONTENT) {
-            setLayoutParams(
-                ViewGroup.LayoutParams(
-                    RelativeLayout.LayoutParams.MATCH_PARENT,
-                    resources.getDimensionPixelSize(
-                        R.dimen.setting_row_height
-                    )
-                )
-            )
-        }
         if (attrs != null) {
             initAttrs(context, attrs)
         }
+        initBackground()
+    }
+
+    private fun initBackground() {
+        val typedValue = TypedValue()
+        context.theme.resolveAttribute(android.R.attr.selectableItemBackground, typedValue, true)
+        val attribute = intArrayOf(android.R.attr.selectableItemBackground)
+        val typedArray = context.theme.obtainStyledAttributes(typedValue.resourceId, attribute)
+        val drawable = typedArray.getDrawable(0)
+        background = drawable
+        typedArray.recycle()
     }
 
     private fun initAttrs(context: Context, attrs: AttributeSet) {
@@ -99,6 +100,20 @@ class SettingRow @JvmOverloads constructor(
         typedArray.recycle()
     }
 
+    override fun onFinishInflate() {
+        super.onFinishInflate()
+        val layoutParams = layoutParams
+        if (layoutParams == null || layoutParams.height == ViewGroup.LayoutParams.WRAP_CONTENT) {
+            setLayoutParams(
+                ViewGroup.LayoutParams(
+                    RelativeLayout.LayoutParams.MATCH_PARENT,
+                    resources.getDimensionPixelSize(
+                        R.dimen.setting_row_height
+                    )
+                )
+            )
+        }
+    }
 
     fun setTitle(title: String?) {
         tvTitle.text = title

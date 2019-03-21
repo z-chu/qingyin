@@ -6,12 +6,14 @@ import androidx.lifecycle.MutableLiveData
 import com.github.zchu.model.ViewData
 import io.reactivex.Observable
 import io.reactivex.Observer
+import io.reactivex.annotations.CheckReturnValue
 import io.reactivex.disposables.Disposable
 
 fun <T> Observable<T>.asLiveDataOfViewData(): ResourceLiveData<T> {
     return ResourceLiveData(this)
 }
 
+@CheckReturnValue
 fun <T> Observable<T>.subscribe(mutableLiveData: MutableLiveData<ViewData<T>>): Disposable {
     mutableLiveData.safeSetValue(ViewData.loading())
     return this.subscribe({

@@ -2,10 +2,10 @@ package live.qingyin.talk.presentation.login
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.github.zchu.common.rx.RxViewModel
 import com.github.zchu.common.rx.schedule4Io2Main
 import com.github.zchu.model.ViewData
-import live.qingyin.talk.data.json.toUser
+import live.qingyin.talk.data.json.toUserSession
 import live.qingyin.talk.data.repository.UserRepository
 import live.qingyin.talk.usersession.UserSessionManager
 import live.qingyin.talk.usersession.model.UserSession
@@ -14,7 +14,7 @@ import live.qingyin.talk.utils.subscribe
 class LoginViewModel(
     private val userRepository: UserRepository
     , private val userManager: UserSessionManager
-) : ViewModel() {
+) : RxViewModel() {
 
     private val viewData: MutableLiveData<ViewData<UserSession>> by lazy {
         MutableLiveData<ViewData<UserSession>>()
@@ -28,13 +28,14 @@ class LoginViewModel(
         userRepository
             .loginOrRegister(username, password)
             .map {
-                it.toUser()
+                it.toUserSession()
             }
             .schedule4Io2Main()
             .doOnNext {
                 userManager.saveUser(it)
             }
             .subscribe(viewData)
+            .disposeWhenCleared()
     }
 
 }

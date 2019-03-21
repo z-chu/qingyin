@@ -3,6 +3,7 @@ package live.qingyin.talk.usersession
 import android.content.Context
 import androidx.lifecycle.LiveData
 import com.github.zchu.common.util.checkNonNull
+import live.qingyin.talk.usersession.model.Gender
 import live.qingyin.talk.usersession.model.UserSession
 import net.grandcentrix.tray.TrayPreferences
 import net.grandcentrix.tray.core.OnTrayPreferenceChangeListener
@@ -45,11 +46,11 @@ internal class UserPreferences(context: Context) {
         }
         get() = preferences.getString(K_PHONE, null)
 
-    private var gender: Int
+    private var gender: Gender
         set(value) {
-            preferences.put(K_GENDER, value)
+            preferences.put(K_GENDER, value.gender)
         }
-        get() = preferences.getInt(K_GENDER, 0)
+        get() = Gender(preferences.getInt(K_GENDER, 0))
 
     private var name: String?
         set(value) {
