@@ -23,7 +23,7 @@ interface LeancloudService {
     fun login(@Query("username") username: String, @Query("password") password: String): Observable<UserBean>
 
     @PUT("users/{objectId}")
-    fun putUser(@Header(H_LC_SESSION) sessionToken: String, @Path("objectId") userId: String, @Body user: UserBean): Observable<LCResult<*>>
+    fun putUser(@Header(H_LC_SESSION) sessionToken: String, @Path("objectId") userId: String, @Body user: UserBean): Observable<LCResult<Any>>
 
     @GET("users/me")
     fun me(@Header(H_LC_SESSION) sessionToken: String)

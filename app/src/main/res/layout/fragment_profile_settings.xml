@@ -36,7 +36,8 @@
             android:layout_width="match_parent"
             android:layout_height="56dp"
             app:setting_subtitle="zchu"
-            app:setting_title="账号名"
+            app:setting_title="账户名"
+            app:setting_arrow_visibility="false"
             />
 
     <live.qingyin.talk.widget.SettingRow

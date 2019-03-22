@@ -86,6 +86,8 @@ dependencies {
     // rxjava2
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
     implementation 'io.reactivex.rxjava2:rxjava:2.2.3'
+    implementation 'com.github.tbruyelle:rxpermissions:0.10.2'
+
 
     //common
     implementation "com.github.z-chu.android-common-kit:common:$android_common_kit_version"

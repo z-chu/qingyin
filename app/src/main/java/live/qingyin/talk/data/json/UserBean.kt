@@ -34,3 +34,19 @@ fun UserBean.toUserSession(): UserSession {
     )
 }
 
+fun UserBean.applyTo(userSession: UserSession): UserSession {
+    return UserSession(
+        objectId ?: userSession.id,
+        username ?: userSession.username,
+        sessionToken ?: userSession.sessionToken,
+        name ?: userSession.name ?: username!!,
+        Gender(gender ?: userSession.gender.gender),
+        phone ?: userSession.phone,
+        profilePhoto ?: userSession.profilePhoto,
+        cover ?: userSession.cover,
+        bio ?: userSession.bio,
+        region ?: userSession.region,
+        birthday ?: userSession.birthday
+    )
+}
+

@@ -8,7 +8,9 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
+    <uses-permission android:name="android.permission.CAMERA"/>
 
 
     <application
@@ -71,6 +73,16 @@
                 android:authorities="${applicationId}.usersession.provider"
                 android:exported="false"
                 tools:replace="android:authorities"/>
+
+        <provider
+                android:name=".pref.PhotoFileProvider"
+                android:authorities="${applicationId}.photo.provider"
+                android:exported="false"
+                android:grantUriPermissions="true">
+            <meta-data
+                    android:name="android.support.FILE_PROVIDER_PATHS"
+                    android:resource="@xml/photo_provider_paths"/>
+        </provider>
     </application>
 
 </manifest>
