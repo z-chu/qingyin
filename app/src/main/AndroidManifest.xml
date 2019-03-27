@@ -67,6 +67,7 @@
         </activity>
         <activity android:name=".presentation.setting.SettingActivity"/>
         <activity android:name=".presentation.user.ProfileSettingsActivity"/>
+        <activity android:name=".presentation.user.BioModifyActivity"/>
 
         <provider
                 android:name="net.grandcentrix.tray.provider.TrayContentProvider"
