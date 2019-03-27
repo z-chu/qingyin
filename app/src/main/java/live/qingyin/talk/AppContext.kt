@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import androidx.multidex.MultiDex
+import com.avos.avoscloud.AVOSCloud
 import com.github.zchu.common.help.ToastDef
 import com.github.zchu.debug.DebugKit
 import com.orhanobut.logger.AndroidLogAdapter
@@ -40,6 +41,7 @@ class AppContext : Application() {
         }
         initLogger()
         ToastDef.defaultContext = this
+        AVOSCloud.initialize(this, BuildConfig.LEANCLOUD_APP_ID, BuildConfig.LEANCLOUD_APP_KEY)
 
     }
 

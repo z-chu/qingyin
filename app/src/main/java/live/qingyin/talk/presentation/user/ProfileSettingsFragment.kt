@@ -12,7 +12,6 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
 import androidx.core.content.FileProvider
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.github.zchu.common.help.showToastShort
 import com.github.zchu.common.rx.bindLifecycle
@@ -71,6 +70,7 @@ class ProfileSettingsFragment : BaseFragment(), View.OnClickListener {
                     Status.RUNNING -> {
                     }
                     Status.SUCCEEDED -> {
+                        requireContext().showToastShort("修改成功")
                     }
                     Status.FAILED -> {
                         requireContext().showToastShort(it.throwable!!.getEasyMessage(requireContext()))
@@ -238,23 +238,21 @@ class ProfileSettingsFragment : BaseFragment(), View.OnClickListener {
 
     private fun cropPhoto(file: File) {
         val cropPhotoFile = generatePhotoFile() ?: return
-        startSystemAvatarCrop(this, file, cropPhotoFile, 0X33)
-        activityResultDispatcher.subscribe(-11) { _, data ->
-            GlideApp.with(this@ProfileSettingsFragment)
-                .load(cropPhotoFile)
-                .placeholder(R.mipmap.ic_launcher)
-                .into(iv_profile_photo)
-        }
+        val cropPhotoIntent = createCropPhotoIntent(requireContext(), file, cropPhotoFile)
+        activityResultDispatcher
+            .startIntent(this, cropPhotoIntent) { resultCode: Int, data: Intent? ->
+                if (resultCode == Activity.RESULT_OK) {
+                    viewModel.modifyProfilePhoto(cropPhotoFile)
+                }
+            }
 
     }
 
-    /**
-     * 调用系统头像裁剪
-     */
-    fun startSystemAvatarCrop(context: Fragment, inputFile: File, outputFile: File, requestCode: Int) {
+
+    private fun createCropPhotoIntent(context: Context, inputFile: File, outputFile: File): Intent {
         val intent = Intent("com.android.camera.action.CROP")
         intent.setDataAndType(
-            getImageContentUri(context.requireContext(), inputFile),
+            getImageContentUri(context, inputFile),
             "image/*"
         )//自己使用Content Uri替换File Uri
         intent.putExtra("crop", "true")
@@ -267,8 +265,7 @@ class ProfileSettingsFragment : BaseFragment(), View.OnClickListener {
         intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(outputFile))
         intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString())
         intent.putExtra("noFaceDetection", true)
-        context.startActivityForResult(intent, requestCode)
-
+        return intent
     }
 
     /**
@@ -288,17 +285,18 @@ class ProfileSettingsFragment : BaseFragment(), View.OnClickListener {
                 cursor
                     .getColumnIndex(MediaStore.MediaColumns._ID)
             )
+            cursor.close()
             val baseUri = Uri.parse("content://media/external/images/media")
             return Uri.withAppendedPath(baseUri, "" + id)
         } else {
-            if (imageFile.exists()) {
+            return if (imageFile.exists()) {
                 val values = ContentValues()
                 values.put(MediaStore.Images.Media.DATA, filePath)
-                return context.contentResolver.insert(
+                context.contentResolver.insert(
                     MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values
                 )
             } else {
-                return null
+                null
             }
         }
     }

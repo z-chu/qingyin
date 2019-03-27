@@ -1,5 +1,6 @@
 package live.qingyin.talk.di
 
+import live.qingyin.talk.data.repository.FileUploader
 import live.qingyin.talk.data.repository.UserRepository
 import live.qingyin.talk.presentation.login.LoginViewModel
 import live.qingyin.talk.presentation.user.ProfileSettingViewModel
@@ -14,9 +15,11 @@ val appModule = module {
 
     single { UserRepository(get()) }
 
+    single { FileUploader() }
+
     viewModel { LoginViewModel(get(), get()) }
 
-    viewModel { ProfileSettingViewModel(get(), get()) }
+    viewModel { ProfileSettingViewModel(get(), get(), get()) }
 
 }
 
