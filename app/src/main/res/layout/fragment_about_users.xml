@@ -2,6 +2,67 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
+              android:paddingLeft="@dimen/activity_horizontal_margin"
+              android:paddingRight="@dimen/activity_horizontal_margin"
               android:layout_height="match_parent">
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:text="个人信息"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:textStyle="bold"
+            android:layout_height="wrap_content"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:textSize="12sp"
+            android:text=" UID：zchu8073"
+            android:layout_marginBottom="8dp"
+            android:layout_height="wrap_content"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:textSize="12sp"
+            android:text="等级：110天"
+            android:layout_marginBottom="8dp"
+            android:layout_height="wrap_content"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:textSize="12sp"
+            android:text="年龄：95后 双鱼座"
+            android:layout_marginBottom="8dp"
+            android:layout_height="wrap_content"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:textSize="12sp"
+            android:layout_marginBottom="8dp"
+            android:text="性别：男"
+            android:layout_height="wrap_content"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:textSize="12sp"
+            android:layout_marginBottom="8dp"
+            android:text="地区：上海市 浦东新区"
+            android:layout_height="wrap_content"/>
+
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:text="个人介绍"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:textStyle="bold"
+            android:layout_height="wrap_content"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:textSize="12sp"
+            android:layout_marginBottom="8dp"
+            android:text="我的小时候，吵闹任性的时候。我的外婆总是拿刀捅我。"
+            android:layout_height="wrap_content"/>
 
 </LinearLayout>
