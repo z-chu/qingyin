@@ -2,16 +2,10 @@ package live.qingyin.talk.presentation.user
 
 import android.Manifest
 import android.app.Activity
-import android.content.ContentValues
-import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
-import androidx.core.content.FileProvider
 import androidx.lifecycle.Observer
 import com.github.zchu.common.help.showToastShort
 import com.github.zchu.common.rx.bindLifecycle
@@ -20,13 +14,11 @@ import com.github.zchu.model.Status
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.tbruyelle.rxpermissions2.RxPermissions
 import kotlinx.android.synthetic.main.fragment_profile_settings.*
-import live.qingyin.talk.BuildConfig
 import live.qingyin.talk.R
 import live.qingyin.talk.base.BaseFragment
 import live.qingyin.talk.pref.profilePhotoUrls
 import live.qingyin.talk.usersession.model.UserSession
-import live.qingyin.talk.utils.GlideApp
-import live.qingyin.talk.utils.getEasyMessage
+import live.qingyin.talk.utils.*
 import org.koin.android.viewmodel.ext.viewModel
 import java.io.File
 
@@ -194,16 +186,7 @@ class ProfileSettingsFragment : BaseFragment(), View.OnClickListener {
 
     private fun openPhoto4Camera() {
         val photoFile = generatePhotoFile() ?: return
-        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            intent.putExtra(
-                MediaStore.EXTRA_OUTPUT,
-                FileProvider
-                    .getUriForFile(requireContext(), BuildConfig.APPLICATION_ID + ".photo.provider", photoFile)
-            )
-        } else {
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile))
-        }
+        val intent = createTakePhotoIntent(requireContext(), photoFile)
         activityResultDispatcher.startIntent(this, intent) { resultCode, data ->
             if (resultCode == Activity.RESULT_OK) {
                 cropPhoto(photoFile)
@@ -223,7 +206,20 @@ class ProfileSettingsFragment : BaseFragment(), View.OnClickListener {
     }
 
     private fun openPhoto4Gallery() {
-
+        val intent = createOpenAlbumIntent()
+        activityResultDispatcher.startIntent(this, intent) { resultCode, data ->
+            data?.data?.let {
+                val filePathColumn = arrayOf(MediaStore.Images.Media.DATA)
+                val cursor = requireContext().contentResolver.query(it, filePathColumn, null, null, null)
+                cursor?.run {
+                    moveToFirst()
+                    val columnIndex = getColumnIndex(filePathColumn[0])
+                    val picturePath = getString(columnIndex)
+                    close()
+                    cropPhoto(File(picturePath))
+                }
+            }
+        }
     }
 
     private fun generatePhotoFile(): File? {
@@ -246,59 +242,6 @@ class ProfileSettingsFragment : BaseFragment(), View.OnClickListener {
                 }
             }
 
-    }
-
-
-    private fun createCropPhotoIntent(context: Context, inputFile: File, outputFile: File): Intent {
-        val intent = Intent("com.android.camera.action.CROP")
-        intent.setDataAndType(
-            getImageContentUri(context, inputFile),
-            "image/*"
-        )//自己使用Content Uri替换File Uri
-        intent.putExtra("crop", "true")
-        intent.putExtra("aspectX", 1)
-        intent.putExtra("aspectY", 1)
-        intent.putExtra("outputX", 300)
-        intent.putExtra("outputY", 300)
-        intent.putExtra("scale", true)
-        intent.putExtra("return-data", false)
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(outputFile))
-        intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString())
-        intent.putExtra("noFaceDetection", true)
-        return intent
-    }
-
-    /**
-     * 转换 content:// uri  ，调用系统头像裁剪用到
-     */
-    fun getImageContentUri(context: Context, imageFile: File): Uri? {
-        val filePath = imageFile.absolutePath
-        val cursor = context.contentResolver.query(
-            MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-            arrayOf(MediaStore.Images.Media._ID),
-            MediaStore.Images.Media.DATA + "=? ",
-            arrayOf(filePath), null
-        )
-
-        if (cursor != null && cursor.moveToFirst()) {
-            val id = cursor.getInt(
-                cursor
-                    .getColumnIndex(MediaStore.MediaColumns._ID)
-            )
-            cursor.close()
-            val baseUri = Uri.parse("content://media/external/images/media")
-            return Uri.withAppendedPath(baseUri, "" + id)
-        } else {
-            return if (imageFile.exists()) {
-                val values = ContentValues()
-                values.put(MediaStore.Images.Media.DATA, filePath)
-                context.contentResolver.insert(
-                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values
-                )
-            } else {
-                null
-            }
-        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
