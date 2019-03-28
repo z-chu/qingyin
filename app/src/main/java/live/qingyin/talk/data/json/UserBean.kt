@@ -9,7 +9,7 @@ class UserBean {
     var username: String? = null
     var sessionToken: String? = null
     var phone: String? = null //手机
-    var gender: Int? = 0 //性别  0保密、1男、2女
+    var gender: Int? = null //性别  0保密、1男、2女
     var name: String? = null //名称
     var profilePhoto: String? = null //头像
     var cover: String? = null //封面

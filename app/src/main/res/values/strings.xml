@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">氢音</string>
-
+    <!-- title-->
     <string name="title_home">Home</string>
     <string name="title_following">following</string>
     <string name="title_messages">Messages</string>
@@ -10,11 +10,28 @@
     <string name="title_register">Sign up</string>
     <string name="title_setting">Setting</string>
 
+    <!-- action-->
     <string name="action_sign_out">Sign out</string>
+    <string name="action_done">Done</string>
+
+    <!-- message-->
     <string name="message_warn_sign_out">Do you really want to log out?</string>
 
 
+    <!-- exception-->
+    <string name="exception_default">Something went wrong, please try again later</string>
+    <string name="exception_socket_time_out">Network connection timed out, please try again later</string>
+    <string name="exception_connect">Network connection failed, please try again later</string>
+    <string name="error_server">Server unknown error</string>
+    <string name="exception_unknown_host">No network, please check the network settings</string>
+    <string name="exception_security">Insufficient permissions</string>
+    <string name="exception_json">Data parsing error</string>
+    <string name="exception_ssl">Network certificate verification failed</string>
+    <string name="exception_timeout">Request timed out, please try again</string>
+
+
     <string name="default_bio_if_null">还没有填写个性签名</string>
+
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password (optional)</string>
     <string name="action_sign_in">Sign in or register</string>
@@ -29,18 +46,6 @@
     <string name="username">username</string>
     <string name="password">password</string>
     <string name="forgot_your_password">forgot your password?</string>
-
-
-    //exception
-    <string name="exception_default">Something went wrong, please try again later</string>
-    <string name="exception_socket_time_out">Network connection timed out, please try again later</string>
-    <string name="exception_connect">Network connection failed, please try again later</string>
-    <string name="error_server">Server unknown error</string>
-    <string name="exception_unknown_host">No network, please check the network settings</string>
-    <string name="exception_security">Insufficient permissions</string>
-    <string name="exception_json">Data parsing error</string>
-    <string name="exception_ssl">Network certificate verification failed</string>
-    <string name="exception_timeout">Request timed out, please try again</string>
 
 
     <string name="feed">Feed</string>

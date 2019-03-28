@@ -8,11 +8,13 @@
     <include layout="@layout/view_appbar"/>
 
     <EditText
+            android:id="@+id/et_profile_name"
             android:layout_width="match_parent"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:maxLength="64"
+            android:hint="好的昵称让人更容易记住你！"
             tools:text="生活不能等别人来安排，要自已去争取和奋斗；而不论其结果是喜是悲，但可以慰藉的是，你总不枉在这世界上活了一场。"
             android:layout_height="wrap_content"/>
 

@@ -53,6 +53,12 @@ class ProfileSettingViewModel(
         modifyProfile(userBean)
     }
 
+    fun modifyBio(bio: String) {
+        val userBean = UserBean()
+        userBean.bio = bio
+        modifyProfile(userBean)
+    }
+
     fun modifyGender(gender: Int) {
         val userBean = UserBean()
         userBean.gender = gender

@@ -129,14 +129,7 @@ class ProfileSettingsFragment : BaseFragment(), View.OnClickListener {
     }
 
     private fun modifyNickname() {
-        MaterialAlertDialogBuilder(requireContext())
-            .setTitle("修改昵称")
-            .setMessage("好的昵称让人更容易记住你")
-            .setItems(arrayOf("保密", "男", "女")) { dialog, which ->
-
-            }
-
-
+        NameModifyActivity.start(requireContext())
     }
 
     private fun modifyGender() {
@@ -153,12 +146,12 @@ class ProfileSettingsFragment : BaseFragment(), View.OnClickListener {
     }
 
     private fun modifyBio() {
-        MaterialAlertDialogBuilder(requireContext())
-            .setTitle("修改性别")
-            .setItems(arrayOf("保密", "男", "女")) { dialog, which ->
-
+        val newIntent = BioModifyActivity.newIntent(requireContext(), viewModel.userSessionLive.value?.bio)
+        activityResultDispatcher.startIntent(this, newIntent) { resultCode, data ->
+            BioModifyActivity.getProfileBio(data)?.let {
+                viewModel.modifyBio(it)
             }
-            .show()
+        }
     }
 
     private fun modifyRegion() {
