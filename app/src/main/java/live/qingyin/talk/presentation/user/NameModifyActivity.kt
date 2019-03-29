@@ -11,7 +11,7 @@ import live.qingyin.talk.base.BaseActivity
 class NameModifyActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_modify_profile_bio)
+        setContentView(R.layout.activity_modify_profile_name)
         initToolbar("修改昵称")
 
 

@@ -2,6 +2,7 @@ package live.qingyin.talk.presentation.user
 
 import android.Manifest
 import android.app.Activity
+import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.provider.MediaStore
@@ -159,7 +160,12 @@ class ProfileSettingsFragment : BaseFragment(), View.OnClickListener {
     }
 
     private fun modifyBirthday() {
+        DatePickerDialog(requireContext(),
+            DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
 
+            }
+            , -1, -1, -1
+        ).show()
     }
 
     private fun takePhoto4Camera() {
