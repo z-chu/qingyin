@@ -2,7 +2,6 @@ package live.qingyin.talk.data.json
 
 import live.qingyin.talk.usersession.model.Gender
 import live.qingyin.talk.usersession.model.UserSession
-import java.util.*
 
 class UserBean {
     var objectId: String? = null
@@ -15,7 +14,7 @@ class UserBean {
     var cover: String? = null //封面
     var bio: String? = null //个人介绍
     var region: String? = null //地区
-    var birthday: Date? = null // 生日
+    var birthday: LCDate? = null // 生日
 }
 
 fun UserBean.toUserSession(): UserSession {
@@ -30,7 +29,7 @@ fun UserBean.toUserSession(): UserSession {
         cover,
         bio,
         region,
-        birthday
+        birthday?.date
     )
 }
 
@@ -46,7 +45,7 @@ fun UserBean.applyTo(userSession: UserSession): UserSession {
         cover ?: userSession.cover,
         bio ?: userSession.bio,
         region ?: userSession.region,
-        birthday ?: userSession.birthday
+        birthday?.date ?: userSession.birthday
     )
 }
 

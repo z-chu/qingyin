@@ -22,6 +22,8 @@ import live.qingyin.talk.usersession.model.UserSession
 import live.qingyin.talk.utils.*
 import org.koin.android.viewmodel.ext.viewModel
 import java.io.File
+import java.text.SimpleDateFormat
+import java.util.*
 
 class ProfileSettingsFragment : BaseFragment(), View.OnClickListener {
 
@@ -81,7 +83,10 @@ class ProfileSettingsFragment : BaseFragment(), View.OnClickListener {
             row_gender.setSubtitle(getString(gender.stringRes))
             row_bio.setSubtitle(bio ?: getString(R.string.default_bio_if_null))
             row_region.setSubtitle(region)
-            row_birthday.setSubtitle(birthday?.toString())
+            val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            if (birthday != null) {
+                row_birthday.setSubtitle(simpleDateFormat.format(birthday))
+            }
         }
 
     }
@@ -130,7 +135,12 @@ class ProfileSettingsFragment : BaseFragment(), View.OnClickListener {
     }
 
     private fun modifyNickname() {
-        NameModifyActivity.start(requireContext())
+        val newIntent = NameModifyActivity.newIntent(requireContext(), viewModel.userSessionLive.value?.name)
+        activityResultDispatcher.startIntent(this, newIntent) { resultCode, data ->
+            NameModifyActivity.getProfileName(data)?.let {
+                viewModel.modifyName(it)
+            }
+        }
     }
 
     private fun modifyGender() {
@@ -156,15 +166,32 @@ class ProfileSettingsFragment : BaseFragment(), View.OnClickListener {
     }
 
     private fun modifyRegion() {
-
+        val newIntent = RegionSelectionActivity.newIntent(requireContext(), viewModel.userSessionLive.value?.region)
+        activityResultDispatcher.startIntent(this, newIntent) { resultCode, data ->
+            RegionSelectionActivity.getRegion(data)?.let {
+                viewModel.modifyRegion(it)
+            }
+        }
     }
 
     private fun modifyBirthday() {
+        val birthday = viewModel.userSessionLive.value?.birthday ?: Date()
+        val calendar = Calendar.getInstance()
+        calendar.time = birthday
+        val YEAR = calendar.get(Calendar.YEAR)
+        val MONTH = calendar.get(Calendar.MONTH)
+        val DAY_OF_MONTH = calendar.get(Calendar.DAY_OF_MONTH)
         DatePickerDialog(requireContext(),
-            DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
-
+            DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
+                val instance = Calendar.getInstance()
+                instance.set(year, month, dayOfMonth)
+                if (instance.time.time > Date().time) {
+                    requireContext().showToastShort("你的出生日期在未来，你是穿越回来的吗？")
+                } else {
+                    viewModel.modifyBirthday(instance.time)
+                }
             }
-            , -1, -1, -1
+            , YEAR, MONTH, DAY_OF_MONTH
         ).show()
     }
 

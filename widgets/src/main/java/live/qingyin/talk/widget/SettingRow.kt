@@ -31,9 +31,7 @@ class SettingRow @JvmOverloads constructor(
         tvSubtitle = findViewById(R.id.tv_subtitle)
         divider = findViewById(R.id.divider)
         arrow = findViewById(R.id.arrow)
-        if (attrs != null) {
-            initAttrs(context, attrs)
-        }
+        initAttrs(context, attrs)
         initBackground()
     }
 
@@ -47,7 +45,7 @@ class SettingRow @JvmOverloads constructor(
         typedArray.recycle()
     }
 
-    private fun initAttrs(context: Context, attrs: AttributeSet) {
+    private fun initAttrs(context: Context, attrs: AttributeSet?) {
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.SettingRow)
         val iconResId = typedArray.getResourceId(R.styleable.SettingRow_setting_icon, 0)
         if (iconResId != 0) {
@@ -64,18 +62,9 @@ class SettingRow @JvmOverloads constructor(
         val subtitle = typedArray.getString(R.styleable.SettingRow_setting_subtitle)
         tvSubtitle.text = subtitle
         val dividerVisibility = typedArray.getBoolean(R.styleable.SettingRow_setting_divider_visibility, true)
-        divider.visibility = if (dividerVisibility) View.VISIBLE else View.GONE
+        setDividerVisibility(dividerVisibility)
         val arrowVisibility = typedArray.getBoolean(R.styleable.SettingRow_setting_arrow_visibility, true)
-        val layoutParams = tvSubtitle.layoutParams as RelativeLayout.LayoutParams
-        if (arrowVisibility) {
-            arrow.visibility = View.VISIBLE
-            layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, 0)
-            layoutParams.rightMargin = 0
-        } else {
-            arrow.visibility = View.GONE
-            layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT)
-            layoutParams.rightMargin = resources.getDimensionPixelSize(R.dimen.setting_row_horizontal_margin)
-        }
+        setArrowVisibility(arrowVisibility)
         tvTitle.setTextColor(
             typedArray.getColor(
                 R.styleable.SettingRow_setting_title_color,
@@ -100,18 +89,25 @@ class SettingRow @JvmOverloads constructor(
         typedArray.recycle()
     }
 
-    override fun onFinishInflate() {
-        super.onFinishInflate()
-        val layoutParams = layoutParams
-        if (layoutParams == null || layoutParams.height == ViewGroup.LayoutParams.WRAP_CONTENT) {
-            setLayoutParams(
-                ViewGroup.LayoutParams(
-                    RelativeLayout.LayoutParams.MATCH_PARENT,
-                    resources.getDimensionPixelSize(
-                        R.dimen.setting_row_height
+
+    override fun onWindowVisibilityChanged(visibility: Int) {
+        super.onWindowVisibilityChanged(visibility)
+        if (visibility == VISIBLE) {
+            val layoutParams = layoutParams
+            if (layoutParams == null) {
+                setLayoutParams(
+                    ViewGroup.LayoutParams(
+                        RelativeLayout.LayoutParams.MATCH_PARENT,
+                        resources.getDimensionPixelSize(
+                            R.dimen.setting_row_height
+                        )
                     )
                 )
-            )
+            } else if (layoutParams.height == ViewGroup.LayoutParams.WRAP_CONTENT) {
+                layoutParams.height = resources.getDimensionPixelSize(
+                    R.dimen.setting_row_height
+                )
+            }
         }
     }
 
@@ -136,7 +132,16 @@ class SettingRow @JvmOverloads constructor(
     }
 
     fun setArrowVisibility(visibility: Boolean) {
-        arrow.visibility = if (visibility) View.VISIBLE else View.GONE
+        val layoutParams = tvSubtitle.layoutParams as RelativeLayout.LayoutParams
+        if (visibility) {
+            arrow.visibility = View.VISIBLE
+            layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, 0)
+            layoutParams.rightMargin = 0
+        } else {
+            arrow.visibility = View.GONE
+            layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT)
+            layoutParams.rightMargin = resources.getDimensionPixelSize(R.dimen.setting_row_horizontal_margin)
+        }
     }
 
     fun setTitleBold(isBold: Boolean) {

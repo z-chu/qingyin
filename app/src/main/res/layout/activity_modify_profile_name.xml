@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
@@ -18,22 +18,65 @@
                 tools:text="柱子哥"
                 android:layout_height="wrap_content"/>
                 -->
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="8dp"
+            android:background="@android:color/white"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingBottom="12dp"
+            android:paddingTop="12dp"
+            android:layout_height="wrap_content">
 
+        <EditText
+                android:id="@+id/et_profile_name"
+                android:layout_width="match_parent"
+                android:maxLength="@integer/max_length_profile_bio"
+                android:minHeight="48dp"
+                android:gravity="start"
+                android:textSize="14sp"
+                android:lineSpacingExtra="3dp"
+                android:background="@android:color/transparent"
+                android:hint="好名字可以让人更容易记住你！"
+                tools:text="zchu"
+                android:layout_height="wrap_content">
+
+            <requestFocus/>
+        </EditText>
+
+        <TextView
+                android:id="@+id/tv_text_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@id/et_profile_name"
+                tools:text="2/64"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"/>
+    </RelativeLayout>
+
+    <!--
     <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            style="@style/Widget.Design.TextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="好名字可以让人更容易记住你"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
             app:counterEnabled="true"
-            app:counterMaxLength="10">
+            app:counterMaxLength="30"
+            android:layout_marginTop="16dp">
 
         <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:maxLength="30"
+                android:layout_height="wrap_content">
+
+            <requestFocus/>
+        </com.google.android.material.textfield.TextInputEditText>
     </com.google.android.material.textfield.TextInputLayout>
+    -->
 
 
 </LinearLayout>

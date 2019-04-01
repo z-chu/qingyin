@@ -8,6 +8,7 @@ import com.github.zchu.common.rx.schedule4Io2Main
 import com.github.zchu.model.WorkState
 import com.orhanobut.logger.Logger
 import io.reactivex.Observable
+import live.qingyin.talk.data.json.LCDate
 import live.qingyin.talk.data.json.UserBean
 import live.qingyin.talk.data.json.applyTo
 import live.qingyin.talk.data.repository.FileUploader
@@ -15,6 +16,7 @@ import live.qingyin.talk.data.repository.UserRepository
 import live.qingyin.talk.usersession.UserSessionManager
 import live.qingyin.talk.usersession.model.UserSession
 import java.io.File
+import java.util.*
 
 class ProfileSettingViewModel(
     private val userSessionManager: UserSessionManager,
@@ -53,6 +55,12 @@ class ProfileSettingViewModel(
         modifyProfile(userBean)
     }
 
+    fun modifyName(name: String) {
+        val userBean = UserBean()
+        userBean.name = name
+        modifyProfile(userBean)
+    }
+
     fun modifyBio(bio: String) {
         val userBean = UserBean()
         userBean.bio = bio
@@ -65,6 +73,17 @@ class ProfileSettingViewModel(
         modifyProfile(userBean)
     }
 
+    fun modifyRegion(region: String) {
+        val userBean = UserBean()
+        userBean.region = region
+        modifyProfile(userBean)
+    }
+
+    fun modifyBirthday(birthday: Date) {
+        val userBean = UserBean()
+        userBean.birthday = LCDate(birthday)
+        modifyProfile(userBean)
+    }
     private fun modifyProfile(userBean: UserBean) {
         userRepository
             .modifyProfile(userSession.sessionToken, userSession.id, userBean)
