@@ -16,7 +16,9 @@ class RegionSelectionActivity : BaseActivity()
     , RegionSelectionFragment.OnCitySelectedListener
     , RegionSelectionFragment.OnAreaSelectedListener {
 
-    private lateinit var provincesFragment: RegionSelectionFragment
+    private var provincesFragment: RegionSelectionFragment? = null
+    private var cityFragment: RegionSelectionFragment? = null
+    private var areaFragment: RegionSelectionFragment? = null
 
     private var provinceName: String? = null
     private var cityName: String? = null
@@ -46,11 +48,12 @@ class RegionSelectionActivity : BaseActivity()
         val gson = Gson()
         val adapter = gson.getAdapter(object : TypeToken<ArrayList<Province>>() {})
         val provinceList = adapter.fromJson(streamReader)
-        provincesFragment = RegionSelectionFragment.newProvinces(provinceList, provinceName)
+
         if (savedInstanceState == null) {
+            provincesFragment = RegionSelectionFragment.newProvinces(provinceList, provinceName)
             supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.container, provincesFragment)
+                .replace(R.id.container, provincesFragment!!)
                 .commit()
             supportFragmentManager
         }
@@ -58,6 +61,8 @@ class RegionSelectionActivity : BaseActivity()
     }
 
     override fun onProvinceSelected(province: Province) {
+        val cityFragment = RegionSelectionFragment.newCities(province.city, cityName)
+        this.cityFragment = cityFragment
         val city = province.city
         provinceName = province.name
         if (city.size > 1) {
@@ -69,7 +74,12 @@ class RegionSelectionActivity : BaseActivity()
                     R.anim.slide_left_in,
                     R.anim.slide_right_out
                 )
-                .replace(R.id.container, RegionSelectionFragment.newCities(province.city, cityName))
+                .add(R.id.container, cityFragment)
+                .apply {
+                    provincesFragment?.let {
+                        hide(it)
+                    }
+                }
                 .addToBackStack(null)
                 .commit()
         } else {
@@ -78,6 +88,8 @@ class RegionSelectionActivity : BaseActivity()
     }
 
     override fun onCitySelected(city: City) {
+        val areaFragment = RegionSelectionFragment.newAreas(city.area, areaName)
+        this.areaFragment = areaFragment
         cityName = city.name
         supportFragmentManager
             .beginTransaction()
@@ -87,7 +99,12 @@ class RegionSelectionActivity : BaseActivity()
                 R.anim.slide_left_in,
                 R.anim.slide_right_out
             )
-            .replace(R.id.container, RegionSelectionFragment.newAreas(city.area, areaName))
+            .add(R.id.container, areaFragment)
+            .apply {
+                cityFragment?.let {
+                    hide(it)
+                }
+            }
             .addToBackStack(null)
             .commit()
     }

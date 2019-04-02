@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
 import androidx.lifecycle.Observer
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.github.zchu.common.help.showToastShort
 import com.github.zchu.common.rx.bindLifecycle
 import com.github.zchu.common.util.DebounceOnClickLister
@@ -76,9 +77,25 @@ class ProfileSettingsFragment : BaseFragment(), View.OnClickListener {
 
     private fun displayUser(userSession: UserSession) {
         userSession.run {
-            GlideApp.with(this@ProfileSettingsFragment)
-                .load(userSession.profilePhoto)
-                .into(iv_profile_photo)
+            if (userSession.profilePhoto != null) {
+                GlideApp.with(this@ProfileSettingsFragment)
+                    .load(userSession.profilePhoto)
+                    .transform(CircleCrop())
+                    .into(iv_profile_photo)
+            } else {
+                GlideApp.with(this@ProfileSettingsFragment)
+                    .load(R.drawable.img_profile_photo_default)
+                    .into(iv_profile_cover)
+            }
+            if (userSession.cover != null) {
+                GlideApp.with(this@ProfileSettingsFragment)
+                    .load(userSession.cover)
+                    .into(iv_profile_cover)
+            } else {
+                GlideApp.with(this@ProfileSettingsFragment)
+                    .load(R.drawable.img_cover_default)
+                    .into(iv_profile_cover)
+            }
             row_nickname.setSubtitle(name)
             row_gender.setSubtitle(getString(gender.stringRes))
             row_bio.setSubtitle(bio ?: getString(R.string.default_bio_if_null))

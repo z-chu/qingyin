@@ -17,10 +17,10 @@
         <item name="colorOnSecondary">#FFFFFF</item>
 
         <!-- 表面颜色会影响组件的表面，例如卡片，工作表和菜单。 -->
-        <item name="colorSurface">#FFFFFF</item>
+        <item name="colorSurface">@color/colorSurface</item>
 
         <!-- 在表面颜色上绘制时传递文本/图标的可访问性指南的颜色。 -->
-        <item name="colorOnSurface">#000000</item>
+        <item name="colorOnSurface">@color/colorOnSurface</item>
 
         <!-- 错误颜色表示文本字段等组件的错误状态 -->
         <item name="colorError">#C51162</item>
@@ -35,6 +35,9 @@
         <item name="colorOnBackground">#000000</item>
 
         <item name="dialogCornerRadius">4dp</item>
+
+        <item name="android:selectableItemBackground">@drawable/selectable_item_background</item>
+        <item name="selectableItemBackground">@drawable/selectable_item_background</item>
 
     </style>
 

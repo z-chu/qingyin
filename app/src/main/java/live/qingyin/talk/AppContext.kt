@@ -26,8 +26,8 @@ val appContext: AppContext
 class AppContext : Application() {
 
     override fun attachBaseContext(base: Context?) {
-        MultiDex.install(this)
         super.attachBaseContext(base)
+        MultiDex.install(this)
         context = this
     }
 

@@ -3,4 +3,7 @@
     <color name="colorPrimary">#E57373</color>
     <color name="colorPrimaryDark">#CE6363</color>
     <color name="colorAccent">#F38181</color>
+    <color name="colorSurface">#FFFFFF</color>
+    <color name="colorOnSurface">#000000</color>
+    <color name="colorBackground">@color/md_grey_50</color>
 </resources>

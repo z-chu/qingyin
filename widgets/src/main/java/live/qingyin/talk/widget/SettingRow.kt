@@ -36,13 +36,15 @@ class SettingRow @JvmOverloads constructor(
     }
 
     private fun initBackground() {
-        val typedValue = TypedValue()
-        context.theme.resolveAttribute(android.R.attr.selectableItemBackground, typedValue, true)
-        val attribute = intArrayOf(android.R.attr.selectableItemBackground)
-        val typedArray = context.theme.obtainStyledAttributes(typedValue.resourceId, attribute)
-        val drawable = typedArray.getDrawable(0)
-        background = drawable
-        typedArray.recycle()
+        if (background == null) {
+            val typedValue = TypedValue()
+            context.theme.resolveAttribute(android.R.attr.selectableItemBackground, typedValue, true)
+            val attribute = intArrayOf(android.R.attr.selectableItemBackground)
+            val typedArray = context.theme.obtainStyledAttributes(typedValue.resourceId, attribute)
+            val drawable = typedArray.getDrawable(0)
+            background = drawable
+            typedArray.recycle()
+        }
     }
 
     private fun initAttrs(context: Context, attrs: AttributeSet?) {

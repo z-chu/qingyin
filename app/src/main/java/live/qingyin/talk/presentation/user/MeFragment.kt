@@ -3,9 +3,8 @@ package live.qingyin.talk.presentation.user
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.github.zchu.common.help.BaseFragmentAdapter
-import com.github.zchu.common.util.dp2px
 import com.github.zchu.common.util.setDebounceOnClickLister
 import kotlinx.android.synthetic.main.fragment_me.*
 import kotlinx.android.synthetic.main.header_user_overview.*
@@ -64,13 +63,12 @@ class MeFragment : BaseFragment() {
             GlideApp
                 .with(this)
                 .load(R.drawable.img_profile_photo_default)
-                .transform(RoundedCorners(requireContext().dp2px(6F)))
                 .into(iv_profile_photo)
         } else {
             GlideApp
                 .with(this)
                 .load(profilePhoto)
-                .transform(RoundedCorners(requireContext().dp2px(6F)))
+                .transform(CircleCrop())
                 .into(iv_profile_photo)
         }
 
