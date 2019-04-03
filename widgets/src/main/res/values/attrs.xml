@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <declare-styleable name="SettingRow">
+    <attr name="settingRowLayoutStyle" format="reference"/>
+
+    <declare-styleable name="SettingRowLayout">
         <attr name="setting_icon" format="color|reference"/>
         <attr name="setting_title" format="string"/>
         <attr name="setting_title_color" format="color"/>
@@ -12,7 +14,6 @@
         <attr name="setting_divider" format="color|reference"/>
         <attr name="setting_arrow_visibility" format="boolean"/>
         <attr name="setting_arrow" format="reference"/>
-
     </declare-styleable>
 
 

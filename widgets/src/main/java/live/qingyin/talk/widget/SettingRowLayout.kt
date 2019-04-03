@@ -1,8 +1,6 @@
 package live.qingyin.talk.widget
 
 import android.content.Context
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.LayoutInflater
@@ -14,8 +12,8 @@ import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.core.content.res.ResourcesCompat
 
-class SettingRow @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+class SettingRowLayout @JvmOverloads constructor(
+    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = R.attr.settingRowLayoutStyle
 ) : RelativeLayout(context, attrs, defStyleAttr) {
 
     private val ivIcon: ImageView
@@ -48,8 +46,8 @@ class SettingRow @JvmOverloads constructor(
     }
 
     private fun initAttrs(context: Context, attrs: AttributeSet?) {
-        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.SettingRow)
-        val iconResId = typedArray.getResourceId(R.styleable.SettingRow_setting_icon, 0)
+        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.SettingRowLayout)
+        val iconResId = typedArray.getResourceId(R.styleable.SettingRowLayout_setting_icon, 0)
         if (iconResId != 0) {
             ivIcon.setImageDrawable(ResourcesCompat.getDrawable(resources, iconResId, context.theme))
         } else {
@@ -57,37 +55,52 @@ class SettingRow @JvmOverloads constructor(
             (tvTitle.layoutParams as RelativeLayout.LayoutParams).leftMargin =
                 (ivIcon.layoutParams as RelativeLayout.LayoutParams).leftMargin
         }
-        val title = typedArray.getString(R.styleable.SettingRow_setting_title)
+        val title = typedArray.getString(R.styleable.SettingRowLayout_setting_title)
         tvTitle.text = title
-        val titleBold = typedArray.getBoolean(R.styleable.SettingRow_setting_title_bold, false)
+        val titleBold = typedArray.getBoolean(R.styleable.SettingRowLayout_setting_title_bold, false)
         tvTitle.paint.isFakeBoldText = titleBold
-        val subtitle = typedArray.getString(R.styleable.SettingRow_setting_subtitle)
+        val subtitle = typedArray.getString(R.styleable.SettingRowLayout_setting_subtitle)
         tvSubtitle.text = subtitle
-        val dividerVisibility = typedArray.getBoolean(R.styleable.SettingRow_setting_divider_visibility, true)
+        val dividerVisibility = typedArray.getBoolean(R.styleable.SettingRowLayout_setting_divider_visibility, true)
         setDividerVisibility(dividerVisibility)
-        val arrowVisibility = typedArray.getBoolean(R.styleable.SettingRow_setting_arrow_visibility, true)
+        val arrowVisibility = typedArray.getBoolean(R.styleable.SettingRowLayout_setting_arrow_visibility, true)
         setArrowVisibility(arrowVisibility)
-        tvTitle.setTextColor(
-            typedArray.getColor(
-                R.styleable.SettingRow_setting_title_color,
-                Color.parseColor("#212121")
-            )
-        )
-        tvSubtitle.setTextColor(
-            typedArray.getColor(
-                R.styleable.SettingRow_setting_subtitle_color,
-                Color.parseColor("#9192a6")
-            )
-        )
+
         arrow.setImageDrawable(
             ResourcesCompat.getDrawable(
                 resources,
-                typedArray.getResourceId(R.styleable.SettingRow_setting_arrow, R.drawable.ic_setting_row_arrow),
+                typedArray.getResourceId(R.styleable.SettingRowLayout_setting_arrow, R.drawable.ic_setting_row_arrow),
                 context.theme
             )
         )
-        divider.background =
-            typedArray.getDrawable(R.styleable.SettingRow_setting_divider) ?: ColorDrawable(Color.parseColor("#eeeeee"))
+        typedArray
+            .getColor(
+                R.styleable.SettingRowLayout_setting_title_color,
+                -1
+            )
+            .let {
+                if (it != -1) {
+                    tvTitle.setTextColor(it)
+                }
+            }
+        typedArray
+            .getColor(
+                R.styleable.SettingRowLayout_setting_subtitle_color,
+                -1
+            )
+            .let {
+                if (it != -1) {
+                    tvSubtitle.setTextColor(it)
+                }
+            }
+        typedArray
+            .getDrawable(R.styleable.SettingRowLayout_setting_divider)
+            .let {
+                if (it != null) {
+                    divider.background = it
+                }
+            }
+
         typedArray.recycle()
     }
 

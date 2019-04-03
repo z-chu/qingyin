@@ -18,7 +18,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@id/iv_icon"
-            android:textSize="14sp"
+            android:textAppearance="?android:textAppearance"
             tools:text="资产单位"/>
 
     <ImageView
@@ -35,13 +35,14 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@id/arrow"
-            android:textSize="14sp"
+            android:textAppearance="?android:textAppearanceSmall"
             tools:text="CNY"/>
 
     <View
             android:id="@+id/divider"
             android:layout_width="match_parent"
             android:layout_height="0.55dp"
+            android:background="?android:listDivider"
             android:layout_alignParentBottom="true"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"/>

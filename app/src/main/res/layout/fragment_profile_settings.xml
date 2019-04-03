@@ -10,7 +10,7 @@
             android:layout_width="match_parent"
             android:layout_height="8dp"/>
 
-    <live.qingyin.talk.widget.SettingRow
+    <live.qingyin.talk.widget.SettingRowLayout
             android:id="@+id/row_username"
             android:layout_width="match_parent"
             android:layout_height="64dp"
@@ -20,7 +20,7 @@
             app:setting_arrow_visibility="false"
             />
 
-    <live.qingyin.talk.widget.SettingRow
+    <live.qingyin.talk.widget.SettingRowLayout
             android:id="@+id/row_profile_photo"
             android:layout_width="match_parent"
             app:setting_title="头像"
@@ -34,9 +34,9 @@
                 android:layout_toLeftOf="@id/arrow"
                 tools:srcCompat="@tools:sample/avatars"/>
 
-    </live.qingyin.talk.widget.SettingRow>
+    </live.qingyin.talk.widget.SettingRowLayout>
 
-    <live.qingyin.talk.widget.SettingRow
+    <live.qingyin.talk.widget.SettingRowLayout
             android:id="@+id/row_profile_cover"
             android:layout_width="match_parent"
             app:setting_title="个人主页背景"
@@ -50,9 +50,9 @@
                 android:layout_toLeftOf="@id/arrow"
                 tools:srcCompat="@tools:sample/avatars"/>
 
-    </live.qingyin.talk.widget.SettingRow>
+    </live.qingyin.talk.widget.SettingRowLayout>
 
-    <live.qingyin.talk.widget.SettingRow
+    <live.qingyin.talk.widget.SettingRowLayout
             android:id="@+id/row_nickname"
             android:layout_width="match_parent"
             android:layout_height="56dp"
@@ -61,7 +61,7 @@
             />
 
 
-    <live.qingyin.talk.widget.SettingRow
+    <live.qingyin.talk.widget.SettingRowLayout
             android:id="@+id/row_gender"
             android:layout_width="match_parent"
             android:layout_height="56dp"
@@ -74,7 +74,7 @@
             android:layout_width="match_parent"
             android:layout_height="8dp"/>
 
-    <live.qingyin.talk.widget.SettingRow
+    <live.qingyin.talk.widget.SettingRowLayout
             android:id="@+id/row_bio"
             android:layout_width="match_parent"
             android:layout_height="56dp"
@@ -82,7 +82,7 @@
             app:setting_title="个性签名"
             />
 
-    <live.qingyin.talk.widget.SettingRow
+    <live.qingyin.talk.widget.SettingRowLayout
             android:id="@+id/row_region"
             android:layout_width="match_parent"
             android:layout_height="56dp"
@@ -90,7 +90,7 @@
             app:setting_title="地区"
             />
 
-    <live.qingyin.talk.widget.SettingRow
+    <live.qingyin.talk.widget.SettingRowLayout
             android:id="@+id/row_birthday"
             android:layout_width="match_parent"
             android:layout_height="56dp"

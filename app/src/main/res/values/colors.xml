@@ -6,4 +6,5 @@
     <color name="colorSurface">#FFFFFF</color>
     <color name="colorOnSurface">#000000</color>
     <color name="colorBackground">@color/md_grey_50</color>
+    <color name="colorOnSecondary">#FFFFFF</color>
 </resources>

@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.github.zchu.base.CommonAdapter
 import com.github.zchu.base.CommonViewHolder
 import live.qingyin.talk.base.BaseFragment
-import live.qingyin.talk.widget.SettingRow
+import live.qingyin.talk.widget.SettingRowLayout
 
 abstract class RegionSelectionFragment : BaseFragment() {
 
@@ -34,7 +34,7 @@ abstract class RegionSelectionFragment : BaseFragment() {
             val string = arguments.getString("current_province")
             view.adapter = object : CommonAdapter<Province>(provinces) {
                 override fun convert(helper: CommonViewHolder, item: Province) {
-                    val settingRow = helper.itemView as SettingRow
+                    val settingRow = helper.itemView as SettingRowLayout
                     settingRow.tag = item
                     settingRow.setTitle(item.name)
                     if (string == item.name) {
@@ -45,7 +45,7 @@ abstract class RegionSelectionFragment : BaseFragment() {
                 }
 
                 override fun onCreateDefViewHolder(parent: ViewGroup, viewType: Int): CommonViewHolder {
-                    val settingRow = SettingRow(parent.context)
+                    val settingRow = SettingRowLayout(parent.context)
                     settingRow.setDividerVisibility(true)
                     settingRow.setOnClickListener {
                         val tag = it.tag
@@ -69,7 +69,7 @@ abstract class RegionSelectionFragment : BaseFragment() {
 
             view.adapter = object : CommonAdapter<City>(cities) {
                 override fun convert(helper: CommonViewHolder, item: City) {
-                    val settingRow = helper.itemView as SettingRow
+                    val settingRow = helper.itemView as SettingRowLayout
                     settingRow.tag = item
                     settingRow.setTitle(item.name)
                     if (string == item.name) {
@@ -80,7 +80,7 @@ abstract class RegionSelectionFragment : BaseFragment() {
                 }
 
                 override fun onCreateDefViewHolder(parent: ViewGroup, viewType: Int): CommonViewHolder {
-                    val settingRow = SettingRow(parent.context)
+                    val settingRow = SettingRowLayout(parent.context)
                     settingRow.setDividerVisibility(true)
                     settingRow.setOnClickListener {
                         val tag = it.tag
@@ -106,7 +106,7 @@ abstract class RegionSelectionFragment : BaseFragment() {
 
             view.adapter = object : CommonAdapter<String>(areas) {
                 override fun convert(helper: CommonViewHolder, item: String) {
-                    val settingRow = helper.itemView as SettingRow
+                    val settingRow = helper.itemView as SettingRowLayout
                     settingRow.tag = item
                     settingRow.setTitle(item)
                     if (string == item) {
@@ -117,7 +117,7 @@ abstract class RegionSelectionFragment : BaseFragment() {
                 }
 
                 override fun onCreateDefViewHolder(parent: ViewGroup, viewType: Int): CommonViewHolder {
-                    val settingRow = SettingRow(parent.context)
+                    val settingRow = SettingRowLayout(parent.context)
                     settingRow.setDividerVisibility(true)
                     settingRow.setArrowVisibility(false)
                     settingRow.setOnClickListener {
