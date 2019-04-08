@@ -10,8 +10,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import com.github.zchu.common.help.showToastShort
 import com.github.zchu.common.util.DebounceOnClickLister
-import com.github.zchu.model.whenRun
-import com.orhanobut.logger.Logger
+import com.github.zchu.model.switch
 import kotlinx.android.synthetic.main.login_card.*
 import live.qingyin.talk.R
 import live.qingyin.talk.presentation.main.MainActivity
@@ -37,18 +36,15 @@ class LoginDialogFragment : DialogFragment(), View.OnClickListener {
         viewModel
             .result()
             .observe(this, Observer {
-                it.whenRun {
+                it.switch {
                     onLoading {
                         showLoading()
                     }
                     onSuccess {
                         showContent()
                     }
-                    onError { throwable, _ ->
-                        throwable?.let {
-                            Logger.e(it, "login")
-                        }
-                        showError(throwable.getEasyMessage(context))
+                    onError { failure ->
+                        showError(failure.throwable.getEasyMessage(context))
                     }
                 }
             })

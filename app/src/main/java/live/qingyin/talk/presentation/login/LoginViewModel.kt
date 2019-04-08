@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.github.zchu.common.rx.RxViewModel
 import com.github.zchu.common.rx.schedule4Io2Main
-import com.github.zchu.model.ViewData
+import com.github.zchu.model.WorkResult
 import live.qingyin.talk.data.json.toUserSession
 import live.qingyin.talk.data.repository.UserRepository
 import live.qingyin.talk.usersession.UserSessionManager
@@ -16,11 +16,11 @@ class LoginViewModel(
     , private val userManager: UserSessionManager
 ) : RxViewModel() {
 
-    private val viewData: MutableLiveData<ViewData<UserSession>> by lazy {
-        MutableLiveData<ViewData<UserSession>>()
+    private val viewData: MutableLiveData<WorkResult<UserSession>> by lazy {
+        MutableLiveData<WorkResult<UserSession>>()
     }
 
-    fun result(): LiveData<ViewData<UserSession>> {
+    fun result(): LiveData<WorkResult<UserSession>> {
         return viewData
     }
 
