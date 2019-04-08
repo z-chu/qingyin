@@ -1,21 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <attr name="theme_windowForeground" format="color|reference"/><!--前景色-->
 
-    <attr name="theme_statusBarBackground" format="color|reference"/>
     <attr name="theme_statusBarDarkFont" format="boolean"/>
-    <attr name="theme_appBarBackground" format="color|reference"/>
-    <attr name="theme_textPrimary" format="color"/><!--用于重要级文字信息，如标题，子模块功能文字等-->
-    <attr name="theme_textSecondary" format="color"/><!--用于普通级信息-->
-    <attr name="theme_textPrimaryInverted" format="color"/><!--相反颜色 -->
-    <attr name="theme_textSecondaryInverted" format="color"/>
-    <attr name="theme_textError" format="color"/>
-    <attr name="theme_textAssist" format="color"/><!--用于普通级信息、引导词,如昵正文、弹层文案、查看更多之类-->
-    <attr name="theme_textAssistSecondary" format="color"/><!--用于辅助、次要的文字信息、普通按钮描边,如时间、来自等补充信息文案-->
-    <attr name="theme_appbar_style" format="reference"/>
-    <attr name="theme_toolbar_style" format="reference"/>
-    <attr name="theme_dividerColor" format="color"/>
     <attr name="theme_badgeColor" format="color"/>
-    <attr name="theme_colorAccentSecondary" format="color"/>
 
 </resources>
