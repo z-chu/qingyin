@@ -5,17 +5,17 @@
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryVariant</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryVariant</item>
 
         <!-- 在 colorPrimary 上绘制时传递文本/图标的可访问性指南的颜色。 -->
-        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorOnPrimary">@android:color/white</item>
 
-        <item name="colorSecondary">@color/colorAccent</item>
-        <item name="colorSecondaryVariant">#F39881</item>
+        <item name="colorSecondary">@color/colorSecondary</item>
+        <item name="colorSecondaryVariant">@color/colorSecondary</item>
 
         <!-- 在 colorSecondary 上绘制时传递文本/图标的可访问性指南的颜色。 -->
-        <item name="colorOnSecondary">#FFFFFF</item>
+        <item name="colorOnSecondary">@color/colorOnSecondary</item>
 
         <!-- 表面颜色会影响组件的表面，例如卡片，工作表和菜单。 -->
         <item name="colorSurface">@color/colorSurface</item>
@@ -24,16 +24,16 @@
         <item name="colorOnSurface">@color/colorOnSurface</item>
 
         <!-- 错误颜色表示文本字段等组件的错误状态 -->
-        <item name="colorError">#C51162</item>
+        <item name="colorError">@color/colorError</item>
 
         <!-- 在 colorError 之上绘制时，传递文本/图标的可访问性指南的颜色。-->
-        <item name="colorOnError">#FFFFFF</item>
+        <item name="colorOnError">@color/colorOnError</item>
 
         <!--应用的背景颜色 不能直接设置颜色值，要设置引用-->
-        <item name="android:colorBackground">@color/md_grey_50</item>
+        <item name="android:colorBackground">@color/colorBackground</item>
 
         <!-- 在背景颜色上绘制时传递文本/图标的辅助功能指南的颜色。 -->
-        <item name="colorOnBackground">#000000</item>
+        <item name="colorOnBackground">@color/colorOnBackground</item>
 
         <item name="dialogCornerRadius">4dp</item>
 
@@ -50,7 +50,6 @@
 
         <item name="android:textColorTertiary">@color/md_grey_900</item>
        -->
-
     </style>
 
 

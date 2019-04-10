@@ -3,7 +3,11 @@ package live.qingyin.talk.utils
 import android.os.Looper
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.github.zchu.model.ViewData
+import com.github.zchu.common.livedata.safeSetValue
+import com.github.zchu.model.Failure
+import com.github.zchu.model.Loading
+import com.github.zchu.model.Success
+import com.github.zchu.model.WorkResult
 import io.reactivex.Observable
 import io.reactivex.Observer
 import io.reactivex.annotations.CheckReturnValue
@@ -14,25 +18,18 @@ fun <T> Observable<T>.asLiveDataOfViewData(): ResourceLiveData<T> {
 }
 
 @CheckReturnValue
-fun <T> Observable<T>.subscribe(mutableLiveData: MutableLiveData<ViewData<T>>): Disposable {
-    mutableLiveData.safeSetValue(ViewData.loading())
+fun <T> Observable<T>.subscribe(mutableLiveData: MutableLiveData<WorkResult<T>>): Disposable {
+    mutableLiveData.safeSetValue(Loading())
     return this.subscribe({
-        mutableLiveData.safeSetValue(ViewData.loaded(it))
+        mutableLiveData.safeSetValue(Success(it))
 
     }, {
-        mutableLiveData.safeSetValue(ViewData.error(it))
+        mutableLiveData.safeSetValue(Failure(it))
     })
 }
 
-fun <T> MutableLiveData<T>.safeSetValue(value: T) {
-    if (Looper.getMainLooper().thread === Thread.currentThread()) {
-        setValue(value)
-    } else {
-        postValue(value)
-    }
-}
 
-class ResourceLiveData<T>(private val observable: Observable<T>) : LiveData<ViewData<T>>(), Disposable {
+class ResourceLiveData<T>(private val observable: Observable<T>) : LiveData<WorkResult<T>>(), Disposable {
 
     @Volatile
     private var disposable: Disposable? = null
@@ -55,15 +52,15 @@ class ResourceLiveData<T>(private val observable: Observable<T>) : LiveData<View
                 .subscribe(object : Observer<T> {
                     override fun onSubscribe(d: Disposable) {
                         disposable = d
-                        safeSetValue(ViewData.loading())
+                        safeSetValue(Loading())
                     }
 
                     override fun onNext(t: T) {
-                        safeSetValue(ViewData.loaded(t))
+                        safeSetValue(Success(t))
                     }
 
                     override fun onError(e: Throwable) {
-                        safeSetValue(ViewData.error(e))
+                        safeSetValue(Failure(e))
                     }
 
                     override fun onComplete() {
@@ -74,7 +71,7 @@ class ResourceLiveData<T>(private val observable: Observable<T>) : LiveData<View
     }
 
 
-    private fun safeSetValue(value: ViewData<T>) {
+    private fun safeSetValue(value: WorkResult<T>) {
         if (Looper.getMainLooper().thread === Thread.currentThread()) {
             setValue(value)
         } else {
