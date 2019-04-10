@@ -134,7 +134,7 @@ class ProfileSettingsFragment : BaseFragment(), View.OnClickListener {
     private fun modifyProfilePhoto() {
         MaterialAlertDialogBuilder(requireContext())
             .setTitle("修改头像")
-            .setItems(arrayOf("拍照", "从相册中选", "随机")) { dialog, which ->
+            .setItems(arrayOf("拍照", "从相册中选", "随机")) { _, which ->
                 when (which) {
                     0 -> {
                         takePhoto4Camera()
@@ -153,7 +153,7 @@ class ProfileSettingsFragment : BaseFragment(), View.OnClickListener {
 
     private fun modifyNickname() {
         val newIntent = NameModifyActivity.newIntent(requireContext(), viewModel.userSessionLive.value?.name)
-        activityResultDispatcher.startIntent(this, newIntent) { resultCode, data ->
+        activityResultDispatcher.startIntent(this, newIntent) { _, data ->
             NameModifyActivity.getProfileName(data)?.let {
                 viewModel.modifyName(it)
             }
@@ -175,7 +175,7 @@ class ProfileSettingsFragment : BaseFragment(), View.OnClickListener {
 
     private fun modifyBio() {
         val newIntent = BioModifyActivity.newIntent(requireContext(), viewModel.userSessionLive.value?.bio)
-        activityResultDispatcher.startIntent(this, newIntent) { resultCode, data ->
+        activityResultDispatcher.startIntent(this, newIntent) { _, data ->
             BioModifyActivity.getProfileBio(data)?.let {
                 viewModel.modifyBio(it)
             }
@@ -184,7 +184,7 @@ class ProfileSettingsFragment : BaseFragment(), View.OnClickListener {
 
     private fun modifyRegion() {
         val newIntent = RegionSelectionActivity.newIntent(requireContext(), viewModel.userSessionLive.value?.region)
-        activityResultDispatcher.startIntent(this, newIntent) { resultCode, data ->
+        activityResultDispatcher.startIntent(this, newIntent) { _, data ->
             RegionSelectionActivity.getRegion(data)?.let {
                 viewModel.modifyRegion(it)
             }
@@ -230,7 +230,7 @@ class ProfileSettingsFragment : BaseFragment(), View.OnClickListener {
     private fun openPhoto4Camera() {
         val photoFile = generatePhotoFile() ?: return
         val intent = createTakePhotoIntent(requireContext(), photoFile)
-        activityResultDispatcher.startIntent(this, intent) { resultCode, data ->
+        activityResultDispatcher.startIntent(this, intent) { resultCode, _ ->
             if (resultCode == Activity.RESULT_OK) {
                 cropPhoto(photoFile)
             }
@@ -250,7 +250,7 @@ class ProfileSettingsFragment : BaseFragment(), View.OnClickListener {
 
     private fun openPhoto4Gallery() {
         val intent = createOpenAlbumIntent()
-        activityResultDispatcher.startIntent(this, intent) { resultCode, data ->
+        activityResultDispatcher.startIntent(this, intent) { _, data ->
             data?.data?.let {
                 val filePathColumn = arrayOf(MediaStore.Images.Media.DATA)
                 val cursor = requireContext().contentResolver.query(it, filePathColumn, null, null, null)

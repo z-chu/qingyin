@@ -13,7 +13,7 @@ class ActivityResultDispatcher {
     private val observeCallbacks = ArrayList<((requestCode: Int, resultCode: Int, data: Intent?) -> Unit)>()
     private val codeGenerator = Random()
 
-    private fun generateResultCode(): Int {
+    private fun generateRequestCode(): Int {
         var requestCode: Int
         do {
             requestCode = codeGenerator.nextInt(0xFFFF)
@@ -46,15 +46,15 @@ class ActivityResultDispatcher {
     }
 
     fun startIntent(activity: Activity, intent: Intent, callback: ((resultCode: Int, data: Intent?) -> Unit)) {
-        val resultCode = generateResultCode()
+        val resultCode = generateRequestCode()
         activity.startActivityForResult(intent, resultCode)
         subscribeOnce(resultCode, callback)
     }
 
     fun startIntent(fragment: Fragment, intent: Intent, callback: ((resultCode: Int, data: Intent?) -> Unit)) {
-        val resultCode = generateResultCode()
-        fragment.startActivityForResult(intent, resultCode)
-        subscribeOnce(resultCode, callback)
+        val requestCode = generateRequestCode()
+        fragment.startActivityForResult(intent, requestCode)
+        subscribeOnce(requestCode, callback)
     }
 
     fun dispatch(requestCode: Int, resultCode: Int, data: Intent?) {
