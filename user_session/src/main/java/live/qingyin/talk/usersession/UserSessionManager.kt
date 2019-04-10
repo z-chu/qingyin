@@ -40,7 +40,7 @@ class UserSessionManager(context: Context) {
         return this
     }
 
-    inline fun doIfnNotLoggedIn(block: () -> Unit): UserSessionManager {
+    inline fun doIfNotLoggedIn(block: () -> Unit): UserSessionManager {
         if (!isLoggedIn()) {
             block.invoke()
         }

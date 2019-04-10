@@ -1,6 +1,7 @@
 package live.qingyin.talk.data.net
 
 import io.reactivex.Observable
+import kotlinx.coroutines.Deferred
 import live.qingyin.talk.data.json.LCResult
 import live.qingyin.talk.data.json.UserBean
 import live.qingyin.talk.data.json.UserBody
@@ -26,7 +27,7 @@ interface LeancloudService {
     fun putUser(@Header(H_LC_SESSION) sessionToken: String, @Path("objectId") userId: String, @Body user: UserBean): Observable<LCResult<Any>>
 
     @GET("users/me")
-    fun me(@Header(H_LC_SESSION) sessionToken: String)
+    fun me(@Header(H_LC_SESSION) sessionToken: String): Deferred<UserBean>
 
 
 }

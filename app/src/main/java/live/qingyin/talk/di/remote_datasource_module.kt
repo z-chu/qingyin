@@ -1,6 +1,7 @@
 package live.qingyin.talk.di
 
 import android.content.Context
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.readystatesoftware.chuck.api.ChuckCollector
 import com.readystatesoftware.chuck.api.ChuckInterceptor
 import com.readystatesoftware.chuck.api.RetentionManager
@@ -71,10 +72,12 @@ fun createOkHttpClient(): OkHttpClient {
 }
 
 inline fun <reified T> createWebService(okHttpClient: OkHttpClient, url: String): T {
-    val retrofit = Retrofit.Builder()
+    return Retrofit.Builder()
         .baseUrl(url)
         .client(okHttpClient)
         .addConverterFactory(GsonConverterFactory.create())
-        .addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
-    return retrofit.create(T::class.java)
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+        .addCallAdapterFactory(CoroutineCallAdapterFactory())
+        .build()
+        .create(T::class.java)
 }

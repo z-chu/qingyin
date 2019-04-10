@@ -15,7 +15,13 @@ class UserBean {
     var bio: String? = null //个人介绍
     var region: String? = null //地区
     var birthday: LCDate? = null // 生日
+
+    override fun toString(): String {
+        return "UserBean(objectId=$objectId, username=$username, sessionToken=$sessionToken, phone=$phone," +
+                " gender=$gender, name=$name, profilePhoto=$profilePhoto, cover=$cover, bio=$bio, region=$region, birthday=$birthday)"
+    }
 }
+
 
 fun UserBean.toUserSession(): UserSession {
     return UserSession(
