@@ -149,13 +149,15 @@ internal class UserPreferences(context: Context) {
     private class UserLiveData(val userPreferences: UserPreferences) : LiveData<UserSession>(),
         OnTrayPreferenceChangeListener {
 
-        private val userVersion = 0
+        private var userVersion = 0
 
         override fun onTrayPreferenceChanged(items: MutableCollection<TrayItem>) {
             for (item in items) {
                 if (item.key() == UserPreferences.K_USER_VERSION) {
-                    if (userVersion != item.value()?.toIntOrNull()) {
+                    val toIntOrNull = item.value()?.toIntOrNull() ?: 0
+                    if (userVersion != toIntOrNull) {
                         value = userPreferences.loadUser()
+                        userVersion = toIntOrNull
                     }
                 }
             }
